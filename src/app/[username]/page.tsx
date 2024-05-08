@@ -2,6 +2,7 @@ import { testData } from "@/lib/testData";
 import { RedirectType, redirect } from "next/navigation";
 import Links from "./components/Links";
 import WorkHistory from "./components/WorkHistory";
+import EducationHistory from "./components/EducationHistory";
 
 export default function Page({ params }: { params: { username: string } }) {
   const user = testData.find((user) => user.username === params.username);
@@ -19,6 +20,7 @@ export default function Page({ params }: { params: { username: string } }) {
       <Links links={user.links} />
 
       <WorkHistory workHistory={user.workHistory} />
+      <EducationHistory educationHistory={user.educationHistory} />
     </div>
   );
 }

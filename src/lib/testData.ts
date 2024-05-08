@@ -27,7 +27,7 @@ export interface User {
   bio: string;
   title: string;
   workHistory: WorkExperience[];
-  educationHistory?: EducationExperience[];
+  educationHistory: EducationExperience[];
 }
 
 export const testData: User[] = [

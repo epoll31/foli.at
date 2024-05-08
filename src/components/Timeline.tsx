@@ -7,7 +7,7 @@ export default function Timeline({
   }[];
 }) {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col w-full">
       {items.map((item, index) => (
         <div
           key={index}
