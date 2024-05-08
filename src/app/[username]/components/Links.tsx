@@ -35,12 +35,12 @@ export default function Links({ links }: { links: Link[] }) {
           key={i}
           initial={{
             scale: 1,
-            color: "#e7e5e4",
+            color: "#737373",
             rotate: "0deg",
           }}
           whileHover={{
             scale: 1.15,
-            color: "#93c5fd",
+            color: "#38bdf8",
             rotate: ["0deg", "2deg", "0deg", "-2deg", "0deg"],
           }}
           whileTap={{

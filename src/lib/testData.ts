@@ -5,8 +5,8 @@ export interface Link {
 export interface WorkExperience {
   title: string;
   company: string;
-  startDate: string;
-  endDate: string;
+  startDate: Date;
+  endDate?: Date;
   description: string;
 }
 
@@ -55,16 +55,26 @@ export const testData: User[] = [
       {
         title: "Software Engineer",
         company: "Google",
-        startDate: "2021-01-01",
-        endDate: "2021-12-31",
-        description: "I worked on the Google Search team.",
+        startDate: new Date("2018-01-01"),
+        endDate: new Date("2019-12-31"),
+        description:
+          "I worked on the Google Search team. I built the search bar. It was fun.",
       },
       {
         title: "Software Engineer",
         company: "Facebook",
-        startDate: "2020-01-01",
-        endDate: "2020-12-31",
-        description: "I worked on the Facebook Ads team.",
+        startDate: new Date("2020-01-01"),
+        endDate: new Date("2021-12-31"),
+        description:
+          "I worked on the Facebook Ads team. I built the ads. It was fun. I also built the search bar. It was fun.",
+      },
+      {
+        title: "Software Engineer",
+        company: "Amazon",
+        startDate: new Date("2022-01-01"),
+        endDate: undefined,
+        description:
+          "I worked on the Amazon Web Services team. I built the web services. It was fun. I also built the search bar. It was fun. I also built the ads. It was fun.",
       },
     ],
   },
