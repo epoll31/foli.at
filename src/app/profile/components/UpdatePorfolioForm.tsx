@@ -2,14 +2,9 @@
 
 import { updatePortfolio } from "@/app/profile/actions";
 import Trash from "@/components/icons/trash";
+import { Portfolio } from "@/lib/types";
 import { MotionProps, motion } from "framer-motion";
 import { HTMLProps, useState } from "react";
-// import {
-//   CreatePortfolioData,
-//   CreateEducationEntryData,
-//   CreateLinkData,
-//   CreateWorkEntryData,
-// } from "@/utils/supabase/actions/createPortfolio";
 
 function useKeys() {
   const [keys, setKeys] = useState<number[]>([]);
@@ -26,7 +21,11 @@ function useKeys() {
   return { keys, addKey, removeKey };
 }
 
-export default function UpdatePorfolioForm() {
+export default function UpdatePorfolioForm({
+  portfolio,
+}: {
+  portfolio: Portfolio | null;
+}) {
   const { keys: linkKeys, addKey: addLink, removeKey: removeLink } = useKeys();
   const {
     keys: educationKeys,
@@ -39,15 +38,25 @@ export default function UpdatePorfolioForm() {
     <form className="flex flex-col w-fit gap-4">
       <div className="flex flex-col">
         <label htmlFor="display_name">Name:</label>
-        <input id="display_name" name="display_name" required />
+        <input
+          id="display_name"
+          name="display_name"
+          defaultValue={portfolio?.display_name}
+          required
+        />
       </div>
       <div className="flex flex-col">
         <label htmlFor="title">Title:</label>
-        <input id="title" name="title" required />
+        <input
+          id="title"
+          name="title"
+          defaultValue={portfolio?.title}
+          required
+        />
       </div>
       <div className="flex flex-col">
         <label htmlFor="bio">Bio:</label>
-        <textarea id="bio" name="bio" required />
+        <textarea id="bio" name="bio" defaultValue={portfolio?.bio} required />
       </div>
       <div className="flex flex-col  gap-4">
         <p>Links:</p>

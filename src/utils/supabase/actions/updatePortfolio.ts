@@ -3,7 +3,10 @@
 import { Link, EducationEntry, WorkEntry, Portfolio } from "@/lib/types";
 import { createClient } from "@/utils/supabase/server";
 
-export type LinkData = Omit<Link, "id" | "portfolio_id" | "created_at">;
+export type LinkData = Omit<
+  Link,
+  "id" | "portfolio_id" | "created_at" | "user_id"
+>;
 export type EducationEntryData = Omit<
   EducationEntry,
   "id" | "portfolio_id" | "created_at"

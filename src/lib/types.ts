@@ -1,5 +1,6 @@
 export interface Portfolio {
   id: number; // int8
+  user_id: string; // uuid
   created_at: Date; // timestampz
   edited_last: Date; // timestampz
   display_name: string; // text
