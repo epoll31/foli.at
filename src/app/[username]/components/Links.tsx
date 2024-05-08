@@ -55,6 +55,9 @@ export default function Links({ links }: { links: Link[] }) {
               duration: 0.5,
               type: "keyframes",
             },
+            color: {
+              type: "tween",
+            },
           }}
         >
           {link.type === "linkedin" ? (

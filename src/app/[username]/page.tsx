@@ -1,6 +1,7 @@
 import { testData } from "@/lib/testData";
 import { RedirectType, redirect } from "next/navigation";
 import Links from "./components/Links";
+import WorkHistory from "./components/WorkHistory";
 
 export default function Page({ params }: { params: { username: string } }) {
   const user = testData.find((user) => user.username === params.username);
@@ -16,6 +17,8 @@ export default function Page({ params }: { params: { username: string } }) {
       <p className="text-sm my-4">{user.bio}</p>
 
       <Links links={user.links} />
+
+      <WorkHistory workHistory={user.workHistory} />
     </div>
   );
 }

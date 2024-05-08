@@ -2,6 +2,13 @@ export interface Link {
   href: string;
   type: "github" | "linkedin" | "twitter" | "portfolio" | "other";
 }
+export interface WorkExperience {
+  title: string;
+  company: string;
+  startDate: string;
+  endDate: string;
+  description: string;
+}
 
 export interface User {
   username: string;
@@ -11,6 +18,7 @@ export interface User {
   links: Link[];
   bio: string;
   title: string;
+  workHistory: WorkExperience[];
 }
 
 export const testData: User[] = [
@@ -43,5 +51,21 @@ export const testData: User[] = [
     ],
     bio: "I am a software engineer with a passion for learning and teaching. I love to build things and help others do the same.",
     title: "Software Engineer",
+    workHistory: [
+      {
+        title: "Software Engineer",
+        company: "Google",
+        startDate: "2021-01-01",
+        endDate: "2021-12-31",
+        description: "I worked on the Google Search team.",
+      },
+      {
+        title: "Software Engineer",
+        company: "Facebook",
+        startDate: "2020-01-01",
+        endDate: "2020-12-31",
+        description: "I worked on the Facebook Ads team.",
+      },
+    ],
   },
 ];
