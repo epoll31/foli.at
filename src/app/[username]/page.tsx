@@ -3,16 +3,28 @@ import { RedirectType, redirect } from "next/navigation";
 import Links from "./components/Links";
 import WorkHistory from "./components/WorkHistory";
 import EducationHistory from "./components/EducationHistory";
+import EditButton from "./components/EditButton";
+import { createClient } from "@/utils/supabase/server";
 
-export default function Page({ params }: { params: { username: string } }) {
+export default async function Page({
+  params,
+}: {
+  params: { username: string };
+}) {
   const user = testData.find((user) => user.username === params.username);
 
   if (!user) {
     redirect("/", RedirectType.replace);
   }
 
+  const supabase = createClient();
+  const { error } = await supabase.auth.getUser();
+  const editable = error == null;
+  console.log("error", error);
+  console.log("editable", editable);
+
   return (
-    <div className="p-20 flex flex-col items-center ">
+    <div className="flex flex-col items-center relative">
       <h2 className="text-4xl">{user.fullName}</h2>
       <p className="text-2xl">{user.title}</p>
       <p className="text-sm my-4">{user.bio}</p>
@@ -21,6 +33,8 @@ export default function Page({ params }: { params: { username: string } }) {
 
       <WorkHistory workHistory={user.workHistory} />
       <EducationHistory educationHistory={user.educationHistory} />
+
+      {editable && <EditButton />}
     </div>
   );
 }
