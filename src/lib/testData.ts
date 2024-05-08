@@ -10,6 +10,14 @@ export interface WorkExperience {
   description: string;
 }
 
+export interface EducationExperience {
+  degree: string;
+  school: string;
+  startDate: Date;
+  endDate?: Date;
+  description: string;
+}
+
 export interface User {
   username: string;
   fullName: string;
@@ -19,6 +27,7 @@ export interface User {
   bio: string;
   title: string;
   workHistory: WorkExperience[];
+  educationHistory?: EducationExperience[];
 }
 
 export const testData: User[] = [
@@ -75,6 +84,22 @@ export const testData: User[] = [
         endDate: undefined,
         description:
           "I worked on the Amazon Web Services team. I built the web services. It was fun. I also built the search bar. It was fun. I also built the ads. It was fun.",
+      },
+    ],
+    educationHistory: [
+      {
+        degree: "Bachelor of Science",
+        school: "Worcester Polytechnic Institute",
+        startDate: new Date(2020, 8),
+        endDate: new Date(2024, 5),
+        description: "I studied Computer Science and Engineering.",
+      },
+      {
+        degree: "High School Diploma",
+        school: "Calabasas High School",
+        startDate: new Date(2016, 8),
+        endDate: new Date(2020, 5),
+        description: "I studied Computer Science and Engineering.",
       },
     ],
   },
