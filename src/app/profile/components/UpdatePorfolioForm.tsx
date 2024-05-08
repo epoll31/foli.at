@@ -1,6 +1,6 @@
 "use client";
 
-import { createPortfolio } from "@/app/edit/actions";
+import { updatePortfolio } from "@/app/profile/actions";
 import Trash from "@/components/icons/trash";
 import { MotionProps, motion } from "framer-motion";
 import { HTMLProps, useState } from "react";
@@ -26,7 +26,7 @@ function useKeys() {
   return { keys, addKey, removeKey };
 }
 
-export default function EditPorfolioForm() {
+export default function UpdatePorfolioForm() {
   const { keys: linkKeys, addKey: addLink, removeKey: removeLink } = useKeys();
   const {
     keys: educationKeys,
@@ -167,7 +167,7 @@ export default function EditPorfolioForm() {
         </button>
       </div>
 
-      <button formAction={createPortfolio}>Save</button>
+      <button formAction={updatePortfolio}>Save</button>
     </form>
   );
 }

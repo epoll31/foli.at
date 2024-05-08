@@ -1,6 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 import { RedirectType, redirect } from "next/navigation";
-import EditPorfolioForm from "./components/EditPorfolioForm";
+import UpdatePorfolioForm from "./components/UpdatePorfolioForm";
 
 export default async function EditPage() {
   const supabase = createClient();
@@ -16,7 +16,7 @@ export default async function EditPage() {
     <div className="p-20 flex flex-col items-center  max-w-prose gap-10">
       <h2 className="text-4xl">Edit Your Portfolio</h2>
 
-      <EditPorfolioForm />
+      <UpdatePorfolioForm />
     </div>
   );
 }

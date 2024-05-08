@@ -3,29 +3,29 @@
 import { Link, EducationEntry, WorkEntry, Portfolio } from "@/lib/types";
 import { createClient } from "@/utils/supabase/server";
 
-export type CreateLinkData = Omit<Link, "id" | "portfolio_id" | "created_at">;
-export type CreateEducationEntryData = Omit<
+export type LinkData = Omit<Link, "id" | "portfolio_id" | "created_at">;
+export type EducationEntryData = Omit<
   EducationEntry,
   "id" | "portfolio_id" | "created_at"
 >;
-export type CreateWorkEntryData = Omit<
+export type WorkEntryData = Omit<
   WorkEntry,
   "id" | "portfolio_id" | "created_at"
 >;
 
-export type CreatePortfolioData = Omit<
+export type PortfolioData = Omit<
   Portfolio,
   "id" | "created_at" | "edited_last"
 >;
 
 export type PortfolioGroup = {
-  portfolio: CreatePortfolioData;
-  links: CreateLinkData[];
-  educationEntries: CreateEducationEntryData[];
-  workEntries: CreateWorkEntryData[];
+  portfolio: PortfolioData;
+  links: LinkData[];
+  educationEntries: EducationEntryData[];
+  workEntries: WorkEntryData[];
 };
 
-export async function createPortfolio({
+export async function updatePortfolio({
   portfolio,
   links,
   educationEntries,
