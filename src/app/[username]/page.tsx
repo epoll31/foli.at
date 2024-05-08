@@ -12,7 +12,7 @@ export default function Page({ params }: { params: { username: string } }) {
   }
 
   return (
-    <div className="p-20 flex flex-col items-center max-w-prose">
+    <div className="p-20 flex flex-col items-center ">
       <h2 className="text-4xl">{user.fullName}</h2>
       <p className="text-2xl">{user.title}</p>
       <p className="text-sm my-4">{user.bio}</p>
