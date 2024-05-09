@@ -1,14 +1,16 @@
 "use client";
 
 import { cn } from "@/utils/cn";
-import { useEffect, useRef, useState } from "react";
+import { CSSProperties, useEffect, useRef, useState } from "react";
 
 export default function GlowContainer({
   className,
   children,
+  glowColor = "#fb3b53",
 }: {
   className?: string;
   children: React.ReactNode;
+  glowColor?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const [mousePosition, setMousePosition] = useState({
@@ -39,17 +41,16 @@ export default function GlowContainer({
       ref={ref}
     >
       <span
-        className={`absolute z-0 h-44 w-44 -translate-x-1/2 -translate-y-1/2  bg-[radial-gradient(#fb3b53_0%,transparent_50%)] blur-lg`}
+        className={`absolute z-0 h-44 w-44 -translate-x-1/2 -translate-y-1/2  blur-lg`}
         style={
           {
             left: mousePosition.x,
             top: mousePosition.y,
-          } as any
+            backgroundImage: `radial-gradient(${glowColor} 0%, transparent 50%)`,
+          } as CSSProperties
         }
       ></span>
-      {/* <div className="z-10 m-[1px] rounded-full bg-white/50 backdrop-blur-sm "> */}
       {children}
-      {/* </div> */}
     </div>
   );
 }

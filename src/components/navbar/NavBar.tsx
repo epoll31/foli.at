@@ -1,5 +1,8 @@
+import Link from "next/link";
+import Home from "../icons/home";
 import LinkIcon from "../icons/link";
 import Portfolio from "../icons/portfolio";
+import User from "../icons/user";
 import GlowContainer from "./GlowContainer";
 import NavTab from "./NavTab";
 
@@ -11,7 +14,7 @@ const tabs = [
   {
     name: "Home",
     href: "/",
-    icon: <LinkIcon />,
+    icon: <Home />,
   },
   {
     name: "Portfolio",
@@ -19,22 +22,21 @@ const tabs = [
     icon: <Portfolio />,
   },
   {
-    name: "Settings",
-    href: "/settings",
-    icon: <LinkIcon />,
+    name: "Profile",
+    href: "/profile",
+    icon: <User />,
   },
 ];
 
 export default function Nav() {
   return (
-    <GlowContainer className="fixed bottom-8 shadow-xl scale-95 hover:scale-100 transition-transform">
+    <GlowContainer
+      className="fixed bottom-8 shadow-xl scale-95 hover:scale-100 transition-transform"
+      glowColor="#fb3b53"
+    >
       <nav className="rounded-full flex flex-row flex-nowrap h-fit gap-px ">
-        {tabs.map((tab, index) => (
-          <>
-            <NavTab tab={tab} />
-
-            {/* {index !== tabs.length - 1 && <Separator />} */}
-          </>
+        {tabs.map((tab) => (
+          <NavTab tab={tab} />
         ))}
       </nav>
     </GlowContainer>
