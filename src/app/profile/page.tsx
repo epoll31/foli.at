@@ -3,7 +3,7 @@ import { RedirectType, redirect } from "next/navigation";
 import UpdatePorfolioForm from "./components/UpdatePorfolioForm";
 import { loadPortfolioGroup } from "@/utils/supabase/actions/loadPortfolioGroup";
 
-export default async function EditPage() {
+export default async function ProfilePage() {
   const supabase = createClient();
 
   const { data, error } = await supabase.auth.getUser();
