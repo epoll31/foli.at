@@ -99,11 +99,18 @@ export default function UpdatePorfolioForm({
   return (
     <form className="flex flex-col w-fit gap-4">
       <div className="flex flex-col">
-        <label htmlFor="display_name">Name:</label>
+        <label htmlFor="tag">Tag:</label>
         <input
-          id="display_name"
-          name="display_name"
-          defaultValue={portfolioGroup.portfolio.display_name}
+          id="tag"
+          name="tag"
+          defaultValue={portfolioGroup.portfolio.tag}
+          required
+        />
+        <label htmlFor="full_name">Full Name:</label>
+        <input
+          id="full_name"
+          name="full_name"
+          defaultValue={portfolioGroup.portfolio.full_name}
           required
         />
       </div>

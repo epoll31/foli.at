@@ -20,7 +20,10 @@ export async function login(formData: FormData) {
     redirect("?error=login-failed");
   }
 
-  const username = data!.user.user_metadata.username as string;
-  revalidatePath(`/${username}`, "layout");
-  redirect(`/${username}`);
+  // const tag = data!.user.user_metadata.username as string;
+  // revalidatePath(`/${username}`, "layout");
+  // redirect(`/${username}`);
+
+  revalidatePath("/profile", "layout");
+  redirect("/profile");
 }

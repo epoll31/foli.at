@@ -35,7 +35,7 @@ export async function GET(request: NextRequest) {
           .from("portfolio")
           .insert({
             user_id: user!.id,
-            display_name: "",
+            full_name: "",
             title: "",
             bio: "",
           });

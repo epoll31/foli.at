@@ -1,7 +1,7 @@
 "use server";
 
 import { Link, Portfolio, PortfolioGroup } from "@/lib/types";
-import { getUsernameFromUserId } from "@/utils/supabase/actions/getUsernameFromUserId";
+import { getTagFromUserId } from "@/utils/supabase/actions/getTagFromUserId";
 import { updatePortfolio } from "@/utils/supabase/actions/updatePortfolio";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
@@ -17,7 +17,8 @@ export async function updatePortfolioFromFormData(
 
   const portfolio: Portfolio = {
     ...group.portfolio,
-    display_name: data.get("display_name") as string,
+    tag: data.get("tag") as string,
+    full_name: data.get("full_name") as string,
     title: data.get("title") as string,
     bio: data.get("bio") as string,
   };
@@ -45,13 +46,13 @@ export async function updatePortfolioFromFormData(
       return;
     }
 
-    const username = await getUsernameFromUserId(user!.id);
-    if (!username) {
+    const tag = await getTagFromUserId(user!.id);
+    if (!tag) {
       console.error("Error getting username from user ID");
       return;
     }
 
-    redirect(`${username}`);
+    redirect(`${tag}`);
   } else {
     console.error("Error updating portfolio");
   }

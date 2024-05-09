@@ -2,17 +2,17 @@
 
 import { createClient } from "@/utils/supabase/server";
 
-export async function getUserIdFromUsername(username: string) {
+export async function getUserIdFromTag(tag: string) {
   const supabase = createClient();
 
   const { data, error } = await supabase
-    .from("profile")
+    .from("portfolio")
     .select("user_id")
-    .eq("username", username)
+    .eq("tag", tag)
     .single();
 
   if (error) {
-    console.error("Error getting user ID from username:", error.message);
+    console.error("Error getting user ID from tag:", error.message);
     return undefined;
   }
 
