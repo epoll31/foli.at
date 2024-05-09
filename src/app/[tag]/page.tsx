@@ -18,9 +18,13 @@ export default async function Page({ params }: { params: { tag: string } }) {
     redirect("/", RedirectType.replace);
   }
 
-  const { error } = await supabase.auth.getUser();
-  const editable = error == null;
-  console.log("editable", editable);
+  const {
+    error,
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const isEditable = !error && user?.id === user_id;
+  console.log("editable", isEditable);
 
   return (
     <div className="flex flex-col items-center relative">
@@ -32,7 +36,7 @@ export default async function Page({ params }: { params: { tag: string } }) {
       <WorkHistory workEntries={portfolioGroup?.workEntries} />
       <EducationHistory educationEntries={portfolioGroup?.educationEntries} />
 
-      {editable && <EditButton />}
+      {isEditable && <EditButton />}
     </div>
   );
 }
