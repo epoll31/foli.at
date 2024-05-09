@@ -21,11 +21,12 @@ export interface Link {
 
 export interface EducationEntry {
   id: number; // int8
+  // TODO: add major
   school: string; // text
   degree: string; // text
   description: string; // text
   start_date: Date; // timestamptz
-  end_date: Date; // timestamptz
+  end_date: Date | null; // timestamptz
 }
 
 export interface WorkEntry {

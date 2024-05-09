@@ -7,6 +7,7 @@ import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import { parseLinks } from "./parseLinks";
 import { parseWorkEntries } from "./parseWorkEntries";
+import { parseEducationEntries } from "./parseEducationEntries";
 
 export async function updatePortfolioFromFormData(
   group: PortfolioGroup,
@@ -23,8 +24,14 @@ export async function updatePortfolioFromFormData(
 
   const links = parseLinks(data);
   const workEntries = parseWorkEntries(data);
+  const educationEntries = parseEducationEntries(data);
 
-  const result = await updatePortfolio(portfolio, links, workEntries, []);
+  const result = await updatePortfolio(
+    portfolio,
+    links,
+    workEntries,
+    educationEntries
+  );
 
   if (result) {
     const supabase = createClient();

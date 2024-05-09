@@ -1,5 +1,6 @@
 import Timeline from "@/components/Timeline";
-import { EducationExperience } from "@/lib/testData";
+import { EducationEntry } from "@/lib/types";
+import formatDate from "@/utils/formatDate";
 
 const options = {
   month: "short",
@@ -7,18 +8,18 @@ const options = {
 } as Intl.DateTimeFormatOptions;
 
 export default function WorkHistory({
-  educationHistory: unoderEdeducationHistory,
+  educationEntries: unorderedEducationHistory,
 }: {
-  educationHistory: EducationExperience[];
+  educationEntries: EducationEntry[];
 }) {
-  const educationHistory = unoderEdeducationHistory.sort((a, b) => {
-    if (!b.endDate) {
+  const educationHistory = unorderedEducationHistory.sort((a, b) => {
+    if (!b.end_date) {
       return 1;
     }
-    if (!a.endDate) {
+    if (!a.end_date) {
       return -1;
     }
-    return b.endDate.getTime() - a.endDate.getTime();
+    return b.end_date.getTime() - a.end_date.getTime();
   });
 
   return (
@@ -32,17 +33,16 @@ export default function WorkHistory({
               <div className="flex flex-wrap justify-between">
                 <p className=""> {education.degree}</p>
                 <p className="text-sm ">
-                  ({education.startDate.toLocaleDateString("en-US", options)} -{" "}
-                  {education.endDate
-                    ? education.endDate.toLocaleDateString("en-US", options)
+                  {formatDate(education.start_date)} {" - "}{" "}
+                  {education.end_date
+                    ? formatDate(education.end_date)
                     : "Present"}
-                  )
                 </p>
               </div>
               <p>{education.description}</p>
             </>
           ),
-          active: !education.endDate,
+          active: !education.end_date,
         }))}
       />
     </div>

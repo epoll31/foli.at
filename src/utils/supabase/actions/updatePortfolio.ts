@@ -7,7 +7,7 @@ export async function updatePortfolio(
   portfolio: Portfolio,
   links: NoId<Link>[],
   workEntries: NoId<WorkEntry>[],
-  educationEntries: EducationEntry[]
+  educationEntries: NoId<EducationEntry>[]
 ) {
   const supabase = createClient();
   const { data: newPortfolio, error: portfolioError } = await supabase

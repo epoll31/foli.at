@@ -39,14 +39,29 @@ export async function loadPortfolioGroup(
     return undefined;
   }
 
+  const { data: educationEntries, error: educationEntriesError } =
+    await supabase
+      .from("educationEntry")
+      .select("school, degree, start_date, end_date, id, description")
+      .eq("portfolio_id", portfolio.id);
+
+  if (educationEntriesError) {
+    console.error("Error loading education entries:", educationEntriesError);
+    return undefined;
+  }
+
   return {
     portfolio: portfolio as Portfolio,
     links: links as Link[],
-    educationEntries: [],
     workEntries: workEntries.map((entry) => ({
       ...entry,
       start_date: new Date(entry.start_date),
       end_date: entry.end_date ? new Date(entry.end_date) : null,
     })) as WorkEntry[],
+    educationEntries: educationEntries.map((entry) => ({
+      ...entry,
+      start_date: new Date(entry.start_date),
+      end_date: entry.end_date ? new Date(entry.end_date) : null,
+    })),
   };
 }

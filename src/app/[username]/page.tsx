@@ -33,8 +33,7 @@ export default async function Page({
 
       <Links links={portfolioGroup?.links} />
       <WorkHistory workEntries={portfolioGroup?.workEntries} />
-
-      {/* <EducationHistory educationHistory={user.educationHistory} /> */}
+      <EducationHistory educationEntries={portfolioGroup?.educationEntries} />
 
       {editable && <EditButton />}
     </div>
