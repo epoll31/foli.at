@@ -1,6 +1,5 @@
 "use client";
 
-import { Link } from "@/lib/testData";
 import { motion } from "framer-motion";
 import Github from "@/components/icons/github";
 import LinkedIn from "@/components/icons/linkedin";
@@ -8,8 +7,13 @@ import Portfolio from "@/components/icons/portfolio";
 import Twitter from "@/components/icons/twitter";
 import LinkIcon from "@/components/icons/link";
 import { useMemo } from "react";
+import { Link } from "@/lib/types";
 
-export default function Links({ links }: { links: Link[] }) {
+export default function Links({
+  links,
+}: {
+  links: Omit<Link, "portfolio_id" | "created_at">[];
+}) {
   const orderedLinks = useMemo(() => {
     return links.sort((a, b) => {
       if (a.type === "linkedin") return -1;
