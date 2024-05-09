@@ -33,13 +33,13 @@ export default function GlowContainer({
   return (
     <div
       className={cn(
-        "relative overflow-hidden rounded-full bg-white/50",
+        "relative overflow-hidden rounded-full bg-neutral-300 p-px",
         className
       )}
       ref={ref}
     >
       <span
-        className={`absolute z-0 h-44 w-44 -translate-x-1/2 -translate-y-1/2 bg-[radial-gradient(#fb3b53_0%,transparent_50%)] blur-lg`}
+        className={`absolute z-0 h-44 w-44 -translate-x-1/2 -translate-y-1/2  bg-[radial-gradient(#fb3b53_0%,transparent_50%)] blur-lg`}
         style={
           {
             left: mousePosition.x,
@@ -47,9 +47,9 @@ export default function GlowContainer({
           } as any
         }
       ></span>
-      <div className="relative z-10 m-[1px] rounded-full bg-white/50 backdrop-blur-sm ">
-        {children}
-      </div>
+      {/* <div className="z-10 m-[1px] rounded-full bg-white/50 backdrop-blur-sm "> */}
+      {children}
+      {/* </div> */}
     </div>
   );
 }

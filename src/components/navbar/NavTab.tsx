@@ -16,7 +16,7 @@ export default function NavTab({
 
   return (
     <motion.div
-      className="relative flex flex-row justify-center py-2 px-4 first:pl-6 last:pr-6 overflow-hidden"
+      className="relative flex flex-row justify-center items-center px-4 h-10 first:pl-6 last:pr-6 overflow-hidden bg-white/50 first:rounded-l-full last:rounded-r-full"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       variants={{
