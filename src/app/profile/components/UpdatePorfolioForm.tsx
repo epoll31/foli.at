@@ -6,19 +6,29 @@ import { PortfolioGroup } from "@/lib/types";
 import { motion } from "framer-motion";
 import { HTMLProps, useState } from "react";
 
-function useKeys(defaultKeys: number[] = []) {
-  const [keys, setKeys] = useState<number[]>([]);
-  function addKey() {
-    setKeys([
-      ...keys,
-      keys.reduce((acc, key) => (acc > key ? acc : key) + 1, 0),
+function useKeyedItems<T>(startingItems: T[] = [], defaultValue: T) {
+  const [items, setItems] = useState(
+    startingItems.map((value, index) => ({
+      key: index,
+      value: value,
+    }))
+  );
+  function addItem() {
+    setItems([
+      ...items,
+      {
+        key: items.reduce(
+          (acc, item) => (acc > item.key ? acc : item.key) + 1,
+          0
+        ),
+        value: defaultValue,
+      },
     ]);
   }
-  function removeKey(key: number) {
-    setKeys(keys.filter((k) => k !== key));
+  function removeItem(key: number) {
+    setItems(items.filter((item) => item.key !== key));
   }
-
-  return { keys, addKey, removeKey };
+  return { items: items, addItem, removeItem };
 }
 
 export default function UpdatePorfolioForm({
@@ -26,37 +36,14 @@ export default function UpdatePorfolioForm({
 }: {
   portfolioGroup: PortfolioGroup;
 }) {
-  const [links, setLinks] = useState(
-    portfolioGroup.links.map((link, index) => ({
-      key: index,
-      type: link.type,
-      href: link.href,
-    }))
-  );
-
-  function addLink() {
-    setLinks([
-      ...links,
-      {
-        key: links.reduce(
-          (acc, link) => (acc > link.key ? acc : link.key) + 1,
-          0
-        ),
-        type: "other",
-        href: "",
-      },
-    ]);
-  }
-  function removeLink(key: number) {
-    setLinks(links.filter((link) => link.key !== key));
-  }
-
   const {
-    keys: educationKeys,
-    addKey: addEducation,
-    removeKey: removeEducation,
-  } = useKeys();
-  const { keys: workKeys, addKey: addWork, removeKey: removeWork } = useKeys();
+    items: links,
+    addItem: addLink,
+    removeItem: removeLink,
+  } = useKeyedItems<{ type: string; href: string }>(portfolioGroup.links, {
+    type: "other",
+    href: "",
+  });
 
   function handleSubmit(formData: FormData) {
     updatePortfolioFromFormData(portfolioGroup, formData);
@@ -101,7 +88,7 @@ export default function UpdatePorfolioForm({
               id={`link-type-${link.key}`}
               name={`link-type-${link.key}`}
               required
-              defaultValue={link.type}
+              defaultValue={link.value.type}
             >
               <option value="github">Github</option>
               <option value="linkedin">LinkedIn</option>
@@ -113,7 +100,7 @@ export default function UpdatePorfolioForm({
             <input
               id={`link-href-${link.key}`}
               name={`link-href-${link.key}`}
-              defaultValue={link.href}
+              defaultValue={link.value.href}
               type="url"
               required
             />
@@ -124,7 +111,7 @@ export default function UpdatePorfolioForm({
           Add Link
         </button>
       </div>
-      <div className="flex flex-col gap-4">
+      {/* <div className="flex flex-col gap-4">
         <p>Work:</p>
         {workKeys.map((key, index) => (
           <div key={key} className="flex flex-col relative">
@@ -215,7 +202,7 @@ export default function UpdatePorfolioForm({
         >
           Add Education
         </button>
-      </div>
+      </div> */}
 
       <button formAction={handleSubmit}>Save</button>
     </form>
