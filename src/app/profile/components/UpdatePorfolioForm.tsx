@@ -26,14 +26,6 @@ export default function UpdatePorfolioForm({
 }: {
   portfolioGroup: PortfolioGroup;
 }) {
-  // const linkInitialIds = portfolioGroup.links.map((link) => link.id);
-  // console.log(linkInitialIds);
-  // const {
-  //   keys: linkKeys,
-  //   addKey: addLink,
-  //   removeKey: removeLink,
-  // } = useKeys(linkInitialIds);
-
   const [links, setLinks] = useState(
     portfolioGroup.links.map((link, index) => ({
       key: index,

@@ -36,6 +36,7 @@ export default function Links({
     <div className="flex flex-row gap-2">
       {orderedLinks.map((link, i) => (
         <motion.a
+          // href={link.href} // TODO: add href to link
           key={i}
           initial={{
             scale: 1,
