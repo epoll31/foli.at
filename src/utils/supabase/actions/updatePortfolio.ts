@@ -1,11 +1,11 @@
 "use server";
 
-import { EducationEntry, Link, Portfolio, WorkEntry } from "@/lib/types";
+import { EducationEntry, Link, NoId, Portfolio, WorkEntry } from "@/lib/types";
 import { createClient } from "@/utils/supabase/server";
 
 export async function updatePortfolio(
   portfolio: Portfolio,
-  links: Omit<Link, "id">[],
+  links: NoId<Link>[],
   educationEntries: EducationEntry[],
   workEntries: WorkEntry[]
 ) {

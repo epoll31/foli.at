@@ -44,18 +44,23 @@ export default function UpdatePorfolioForm({
     type: "other",
     href: "",
   });
-  // const {
-  //   items: workKeys,
-  //   addItem: addWork,
-  //   removeItem: removeWork,
-  // } = useKeyedItems <
-  // Omit<WorkEntry, "start_date" | "end_date">(portfolioGroup.workEntries, {
-  //   title: "",
-  //   company: "",
-  //   description: "",
-  //   start_date: "",
-  //   end_date: "",
-  // });
+  const {
+    items: workKeys,
+    addItem: addWork,
+    removeItem: removeWork,
+  } = useKeyedItems<{
+    title: string;
+    company: string;
+    description: string;
+    start_date: Date | undefined;
+    end_date: Date | undefined;
+  }>(portfolioGroup.workEntries, {
+    title: "",
+    company: "",
+    description: "",
+    start_date: undefined,
+    end_date: undefined,
+  });
 
   function handleSubmit(formData: FormData) {
     updatePortfolioFromFormData(portfolioGroup, formData);

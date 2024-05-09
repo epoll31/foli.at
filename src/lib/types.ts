@@ -1,3 +1,5 @@
+export type NoId<T> = Omit<T, "id">;
+
 export interface Portfolio {
   id: number; // int8
   display_name: string; // text

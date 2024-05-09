@@ -1,11 +1,9 @@
 "use server";
-import { Link, LinkType } from "@/lib/types";
+import { Link, LinkType, NoId } from "@/lib/types";
 
-type LinkNoId = Omit<Link, "id">;
-
-export function parseLinksFromFormData(formData: FormData): LinkNoId[] {
-  const links: LinkNoId[] = [];
-  const linkMap: Map<number, Partial<LinkNoId>> = new Map();
+export function parseLinksFromFormData(formData: FormData): NoId<Link>[] {
+  const links: NoId<Link>[] = [];
+  const linkMap: Map<number, Partial<NoId<Link>>> = new Map();
 
   // Process each key-value pair in the form data
   formData.forEach((value, key) => {
