@@ -2,7 +2,7 @@
 
 import { updatePortfolioFromFormData } from "@/app/profile/utils/actions";
 import Trash from "@/components/icons/trash";
-import { PortfolioGroup } from "@/lib/types";
+import { NoId, PortfolioGroup, WorkEntry } from "@/lib/types";
 import { motion } from "framer-motion";
 import { HTMLProps, useState } from "react";
 
@@ -31,6 +31,11 @@ function useKeyedItems<T>(startingItems: T[] = [], defaultValue: T) {
   return { items: items, addItem, removeItem };
 }
 
+type PartialWorkEntry = Omit<NoId<WorkEntry>, "start_date" | "end_date"> & {
+  start_date: Date | undefined;
+  end_date: Date | undefined;
+};
+
 export default function UpdatePorfolioForm({
   portfolioGroup,
 }: {
@@ -48,23 +53,27 @@ export default function UpdatePorfolioForm({
     items: workKeys,
     addItem: addWork,
     removeItem: removeWork,
-  } = useKeyedItems<{
-    title: string;
-    company: string;
-    description: string;
-    start_date: Date | undefined;
-    end_date: Date | undefined;
-  }>(portfolioGroup.workEntries, {
-    title: "",
-    company: "",
-    description: "",
-    start_date: undefined,
-    end_date: undefined,
-  });
+  } = useKeyedItems<PartialWorkEntry>(
+    portfolioGroup.workEntries.map((entry) => ({
+      ...entry,
+      end_date: entry.end_date ? entry.end_date : undefined,
+    })),
+    {
+      title: "",
+      company: "",
+      description: "",
+      start_date: undefined,
+      end_date: undefined,
+    }
+  );
 
   function handleSubmit(formData: FormData) {
     updatePortfolioFromFormData(portfolioGroup, formData);
   }
+
+  workKeys.forEach((item) => {
+    console.log(item.value.start_date?.toISOString());
+  });
 
   return (
     <form className="flex flex-col w-fit gap-4">
@@ -128,51 +137,61 @@ export default function UpdatePorfolioForm({
           Add Link
         </button>
       </div>
-      {/* <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4">
         <p>Work:</p>
-        {workKeys.map((key, index) => (
-          <div key={key} className="flex flex-col relative">
+        {workKeys.map((item, index) => (
+          <div key={item.key} className="flex flex-col relative">
             <p className="text-center">Work {index + 1}</p>
-            <label htmlFor={`work-title-${key}`}>Title:</label>
+            <label htmlFor={`work-title-${item.key}`}>Title:</label>
             <input
-              id={`work-title-${key}`}
-              name={`work-title-${key}`}
+              id={`work-title-${item.key}`}
+              name={`work-title-${item.key}`}
+              defaultValue={item.value.title}
               required
             />
-            <label htmlFor={`work-company-${key}`}>Company:</label>
+            <label htmlFor={`work-company-${item.key}`}>Company:</label>
             <input
-              id={`work-company-${key}`}
-              name={`work-company-${key}`}
+              id={`work-company-${item.key}`}
+              name={`work-company-${item.key}`}
+              defaultValue={item.value.company}
               required
             />
-            <label htmlFor={`work-description-${key}`}>Description:</label>
+            <label htmlFor={`work-description-${item.key}`}>Description:</label>
             <textarea
-              id={`work-description-${key}`}
-              name={`work-description-${key}`}
+              id={`work-description-${item.key}`}
+              name={`work-description-${item.key}`}
+              defaultValue={item.value.description}
               required
             />
-            <label htmlFor={`work-start_date-${key}`}>Start Date:</label>
+            <label htmlFor={`work-start_date-${item.key}`}>Start Date:</label>
             <input
-              id={`work-start_date-${key}`}
-              name={`work-start_date-${key}`}
+              id={`work-start_date-${item.key}`}
+              name={`work-start_date-${item.key}`}
               type="month"
+              defaultValue={
+                item.value.start_date &&
+                item.value.start_date.toISOString().slice(0, 7)
+              }
               required
             />
-            <label htmlFor={`work-end_date-${key}`}>End Date:</label>
+            <label htmlFor={`work-end_date-${item.key}`}>End Date:</label>
             <input
-              id={`work-end_date-${key}`}
-              name={`work-end_date-${key}`}
+              id={`work-end_date-${item.key}`}
+              name={`work-end_date-${item.key}`}
               type="month"
-              required
+              defaultValue={
+                item.value.end_date &&
+                item.value.end_date.toISOString().slice(0, 7)
+              }
             />
-            <TrashButton onClick={() => removeWork(key)} />
+            <TrashButton onClick={() => removeWork(item.key)} />
           </div>
         ))}
         <button type="button" onClick={addWork} className="w-full text-center">
           Add Work
         </button>
       </div>
-      <div className="flex flex-col gap-4">
+      {/* <div className="flex flex-col gap-4">
         <p>Education:</p>
         {educationKeys.map((key, index) => (
           <div key={key} className="flex flex-col relative">

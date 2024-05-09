@@ -5,13 +5,14 @@ import { getUsernameFromUserId } from "@/utils/supabase/actions/getUsernameFromU
 import { updatePortfolio } from "@/utils/supabase/actions/updatePortfolio";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
-import { parseLinksFromFormData } from "./parseLinksFromFormData";
+import { parseLinks } from "./parseLinks";
+import { parseWorkEntries } from "./parseWorkEntries";
 
 export async function updatePortfolioFromFormData(
   group: PortfolioGroup,
   data: FormData
 ) {
-  // console.log("form data", data);
+  console.log("form data", data);
 
   const portfolio: Portfolio = {
     ...group.portfolio,
@@ -20,11 +21,10 @@ export async function updatePortfolioFromFormData(
     bio: data.get("bio") as string,
   };
 
-  const links = parseLinksFromFormData(data);
+  const links = parseLinks(data);
+  const workEntries = parseWorkEntries(data);
 
-  // console.log("links", links);
-
-  const result = await updatePortfolio(portfolio, links, [], []);
+  const result = await updatePortfolio(portfolio, links, workEntries, []);
 
   if (result) {
     const supabase = createClient();

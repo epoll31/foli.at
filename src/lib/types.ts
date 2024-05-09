@@ -34,7 +34,7 @@ export interface WorkEntry {
   company: string; // text
   description: string; // text
   start_date: Date; // timestamptz
-  end_date: Date; // timestamptz
+  end_date: Date | null; // timestamptz
 }
 
 export interface PortfolioGroup {

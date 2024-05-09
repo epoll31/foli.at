@@ -6,8 +6,8 @@ import { createClient } from "@/utils/supabase/server";
 export async function updatePortfolio(
   portfolio: Portfolio,
   links: NoId<Link>[],
-  educationEntries: EducationEntry[],
-  workEntries: WorkEntry[]
+  workEntries: NoId<WorkEntry>[],
+  educationEntries: EducationEntry[]
 ) {
   const supabase = createClient();
   const { data: newPortfolio, error: portfolioError } = await supabase
@@ -64,11 +64,9 @@ export async function updatePortfolio(
     }
   }
 
-  console.log("links", links);
-
   await updateRelatedItems("link", links);
-  await updateRelatedItems("educationEntry", educationEntries);
   await updateRelatedItems("workEntry", workEntries);
+  await updateRelatedItems("educationEntry", educationEntries);
 
   return newPortfolio; // Return the created portfolio
 }

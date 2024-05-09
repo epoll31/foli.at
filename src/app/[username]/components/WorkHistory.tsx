@@ -1,24 +1,20 @@
 import Timeline from "@/components/Timeline";
-import { WorkExperience } from "@/lib/testData";
-
-const options = {
-  month: "short",
-  year: "numeric",
-} as Intl.DateTimeFormatOptions;
+import { WorkEntry } from "@/lib/types";
+import formatDate from "@/utils/formatDate";
 
 export default function WorkHistory({
-  workHistory: unoderedWorkHistory,
+  workEntries: unoderedWorkHistory,
 }: {
-  workHistory: WorkExperience[];
+  workEntries: WorkEntry[];
 }) {
   const workHistory = unoderedWorkHistory.sort((a, b) => {
-    if (!b.endDate) {
+    if (!b.end_date) {
       return 1;
     }
-    if (!a.endDate) {
+    if (!a.end_date) {
       return -1;
     }
-    return b.endDate.getTime() - a.endDate.getTime();
+    return b.end_date.getTime() - a.end_date.getTime();
   });
 
   return (
@@ -31,18 +27,16 @@ export default function WorkHistory({
               <h4 className="text-xl font-semibold">{work.title}</h4>
               <div className="flex flex-wrap justify-between">
                 <p className=""> {work.company}</p>
-                <p className="text-sm ">
-                  ({work.startDate.toLocaleDateString("en-US", options)} -{" "}
-                  {work.endDate
-                    ? work.endDate.toLocaleDateString("en-US", options)
-                    : "Present"}
-                  )
+                <p className="text-sm">
+                  {formatDate(work.start_date)}
+                  {" - "}
+                  {work.end_date ? formatDate(work.end_date) : "Present"}
                 </p>
               </div>
               <p>{work.description}</p>
             </>
           ),
-          active: !work.endDate,
+          active: !work.end_date,
         }))}
       />
     </div>

@@ -1,7 +1,6 @@
-"use server";
 import { Link, LinkType, NoId } from "@/lib/types";
 
-export function parseLinksFromFormData(formData: FormData): NoId<Link>[] {
+export function parseLinks(formData: FormData): NoId<Link>[] {
   const links: NoId<Link>[] = [];
   const linkMap: Map<number, Partial<NoId<Link>>> = new Map();
 

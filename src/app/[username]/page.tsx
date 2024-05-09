@@ -32,9 +32,9 @@ export default async function Page({
       <p className="text-sm my-4">{portfolioGroup.portfolio.bio}</p>
 
       <Links links={portfolioGroup?.links} />
+      <WorkHistory workEntries={portfolioGroup?.workEntries} />
 
-      {/* <WorkHistory workHistory={user.workHistory} />
-      <EducationHistory educationHistory={user.educationHistory} /> */}
+      {/* <EducationHistory educationHistory={user.educationHistory} /> */}
 
       {editable && <EditButton />}
     </div>

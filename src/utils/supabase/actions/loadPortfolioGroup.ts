@@ -1,6 +1,6 @@
 "use server";
 
-import { Link, Portfolio, PortfolioGroup } from "@/lib/types";
+import { Link, Portfolio, PortfolioGroup, WorkEntry } from "@/lib/types";
 import { createClient } from "@/utils/supabase/server";
 
 export async function loadPortfolioGroup(
@@ -29,10 +29,24 @@ export async function loadPortfolioGroup(
     return undefined;
   }
 
+  const { data: workEntries, error: workEntriesError } = await supabase
+    .from("workEntry")
+    .select("title, company, start_date, end_date, id, description")
+    .eq("portfolio_id", portfolio.id);
+
+  if (workEntriesError) {
+    console.error("Error loading work entries:", workEntriesError.message);
+    return undefined;
+  }
+
   return {
     portfolio: portfolio as Portfolio,
     links: links as Link[],
     educationEntries: [],
-    workEntries: [],
+    workEntries: workEntries.map((entry) => ({
+      ...entry,
+      start_date: new Date(entry.start_date),
+      end_date: entry.end_date ? new Date(entry.end_date) : null,
+    })) as WorkEntry[],
   };
 }
