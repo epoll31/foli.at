@@ -1,6 +1,6 @@
 "use client";
 
-import { updatePortfolioFromFormData } from "@/app/profile/actions";
+import { updatePortfolioFromFormData } from "@/app/profile/utils/actions";
 import Trash from "@/components/icons/trash";
 import { PortfolioGroup } from "@/lib/types";
 import { motion } from "framer-motion";
