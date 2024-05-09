@@ -10,7 +10,19 @@ export default async function EditPage() {
 
   if (error) {
     console.error("Error loading user:", error.message);
-    redirect("/", RedirectType.replace);
+    redirect("/login", RedirectType.replace);
+  }
+
+  const verified = data!.user.email_confirmed_at !== null;
+
+  if (!verified) {
+    return (
+      <div className="p-20 flex flex-col items-center  max-w-prose gap-10">
+        <h2 className="text-4xl">
+          Please check your email for a confirmation message.
+        </h2>
+      </div>
+    );
   }
 
   const user_id = data!.user.id as string;
