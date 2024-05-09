@@ -44,6 +44,18 @@ export default function UpdatePorfolioForm({
     type: "other",
     href: "",
   });
+  // const {
+  //   items: workKeys,
+  //   addItem: addWork,
+  //   removeItem: removeWork,
+  // } = useKeyedItems <
+  // Omit<WorkEntry, "start_date" | "end_date">(portfolioGroup.workEntries, {
+  //   title: "",
+  //   company: "",
+  //   description: "",
+  //   start_date: "",
+  //   end_date: "",
+  // });
 
   function handleSubmit(formData: FormData) {
     updatePortfolioFromFormData(portfolioGroup, formData);

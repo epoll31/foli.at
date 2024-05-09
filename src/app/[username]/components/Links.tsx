@@ -9,11 +9,7 @@ import LinkIcon from "@/components/icons/link";
 import { useMemo } from "react";
 import { Link } from "@/lib/types";
 
-export default function Links({
-  links,
-}: {
-  links: Omit<Link, "portfolio_id" | "created_at">[];
-}) {
+export default function Links({ links }: { links: Link[] }) {
   const orderedLinks = useMemo(() => {
     return links.sort((a, b) => {
       if (a.type === "linkedin") return -1;

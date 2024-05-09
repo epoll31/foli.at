@@ -31,7 +31,7 @@ export async function loadPortfolioGroup(
 
   return {
     portfolio: portfolio as Portfolio,
-    links: links as Omit<Link, "portfolio_id" | "created_at">[],
+    links: links as Link[],
     educationEntries: [],
     workEntries: [],
   };

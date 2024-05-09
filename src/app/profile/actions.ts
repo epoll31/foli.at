@@ -6,11 +6,10 @@ import { updatePortfolio } from "@/utils/supabase/actions/updatePortfolio";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 
-function parseLinksFromFormData(
-  formData: FormData
-): Omit<Link, "id" | "portfolio_id" | "created_at">[] {
-  const links: Omit<Link, "id" | "portfolio_id" | "created_at">[] = [];
-  const linkMap: Map<number, { type?: string; href?: string }> = new Map();
+type LinkNoId = Omit<Link, "id">;
+function parseLinksFromFormData(formData: FormData): LinkNoId[] {
+  const links: LinkNoId[] = [];
+  const linkMap: Map<number, Partial<LinkNoId>> = new Map();
 
   // Process each key-value pair in the form data
   formData.forEach((value, key) => {
@@ -26,7 +25,7 @@ function parseLinksFromFormData(
 
       // Set the type or link based on the key
       if (dataType === "type") {
-        linkMap.get(index)!.type = value as string;
+        linkMap.get(index)!.type = value as LinkType;
       } else if (dataType === "href") {
         linkMap.get(index)!.href = value as string;
       }
@@ -37,8 +36,8 @@ function parseLinksFromFormData(
   linkMap.forEach((value, key) => {
     if (value.type && value.href) {
       links.push({
-        type: value.type as LinkType,
-        href: value.href as string,
+        type: value.type!,
+        href: value.href!,
       });
     }
   });
