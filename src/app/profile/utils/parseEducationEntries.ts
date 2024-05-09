@@ -12,7 +12,7 @@ export function parseEducationEntries(
   // Process each key-value pair in the form data
   formData.forEach((value, key) => {
     const match = key.match(
-      /^education-(school|degree|description|start_date|end_date)-(\d+)$/
+      /^education-(school|degree|major|description|start_date|end_date)-(\d+)$/
     );
     if (match) {
       const [_, dataType, indexStr] = match;
@@ -28,6 +28,9 @@ export function parseEducationEntries(
         educationEntryMap.get(index)!.school = value as string;
       } else if (dataType === "degree") {
         educationEntryMap.get(index)!.degree = value as string;
+      } else if (dataType === "major") {
+        educationEntryMap.get(index)!.major =
+          value === "" ? null : (value as string);
       } else if (dataType === "description") {
         educationEntryMap.get(index)!.description = value as string;
       } else if (dataType === "start_date") {
@@ -45,9 +48,10 @@ export function parseEducationEntries(
       educationEntries.push({
         school: value.school!,
         degree: value.degree!,
+        major: value.major || null,
         description: value.description!,
         start_date: value.start_date!,
-        end_date: value.end_date!,
+        end_date: value.end_date || null,
       });
     }
   });

@@ -42,7 +42,7 @@ export async function loadPortfolioGroup(
   const { data: educationEntries, error: educationEntriesError } =
     await supabase
       .from("educationEntry")
-      .select("school, degree, start_date, end_date, id, description")
+      .select("school, degree, major, start_date, end_date, id, description")
       .eq("portfolio_id", portfolio.id);
 
   if (educationEntriesError) {

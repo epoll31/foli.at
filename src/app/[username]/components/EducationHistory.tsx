@@ -31,7 +31,15 @@ export default function WorkHistory({
             <>
               <h4 className="text-xl font-semibold">{education.school}</h4>
               <div className="flex flex-wrap justify-between">
-                <p className=""> {education.degree}</p>
+                <p className="">
+                  {education.degree}
+                  {education.major && (
+                    <span>
+                      <span className="px-3">&bull;</span>
+                      <span className="">{education.major}</span>
+                    </span>
+                  )}
+                </p>
                 <p className="text-sm ">
                   {formatDate(education.start_date)} {" - "}{" "}
                   {education.end_date

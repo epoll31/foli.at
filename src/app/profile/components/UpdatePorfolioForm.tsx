@@ -85,6 +85,7 @@ export default function UpdatePorfolioForm({
     {
       school: "",
       degree: "",
+      major: "",
       description: "",
       start_date: undefined,
       end_date: undefined,
@@ -229,6 +230,12 @@ export default function UpdatePorfolioForm({
               name={`education-degree-${item.key}`}
               defaultValue={item.value.degree}
               required
+            />
+            <label htmlFor={`education-major-${item.key}`}>Major:</label>
+            <input
+              id={`education-major-${item.key}`}
+              name={`education-major-${item.key}`}
+              defaultValue={item.value.major || ""}
             />
             <label htmlFor={`education-description-${item.key}`}>
               Description:
