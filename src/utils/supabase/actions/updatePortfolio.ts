@@ -1,14 +1,20 @@
 "use server";
 
-import { PortfolioGroup } from "@/lib/types";
+import {
+  EducationEntry,
+  Link,
+  Portfolio,
+  PortfolioGroup,
+  WorkEntry,
+} from "@/lib/types";
 import { createClient } from "@/utils/supabase/server";
 
-export async function updatePortfolio({
-  portfolio,
-  links,
-  educationEntries,
-  workEntries,
-}: PortfolioGroup) {
+export async function updatePortfolio(
+  portfolio: Portfolio,
+  links: Omit<Link, "id" | "portfolio_id" | "created_at">[],
+  educationEntries: EducationEntry[],
+  workEntries: WorkEntry[]
+) {
   const supabase = createClient();
   const { data: newPortfolio, error: portfolioError } = await supabase
     .from("portfolio")
@@ -29,11 +35,28 @@ export async function updatePortfolio({
   const portfolioId = newPortfolio.id;
 
   // Helper function to insert related items
-  async function insertRelatedItems<T>(
-    table: string,
-    items: T[],
-    portfolioId: number
-  ) {
+  async function updateRelatedItems<T>(table: string, items: T[]) {
+    const { data: existingItems, error: existingItemsError } = await supabase
+      .from(table)
+      .select()
+      .eq("portfolio_id", portfolioId);
+
+    if (existingItemsError) {
+      console.error(`Error fetching existing ${table}s:`, existingItemsError);
+      return;
+    }
+
+    // Delete existing items
+    if (existingItems && existingItems.length > 0) {
+      const { error } = await supabase
+        .from(table)
+        .delete()
+        .eq("portfolio_id", portfolioId);
+      if (error) {
+        console.error(`Error deleting existing ${table}s:`, error.message);
+      }
+    }
+
     if (items && items.length > 0) {
       const itemsWithPortfolioId = items.map((item) => ({
         ...item,
@@ -47,14 +70,11 @@ export async function updatePortfolio({
     }
   }
 
-  // Insert Links
-  await insertRelatedItems("Link", links, portfolioId);
+  console.log("links", links);
 
-  // Insert Education Entries
-  await insertRelatedItems("EducationEntry", educationEntries, portfolioId);
-
-  // Insert Work Entries
-  await insertRelatedItems("WorkEntry", workEntries, portfolioId);
+  await updateRelatedItems("link", links);
+  await updateRelatedItems("educationEntry", educationEntries);
+  await updateRelatedItems("workEntry", workEntries);
 
   return newPortfolio; // Return the created portfolio
 }

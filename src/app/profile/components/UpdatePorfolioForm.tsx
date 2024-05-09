@@ -6,7 +6,7 @@ import { PortfolioGroup } from "@/lib/types";
 import { motion } from "framer-motion";
 import { HTMLProps, useState } from "react";
 
-function useKeys() {
+function useKeys(defaultKeys: number[] = []) {
   const [keys, setKeys] = useState<number[]>([]);
   function addKey() {
     setKeys([
@@ -26,7 +26,39 @@ export default function UpdatePorfolioForm({
 }: {
   portfolioGroup: PortfolioGroup;
 }) {
-  const { keys: linkKeys, addKey: addLink, removeKey: removeLink } = useKeys();
+  // const linkInitialIds = portfolioGroup.links.map((link) => link.id);
+  // console.log(linkInitialIds);
+  // const {
+  //   keys: linkKeys,
+  //   addKey: addLink,
+  //   removeKey: removeLink,
+  // } = useKeys(linkInitialIds);
+
+  const [links, setLinks] = useState(
+    portfolioGroup.links.map((link, index) => ({
+      key: index,
+      type: link.type,
+      href: link.href,
+    }))
+  );
+
+  function addLink() {
+    setLinks([
+      ...links,
+      {
+        key: links.reduce(
+          (acc, link) => (acc > link.key ? acc : link.key) + 1,
+          0
+        ),
+        type: "other",
+        href: "",
+      },
+    ]);
+  }
+  function removeLink(key: number) {
+    setLinks(links.filter((link) => link.key !== key));
+  }
+
   const {
     keys: educationKeys,
     addKey: addEducation,
@@ -69,23 +101,31 @@ export default function UpdatePorfolioForm({
       </div>
       <div className="flex flex-col  gap-4">
         <p>Links:</p>
-        {linkKeys.map((key, index) => (
-          <div key={key} className="flex flex-col relative ">
+        {links.map((link, index) => (
+          <div key={link.key} className="flex flex-col relative ">
             <p className="text-center">Link {index + 1}</p>
-            <label htmlFor={`link-type-${key}`}>Type:</label>
-            <input
-              id={`link-ntypeame-${key}`}
-              name={`link-type-${key}`}
+            <label htmlFor={`link-type-${link.key}`}>Type:</label>
+            <select
+              id={`link-type-${link.key}`}
+              name={`link-type-${link.key}`}
               required
-            />
-            <label htmlFor={`link-link-${key}`}>Link:</label>
+              defaultValue={link.type}
+            >
+              <option value="github">Github</option>
+              <option value="linkedin">LinkedIn</option>
+              <option value="twitter">Twitter</option>
+              <option value="portfolio">Portfolio</option>
+              <option value="other">Other</option>
+            </select>
+            <label htmlFor={`link-href-${link.key}`}>Link:</label>
             <input
-              id={`link-${key}`}
-              name={`link-${key}`}
+              id={`link-href-${link.key}`}
+              name={`link-href-${link.key}`}
+              defaultValue={link.href}
               type="url"
               required
             />
-            <TrashButton onClick={() => removeLink(key)} />
+            <TrashButton onClick={() => removeLink(link.key)} />
           </div>
         ))}
         <button type="button" onClick={addLink} className="w-full text-center">

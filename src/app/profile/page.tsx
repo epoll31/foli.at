@@ -32,7 +32,7 @@ export default async function EditPage() {
     <div className="p-20 flex flex-col items-center  max-w-prose gap-10">
       <h2 className="text-4xl">Edit Your Portfolio</h2>
 
-      <UpdatePorfolioForm portfolioGroup={portfolioGroup} />
+      {portfolioGroup && <UpdatePorfolioForm portfolioGroup={portfolioGroup} />}
     </div>
   );
 }

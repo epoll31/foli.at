@@ -1,6 +1,5 @@
 export interface Portfolio {
   id: number; // int8
-  user_id: string; // uuid
   created_at: Date; // timestampz
   edited_last: Date; // timestampz
   display_name: string; // text
@@ -8,12 +7,18 @@ export interface Portfolio {
   title: string; // text
 }
 
+export type LinkType =
+  | "github"
+  | "linkedin"
+  | "twitter"
+  | "portfolio"
+  | "other";
 export interface Link {
   id: number; // int8
   portfolio_id: number; // int8
   created_at: Date; // timestampz
   href: string; // text
-  type: "github" | "linkedin" | "twitter" | "portfolio" | "other"; // text
+  type: LinkType; // text
 }
 
 export interface EducationEntry {
@@ -40,7 +45,7 @@ export interface WorkEntry {
 
 export interface PortfolioGroup {
   portfolio: Portfolio;
-  links: Link[];
+  links: Omit<Link, "portfolio_id" | "created_at">[];
   educationEntries: EducationEntry[];
   workEntries: WorkEntry[];
 }
