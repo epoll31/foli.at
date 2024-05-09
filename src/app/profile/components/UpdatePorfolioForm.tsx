@@ -1,9 +1,9 @@
 "use client";
 
-import { updatePortfolio } from "@/app/profile/actions";
+import { updatePortfolioFromFormData } from "@/app/profile/actions";
 import Trash from "@/components/icons/trash";
-import { Portfolio } from "@/lib/types";
-import { MotionProps, motion } from "framer-motion";
+import { PortfolioGroup } from "@/lib/types";
+import { motion } from "framer-motion";
 import { HTMLProps, useState } from "react";
 
 function useKeys() {
@@ -22,9 +22,9 @@ function useKeys() {
 }
 
 export default function UpdatePorfolioForm({
-  portfolio,
+  portfolioGroup,
 }: {
-  portfolio: Portfolio | null;
+  portfolioGroup: PortfolioGroup;
 }) {
   const { keys: linkKeys, addKey: addLink, removeKey: removeLink } = useKeys();
   const {
@@ -34,6 +34,10 @@ export default function UpdatePorfolioForm({
   } = useKeys();
   const { keys: workKeys, addKey: addWork, removeKey: removeWork } = useKeys();
 
+  function handleSubmit(formData: FormData) {
+    updatePortfolioFromFormData(portfolioGroup, formData);
+  }
+
   return (
     <form className="flex flex-col w-fit gap-4">
       <div className="flex flex-col">
@@ -41,7 +45,7 @@ export default function UpdatePorfolioForm({
         <input
           id="display_name"
           name="display_name"
-          defaultValue={portfolio?.display_name}
+          defaultValue={portfolioGroup.portfolio.display_name}
           required
         />
       </div>
@@ -50,13 +54,18 @@ export default function UpdatePorfolioForm({
         <input
           id="title"
           name="title"
-          defaultValue={portfolio?.title}
+          defaultValue={portfolioGroup.portfolio.title}
           required
         />
       </div>
       <div className="flex flex-col">
         <label htmlFor="bio">Bio:</label>
-        <textarea id="bio" name="bio" defaultValue={portfolio?.bio} required />
+        <textarea
+          id="bio"
+          name="bio"
+          defaultValue={portfolioGroup.portfolio.bio}
+          required
+        />
       </div>
       <div className="flex flex-col  gap-4">
         <p>Links:</p>
@@ -176,7 +185,7 @@ export default function UpdatePorfolioForm({
         </button>
       </div>
 
-      <button formAction={updatePortfolio}>Save</button>
+      <button formAction={handleSubmit}>Save</button>
     </form>
   );
 }

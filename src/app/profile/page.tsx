@@ -1,7 +1,7 @@
 import { createClient } from "@/utils/supabase/server";
 import { RedirectType, redirect } from "next/navigation";
 import UpdatePorfolioForm from "./components/UpdatePorfolioForm";
-import { loadPortfolio } from "@/utils/supabase/actions/loadPortfolio";
+import { loadPortfolioGroup } from "@/utils/supabase/actions/loadPortfolioGroup";
 
 export default async function EditPage() {
   const supabase = createClient();
@@ -14,14 +14,13 @@ export default async function EditPage() {
   }
 
   const user_id = data!.user.id as string;
-  const portfolio = await loadPortfolio(user_id);
-  // console.log("portfolio", portfolio);
+  const portfolioGroup = await loadPortfolioGroup(user_id);
 
   return (
     <div className="p-20 flex flex-col items-center  max-w-prose gap-10">
       <h2 className="text-4xl">Edit Your Portfolio</h2>
 
-      <UpdatePorfolioForm portfolio={portfolio} />
+      <UpdatePorfolioForm portfolioGroup={portfolioGroup} />
     </div>
   );
 }

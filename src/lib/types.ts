@@ -37,3 +37,10 @@ export interface WorkEntry {
   start_date: Date; // timestamptz
   end_date: Date; // timestamptz
 }
+
+export interface PortfolioGroup {
+  portfolio: Portfolio;
+  links: Link[];
+  educationEntries: EducationEntry[];
+  workEntries: WorkEntry[];
+}

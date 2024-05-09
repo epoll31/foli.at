@@ -1,32 +1,7 @@
 "use server";
 
-import { Link, EducationEntry, WorkEntry, Portfolio } from "@/lib/types";
+import { PortfolioGroup } from "@/lib/types";
 import { createClient } from "@/utils/supabase/server";
-
-export type LinkData = Omit<
-  Link,
-  "id" | "portfolio_id" | "created_at" | "user_id"
->;
-export type EducationEntryData = Omit<
-  EducationEntry,
-  "id" | "portfolio_id" | "created_at"
->;
-export type WorkEntryData = Omit<
-  WorkEntry,
-  "id" | "portfolio_id" | "created_at"
->;
-
-export type PortfolioData = Omit<
-  Portfolio,
-  "id" | "created_at" | "edited_last"
->;
-
-export type PortfolioGroup = {
-  portfolio: PortfolioData;
-  links: LinkData[];
-  educationEntries: EducationEntryData[];
-  workEntries: WorkEntryData[];
-};
 
 export async function updatePortfolio({
   portfolio,
@@ -37,7 +12,11 @@ export async function updatePortfolio({
   const supabase = createClient();
   const { data: newPortfolio, error: portfolioError } = await supabase
     .from("portfolio")
-    .insert([portfolio])
+    .update({
+      ...portfolio,
+      edited_last: new Date(),
+    })
+    .eq("id", portfolio.id)
     .select()
     .single();
 
