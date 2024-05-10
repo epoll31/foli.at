@@ -7,10 +7,12 @@ export default function GlowContainer({
   className,
   children,
   glowColor = "#fb3b53",
+  padding = "1px",
 }: {
   className?: string;
   children: React.ReactNode;
   glowColor?: string;
+  padding?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const [mousePosition, setMousePosition] = useState({
@@ -35,13 +37,14 @@ export default function GlowContainer({
   return (
     <div
       className={cn(
-        "relative overflow-hidden rounded-full bg-neutral-300 p-px",
+        "relative overflow-hidden rounded-full bg-neutral-300",
         className
       )}
+      style={{ padding }}
       ref={ref}
     >
       <span
-        className={`absolute z-0 h-44 w-44 -translate-x-1/2 -translate-y-1/2  blur-lg`}
+        className={`absolute h-44 w-44 -translate-x-1/2 -translate-y-1/2  blur-lg pointer-events-none z-0`}
         style={
           {
             left: mousePosition.x,
@@ -50,7 +53,7 @@ export default function GlowContainer({
           } as CSSProperties
         }
       ></span>
-      {children}
+      <div className="relative z-10">{children}</div>
     </div>
   );
 }

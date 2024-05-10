@@ -1,12 +1,13 @@
+import Input from "@/components/form/input";
 import { login } from "./actions";
 
 export default function LoginPage() {
   return (
     <form className="flex flex-col w-fit">
       <label htmlFor="email">Email:</label>
-      <input id="email" name="email" type="email" required />
+      <Input id="email" name="email" type="email" required />
       <label htmlFor="password">Password:</label>
-      <input id="password" name="password" type="password" required />
+      <Input id="password" name="password" type="password" required />
       <button formAction={login}>Log in</button>
     </form>
   );

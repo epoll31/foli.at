@@ -87,7 +87,7 @@ export default async function Nav() {
       className="fixed bottom-8 shadow-xl scale-95 hover:scale-100 transition-transform"
       glowColor="#fb3b53"
     >
-      <nav className="rounded-full flex flex-row flex-nowrap h-fit gap-px ">
+      <nav className="rounded-full flex flex-row flex-nowrap h-fit gap-px">
         {tabs.map((tab) => (
           <NavTab tab={tab} />
         ))}
