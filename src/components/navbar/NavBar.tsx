@@ -1,20 +1,22 @@
-import Link from "next/link";
+import { createClient } from "@/utils/supabase/server";
 import Home from "../icons/home";
-import LinkIcon from "../icons/link";
 import Portfolio from "../icons/portfolio";
 import User from "../icons/user";
 import GlowContainer from "./GlowContainer";
-import NavTab from "./NavTab";
+import NavTab, { Tab } from "./NavTab";
+import Logout from "../icons/logout";
+import Search from "../icons/search";
 
-function Separator() {
-  return <span className="w-px bg-neutral-300 self-stretch" />;
-}
-
-const tabs = [
+const loggedInTabs: Tab[] = [
   {
     name: "Home",
     href: "/",
     icon: <Home />,
+  },
+  {
+    name: "Search",
+    href: "/search",
+    icon: <Search />,
   },
   {
     name: "Portfolio",
@@ -22,13 +24,35 @@ const tabs = [
     icon: <Portfolio />,
   },
   {
-    name: "Profile",
-    href: "/profile",
+    name: "Log Out",
+    action: "logout",
+    icon: <Logout />,
+  },
+];
+
+const loggedOutTabs: Tab[] = [
+  {
+    name: "Home",
+    href: "/",
+    icon: <Home />,
+  },
+  {
+    name: "Search",
+    href: "/search",
+    icon: <Search />,
+  },
+  {
+    name: "Login",
+    href: "/login",
     icon: <User />,
   },
 ];
 
-export default function Nav() {
+export default async function Nav() {
+  const supabase = createClient();
+  const { error } = await supabase.auth.getUser();
+  const tabs = error ? loggedOutTabs : loggedInTabs;
+
   return (
     <GlowContainer
       className="fixed bottom-8 shadow-xl scale-95 hover:scale-100 transition-transform"

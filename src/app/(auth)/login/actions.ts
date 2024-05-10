@@ -24,6 +24,6 @@ export async function login(formData: FormData) {
   // revalidatePath(`/${username}`, "layout");
   // redirect(`/${username}`);
 
-  revalidatePath("/profile", "layout");
-  redirect("/profile");
+  revalidatePath("/", "layout");
+  redirect("/");
 }
