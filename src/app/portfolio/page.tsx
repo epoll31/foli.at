@@ -29,9 +29,11 @@ export default async function ProfilePage() {
   const portfolioGroup = await loadPortfolioGroup(user_id);
 
   return (
+    // <div className="flex flex-col items-center ">
     <>
       <h2 className="text-4xl">Edit Your Portfolio</h2>
       {portfolioGroup && <UpdatePorfolioForm portfolioGroup={portfolioGroup} />}
     </>
+    // </div>
   );
 }
