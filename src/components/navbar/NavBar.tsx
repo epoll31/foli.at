@@ -13,11 +13,11 @@ const loggedInTabs: Tab[] = [
     href: "/",
     icon: <Home />,
   },
-  {
-    name: "Search",
-    href: "/search",
-    icon: <Search />,
-  },
+  // {
+  //   name: "Search",
+  //   href: "/search",
+  //   icon: <Search />,
+  // },
   {
     name: "Portfolio",
     href: "/portfolio",
@@ -36,11 +36,11 @@ const loggedOutTabs: Tab[] = [
     href: "/",
     icon: <Home />,
   },
-  {
-    name: "Search",
-    href: "/search",
-    icon: <Search />,
-  },
+  // {
+  //   name: "Search",
+  //   href: "/search",
+  //   icon: <Search />,
+  // },
   {
     name: "Login",
     href: "/login",
