@@ -1,5 +1,5 @@
 import { cn } from "@/utils/cn";
-import GlowContainer from "../navbar/GlowContainer";
+import GlowContainer from "../GlowContainer";
 
 export default function Input({
   className,

@@ -2,7 +2,7 @@ import { createClient } from "@/utils/supabase/server";
 import Home from "../icons/home";
 import Portfolio from "../icons/portfolio";
 import User from "../icons/user";
-import GlowContainer from "./GlowContainer";
+import GlowContainer from "../GlowContainer";
 import NavTab, { Tab } from "./NavTab";
 import Logout from "../icons/logout";
 import Search from "../icons/search";
