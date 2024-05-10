@@ -17,7 +17,7 @@ export default async function ProfilePage() {
 
   if (!verified) {
     return (
-      <div className="p-20 flex flex-col items-center  max-w-prose gap-10">
+      <div className=" flex flex-col items-center  max-w-prose gap-10">
         <h2 className="text-4xl">
           Please check your email for a confirmation message.
         </h2>
@@ -29,10 +29,9 @@ export default async function ProfilePage() {
   const portfolioGroup = await loadPortfolioGroup(user_id);
 
   return (
-    <div className="p-20 flex flex-col items-center  max-w-prose gap-10">
+    <>
       <h2 className="text-4xl">Edit Your Portfolio</h2>
-
       {portfolioGroup && <UpdatePorfolioForm portfolioGroup={portfolioGroup} />}
-    </div>
+    </>
   );
 }
