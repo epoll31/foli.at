@@ -6,6 +6,8 @@ import GlowContainer from "./GlowContainer";
 import NavTab, { Tab } from "./NavTab";
 import Logout from "../icons/logout";
 import Search from "../icons/search";
+import Pencil from "../icons/pencil";
+import { getTagFromUserId } from "@/utils/supabase/actions/getTagFromUserId";
 
 const loggedInTabs: Tab[] = [
   {
@@ -13,15 +15,15 @@ const loggedInTabs: Tab[] = [
     href: "/",
     icon: <Home />,
   },
-  // {
-  //   name: "Search",
-  //   href: "/search",
-  //   icon: <Search />,
-  // },
   {
-    name: "Portfolio",
+    name: "View Portfolio",
     href: "/portfolio",
     icon: <Portfolio />,
+  },
+  {
+    name: "Edit Portfolio",
+    href: "/portfolio",
+    icon: <Pencil />,
   },
   {
     name: "Log Out",
@@ -36,11 +38,6 @@ const loggedOutTabs: Tab[] = [
     href: "/",
     icon: <Home />,
   },
-  // {
-  //   name: "Search",
-  //   href: "/search",
-  //   icon: <Search />,
-  // },
   {
     name: "Login",
     href: "/login",
@@ -50,8 +47,40 @@ const loggedOutTabs: Tab[] = [
 
 export default async function Nav() {
   const supabase = createClient();
-  const { error } = await supabase.auth.getUser();
-  const tabs = error ? loggedOutTabs : loggedInTabs;
+  const {
+    error,
+    data: { user },
+  } = await supabase.auth.getUser();
+  // const tabs = error ? loggedOutTabs : loggedInTabs;
+
+  let tabs = loggedOutTabs;
+
+  if (!error) {
+    const tag = await getTagFromUserId(user!.id);
+
+    tabs = [
+      {
+        name: "Home",
+        href: "/",
+        icon: <Home />,
+      },
+      {
+        name: "View Portfolio",
+        href: `/${tag}`,
+        icon: <Portfolio />,
+      },
+      {
+        name: "Edit Portfolio",
+        href: "/portfolio",
+        icon: <Pencil />,
+      },
+      {
+        name: "Log Out",
+        action: "logout",
+        icon: <Logout />,
+      },
+    ];
+  }
 
   return (
     <GlowContainer

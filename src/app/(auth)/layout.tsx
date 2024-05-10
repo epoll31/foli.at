@@ -1,5 +1,4 @@
 import Tabs from "@/components/Tabs";
-import { headers } from "next/headers";
 
 export default function AuthLayout({
   children,
