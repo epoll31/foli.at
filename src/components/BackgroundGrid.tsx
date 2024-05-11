@@ -9,7 +9,7 @@ export default function BackgroundGrid({
 }) {
   return (
     <div
-      className={cn("-z-50 fixed w-full h-full", className)}
+      className={cn("-z-50 fixed w-full h-full top-0 left-0", className)}
       style={{
         backgroundImage: "url(/lines.svg)",
         backgroundRepeat: "repeat",

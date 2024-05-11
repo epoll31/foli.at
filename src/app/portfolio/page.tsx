@@ -2,6 +2,8 @@ import { createClient } from "@/utils/supabase/server";
 import { RedirectType, redirect } from "next/navigation";
 import UpdatePorfolioForm from "./components/UpdatePorfolioForm";
 import { loadPortfolioGroup } from "@/utils/supabase/actions/loadPortfolioGroup";
+import BackgroundGrid from "@/components/BackgroundGrid";
+import Card from "@/components/ui/Card";
 
 export default async function ProfilePage() {
   const supabase = createClient();
@@ -31,8 +33,17 @@ export default async function ProfilePage() {
   return (
     // <div className="flex flex-col items-center ">
     <>
-      <h2 className="text-4xl">Edit Your Portfolio</h2>
-      {portfolioGroup && <UpdatePorfolioForm portfolioGroup={portfolioGroup} />}
+      <BackgroundGrid size={30} />
+      <Card className="p-0 border border-neutral-200">
+        <div className="px-20 py-6 rounded-t-xl bg-neutral-100 border-neutral-200 border-b">
+          <h2 className="text-4xl">Edit Your Portfolio</h2>
+        </div>
+        <div className="p-6 ">
+          {portfolioGroup && (
+            <UpdatePorfolioForm portfolioGroup={portfolioGroup} />
+          )}
+        </div>
+      </Card>
     </>
     // </div>
   );
