@@ -64,10 +64,10 @@ export default async function Nav() {
 
   return (
     <GlowContainer
-      className="fixed bottom-8 shadow-xl scale-95 hover:scale-100 transition-transform"
+      className="fixed bottom-8 shadow-xl scale-95 hover:scale-100 transition-transform z-40"
       glowColor="#fb3b53"
     >
-      <nav className="rounded-full flex flex-row flex-nowrap h-fit gap-px">
+      <nav className="rounded-full flex flex-row flex-nowrap h-fit gap-px z-50">
         {tabs.map((tab) => (
           <NavTab tab={tab} />
         ))}

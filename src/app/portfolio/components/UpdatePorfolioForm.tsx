@@ -7,6 +7,7 @@ import { EducationEntry, NoId, PortfolioGroup, WorkEntry } from "@/lib/types";
 import { motion } from "framer-motion";
 import { HTMLProps, useState } from "react";
 import TextArea from "@/components/ui/TextArea";
+import DropDown from "@/components/ui/DropDown";
 
 function useKeyedItems<T>(startingItems: T[] = [], defaultValue: T) {
   const [items, setItems] = useState(
@@ -99,7 +100,7 @@ export default function UpdatePorfolioForm({
   }
 
   return (
-    <form className="flex flex-col w-fit gap-4">
+    <form className="flex flex-col w-full gap-4">
       <div className="flex flex-col">
         <label htmlFor="tag">Tag:</label>
         <Input
@@ -143,18 +144,19 @@ export default function UpdatePorfolioForm({
           <div key={link.key} className="flex flex-col relative ">
             <p className="text-center">Link {index + 1}</p>
             <label htmlFor={`link-type-${link.key}`}>Type:</label>
-            <select
-              id={`link-type-${link.key}`}
+            <DropDown
+              options={[
+                { value: "github", label: "Github" },
+                { value: "linkedin", label: "LinkedIn" },
+                { value: "twitter", label: "Twitter" },
+                { value: "portfolio", label: "Portfolio" },
+                { value: "other", label: "Other" },
+              ]}
               name={`link-type-${link.key}`}
+              id={`link-type-${link.key}`}
               required
               defaultValue={link.value.type}
-            >
-              <option value="github">Github</option>
-              <option value="linkedin">LinkedIn</option>
-              <option value="twitter">Twitter</option>
-              <option value="portfolio">Portfolio</option>
-              <option value="other">Other</option>
-            </select>
+            />
             <label htmlFor={`link-href-${link.key}`}>Link:</label>
             <Input
               className="w-full"

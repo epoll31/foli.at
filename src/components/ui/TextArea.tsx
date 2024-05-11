@@ -10,7 +10,7 @@ export default function TextArea({
       <textarea
         className={cn(
           className,
-          "px-4 py-1 rounded-[calc(0.5rem-2px)] outline-blue-300 focus-visible:outline-2 border-none bg-white/80 z-20 min-h-10 max-h-96 align-top"
+          "w-full px-4 py-1 rounded-[calc(0.5rem-2px)] outline-blue-300 focus-visible:outline-2 border-none bg-white/80 z-20 min-h-10 max-h-96 align-top"
         )}
         {...props}
       />
