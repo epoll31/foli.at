@@ -17,7 +17,7 @@ export default function UpdatePorfolioForm({
   }
 
   return (
-    <form className="flex flex-col w-full gap-4">
+    <form className="flex flex-col w-full ">
       <PortfolioInfoSection portfolio={portfolioGroup.portfolio} />
       <LinksSection links={portfolioGroup.links} />
       <WorkSection workEntries={portfolioGroup.workEntries} />

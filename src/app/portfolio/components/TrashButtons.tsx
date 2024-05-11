@@ -5,12 +5,13 @@ import { motion } from "framer-motion";
 import { HTMLProps } from "react";
 
 export default function TrashButton(props: {
+  className?: string;
   onClick: HTMLProps<HTMLButtonElement>["onClick"];
 }) {
   return (
     <motion.button
       type="button"
-      className="text-red-400 absolute top-0 right-0"
+      className="text-red-400 "
       initial={{
         scale: 1,
         color: "#737373",

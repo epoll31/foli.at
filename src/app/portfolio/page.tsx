@@ -38,11 +38,9 @@ export default async function ProfilePage() {
         <div className="px-20 py-6 rounded-t-xl bg-neutral-100 border-neutral-200 border-b">
           <h2 className="text-4xl">Edit Your Portfolio</h2>
         </div>
-        <div className="p-6 ">
-          {portfolioGroup && (
-            <UpdatePorfolioForm portfolioGroup={portfolioGroup} />
-          )}
-        </div>
+        {portfolioGroup && (
+          <UpdatePorfolioForm portfolioGroup={portfolioGroup} />
+        )}
       </Card>
     </>
     // </div>

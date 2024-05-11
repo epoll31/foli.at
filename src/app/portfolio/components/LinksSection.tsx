@@ -1,10 +1,15 @@
-"user client";
+"use client";
 
 import DropDown from "@/components/ui/DropDown";
 import useKeyedItems from "../utils/useKeyedItems";
 import { Link } from "@/lib/types";
 import Input from "@/components/ui/Input";
 import TrashButton from "./TrashButtons";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionTrigger,
+} from "@/components/ui/Accordion";
 
 export default function LinksSection({ links: startLinks }: { links: Link[] }) {
   const {
@@ -17,42 +22,52 @@ export default function LinksSection({ links: startLinks }: { links: Link[] }) {
   });
 
   return (
-    <>
-      <div className="flex flex-col  gap-4">
-        <p>Links:</p>
-        {links.map((link, index) => (
-          <div key={link.key} className="flex flex-col relative ">
-            <p className="text-center">Link {index + 1}</p>
-            <label htmlFor={`link-type-${link.key}`}>Type:</label>
-            <DropDown
-              options={[
-                { value: "github", label: "Github" },
-                { value: "linkedin", label: "LinkedIn" },
-                { value: "twitter", label: "Twitter" },
-                { value: "portfolio", label: "Portfolio" },
-                { value: "other", label: "Other" },
-              ]}
-              name={`link-type-${link.key}`}
-              id={`link-type-${link.key}`}
-              required
-              defaultValue={link.value.type}
-            />
-            <label htmlFor={`link-href-${link.key}`}>Link:</label>
-            <Input
-              className="w-full"
-              id={`link-href-${link.key}`}
-              name={`link-href-${link.key}`}
-              defaultValue={link.value.href}
-              type="url"
-              required
-            />
-            <TrashButton onClick={() => removeLink(link.key)} />
+    <Accordion className="flex flex-col gap-4 pb-6">
+      <AccordionTrigger className="text-center bg-neutral-100 py-3 border-y border-neutral-200">
+        Links
+      </AccordionTrigger>
+      <AccordionContent>
+        {links.map((link) => (
+          <div key={link.key} className="flex flex-col ps-6 ">
+            <div className="flex flex-row">
+              <div className="w-full grid grid-cols-[min-content_1fr] items-baseline gap-x-3 gap-y-3">
+                <label htmlFor={`link-type-${link.key}`}>Type:</label>
+                <DropDown
+                  className="w-full"
+                  options={[
+                    { value: "github", label: "Github" },
+                    { value: "linkedin", label: "LinkedIn" },
+                    { value: "twitter", label: "Twitter" },
+                    { value: "portfolio", label: "Portfolio" },
+                    { value: "other", label: "Other" },
+                  ]}
+                  name={`link-type-${link.key}`}
+                  id={`link-type-${link.key}`}
+                  required
+                  defaultValue={link.value.type}
+                />
+                <label htmlFor={`link-href-${link.key}`}>Link:</label>
+                <Input
+                  className="w-full"
+                  id={`link-href-${link.key}`}
+                  name={`link-href-${link.key}`}
+                  defaultValue={link.value.href}
+                  type="url"
+                  required
+                />
+              </div>
+              <TrashButton
+                className="m-4"
+                onClick={() => removeLink(link.key)}
+              />
+            </div>
+            <span className="w-full h-px my-3 bg-gradient-to-r from-transparent via-blue-300 to-transparent" />
           </div>
         ))}
         <button type="button" onClick={addLink} className="w-full text-center">
           Add Link
         </button>
-      </div>
-    </>
+      </AccordionContent>
+    </Accordion>
   );
 }

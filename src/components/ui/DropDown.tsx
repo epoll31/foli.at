@@ -14,11 +14,11 @@ export default function DropDown({
   options: Option[];
 }) {
   return (
-    <GlowContainer padding="2px" className="rounded-[0.5rem]">
+    <GlowContainer padding="2px" className="rounded-[0.5rem] w-full">
       <select
         className={cn(
-          className,
-          "w-full px-4 py-1 rounded-[calc(0.5rem-2px)] outline-blue-300 focus-visible:outline-2 border-none bg-white/80 z-20"
+          "w-full px-4 py-1 rounded-[calc(0.5rem-2px)] outline-blue-300 focus-visible:outline-2 border-none bg-white/80 z-20",
+          className
         )}
         {...props}
       >

@@ -8,7 +8,7 @@ export default function PortfolioInfoSection({
   portfolio: Portfolio;
 }) {
   return (
-    <>
+    <div className="p-6">
       <div className="flex flex-col">
         <label htmlFor="tag">Tag:</label>
         <Input
@@ -47,6 +47,6 @@ export default function PortfolioInfoSection({
           required
         />
       </div>
-    </>
+    </div>
   );
 }
