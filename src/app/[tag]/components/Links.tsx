@@ -1,13 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Github from "@/components/icons/github";
-import LinkedIn from "@/components/icons/linkedin";
-import Briefcase from "@/components/icons/briefcase";
-import Twitter from "@/components/icons/twitter";
-import LinkIcon from "@/components/icons/link";
 import { useMemo } from "react";
 import { Link } from "@/lib/types";
+import LinkedIn from "@/components/icons/linkedin";
+import Github from "@/components/icons/github";
+import Twitter from "@/components/icons/twitter";
+import BriefcaseFilled from "@/components/icons/briefcase-filled";
+import LinkIcon from "@/components/icons/link";
 
 export default function Links({ links }: { links: Link[] }) {
   const orderedLinks = useMemo(() => {
@@ -68,7 +68,7 @@ export default function Links({ links }: { links: Link[] }) {
           ) : link.type === "twitter" ? (
             <Twitter className="w-6 h-6" />
           ) : link.type === "portfolio" ? (
-            <Briefcase className="w-6 h-6" />
+            <BriefcaseFilled className="w-6 h-6" />
           ) : (
             <LinkIcon className="w-6 h-6" />
           )}
