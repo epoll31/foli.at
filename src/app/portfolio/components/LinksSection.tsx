@@ -23,11 +23,11 @@ export default function LinksSection({ links: startLinks }: { links: Link[] }) {
   });
 
   return (
-    <Accordion className="flex flex-col gap-4 pb-6">
+    <Accordion className="flex flex-col ">
       <AccordionTrigger className="text-center bg-neutral-100 py-3 border-y border-neutral-200">
         Links
       </AccordionTrigger>
-      <AccordionContent className="flex flex-col justify-center">
+      <AccordionContent className="flex flex-col justify-center-4">
         {links.map((link) => (
           <div key={link.key} className="flex flex-col ps-6 ">
             <div className="flex flex-row">
