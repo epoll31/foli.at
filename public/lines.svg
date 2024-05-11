@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg 
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="100 100 100 100" 
+  stroke="#a3a3a3"
+>
+  <path d="M 100 100 L 100 200"/>
+  <path d="M 100 200 L 200 200"/>
+</svg>

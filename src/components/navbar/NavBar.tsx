@@ -1,36 +1,37 @@
 import { createClient } from "@/utils/supabase/server";
 import Home from "../icons/home";
-import Portfolio from "../icons/portfolio";
+import Briefcase from "../icons/briefcase";
 import User from "../icons/user";
 import GlowContainer from "../GlowContainer";
 import NavTab, { Tab } from "./NavTab";
 import Logout from "../icons/logout";
-import Search from "../icons/search";
 import Pencil from "../icons/pencil";
 import { getTagFromUserId } from "@/utils/supabase/actions/getTagFromUserId";
 
-const loggedInTabs: Tab[] = [
-  {
-    name: "Home",
-    href: "/",
-    icon: <Home />,
-  },
-  {
-    name: "View Portfolio",
-    href: "/portfolio",
-    icon: <Portfolio />,
-  },
-  {
-    name: "Edit Portfolio",
-    href: "/portfolio",
-    icon: <Pencil />,
-  },
-  {
-    name: "Log Out",
-    action: "logout",
-    icon: <Logout />,
-  },
-];
+function getLoggedInTabs(tag: string): Tab[] {
+  return [
+    {
+      name: "Home",
+      href: "/",
+      icon: <Home />,
+    },
+    {
+      name: "View Portfolio",
+      href: `/${tag}`,
+      icon: <Briefcase />,
+    },
+    {
+      name: "Edit Portfolio",
+      href: "/portfolio",
+      icon: <Pencil />,
+    },
+    {
+      name: "Log Out",
+      action: "logout",
+      icon: <Logout />,
+    },
+  ];
+}
 
 const loggedOutTabs: Tab[] = [
   {
@@ -39,7 +40,7 @@ const loggedOutTabs: Tab[] = [
     icon: <Home />,
   },
   {
-    name: "Login",
+    name: "Log In",
     href: "/login",
     icon: <User />,
   },
@@ -58,28 +59,7 @@ export default async function Nav() {
   if (!error) {
     const tag = await getTagFromUserId(user!.id);
 
-    tabs = [
-      {
-        name: "Home",
-        href: "/",
-        icon: <Home />,
-      },
-      {
-        name: "View Portfolio",
-        href: `/${tag}`,
-        icon: <Portfolio />,
-      },
-      {
-        name: "Edit Portfolio",
-        href: "/portfolio",
-        icon: <Pencil />,
-      },
-      {
-        name: "Log Out",
-        action: "logout",
-        icon: <Logout />,
-      },
-    ];
+    tabs = getLoggedInTabs(tag);
   }
 
   return (

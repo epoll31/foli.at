@@ -1,18 +1,21 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useMemo } from "react";
+import { useRouter, usePathname } from "next/navigation";
 import { cn } from "@/utils/cn";
-import { useState } from "react";
 
-function Tab({
-  label,
-  selected,
-  setSelected,
-}: {
-  label: string;
-  selected: boolean;
-  setSelected: (label: string) => void;
-}) {
+interface TabProps extends TabInfo {
+  setSelected: (text: string) => void;
+}
+
+function Tab({ label, href, setSelected }: TabProps) {
+  const pathname = usePathname();
+
+  const selected = useMemo(() => {
+    return pathname === href;
+  }, [pathname, href]);
+
   return (
     <button
       onClick={() => {
@@ -34,30 +37,28 @@ function Tab({
   );
 }
 
+export interface TabInfo {
+  label: string;
+  href: string;
+}
+
 export default function Tabs({
-  className,
   tabs,
-  onChange,
+  className,
 }: {
+  tabs: TabInfo[];
   className?: string;
-  tabs: string[];
-  onChange?: (tab: string) => void;
 }) {
-  const [selected, setSelected] = useState<string>(tabs[0]);
-  const handleChange = (tab: string) => {
-    onChange?.(tab);
-    setSelected(tab);
+  const router = useRouter();
+
+  const handleChange = (text: string) => {
+    router.push(tabs.find((tab) => tab.label === text)?.href ?? "/");
   };
 
   return (
-    <div className={cn("flex flex-wrap items-center gap-2 w-fit", className)}>
+    <div className={cn("flex items-center gap-2 w-fit", className)}>
       {tabs.map((tab) => (
-        <Tab
-          key={tab}
-          label={tab}
-          selected={tab === selected}
-          setSelected={handleChange}
-        />
+        <Tab setSelected={handleChange} key={tab.label} {...tab} />
       ))}
     </div>
   );
