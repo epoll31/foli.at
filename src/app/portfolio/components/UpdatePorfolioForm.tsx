@@ -1,10 +1,12 @@
 "use client";
 
+import Input from "@/components/ui/Input";
 import { updatePortfolioFromFormData } from "../utils/actions";
 import Trash from "@/components/icons/trash";
 import { EducationEntry, NoId, PortfolioGroup, WorkEntry } from "@/lib/types";
 import { motion } from "framer-motion";
 import { HTMLProps, useState } from "react";
+import TextArea from "@/components/ui/TextArea";
 
 function useKeyedItems<T>(startingItems: T[] = [], defaultValue: T) {
   const [items, setItems] = useState(
@@ -100,14 +102,16 @@ export default function UpdatePorfolioForm({
     <form className="flex flex-col w-fit gap-4">
       <div className="flex flex-col">
         <label htmlFor="tag">Tag:</label>
-        <input
+        <Input
+          className="w-full"
           id="tag"
           name="tag"
           defaultValue={portfolioGroup.portfolio.tag}
           required
         />
         <label htmlFor="full_name">Full Name:</label>
-        <input
+        <Input
+          className="w-full"
           id="full_name"
           name="full_name"
           defaultValue={portfolioGroup.portfolio.full_name}
@@ -116,7 +120,8 @@ export default function UpdatePorfolioForm({
       </div>
       <div className="flex flex-col">
         <label htmlFor="title">Title:</label>
-        <input
+        <Input
+          className="w-full"
           id="title"
           name="title"
           defaultValue={portfolioGroup.portfolio.title}
@@ -125,7 +130,7 @@ export default function UpdatePorfolioForm({
       </div>
       <div className="flex flex-col">
         <label htmlFor="bio">Bio:</label>
-        <textarea
+        <TextArea
           id="bio"
           name="bio"
           defaultValue={portfolioGroup.portfolio.bio}
@@ -151,7 +156,8 @@ export default function UpdatePorfolioForm({
               <option value="other">Other</option>
             </select>
             <label htmlFor={`link-href-${link.key}`}>Link:</label>
-            <input
+            <Input
+              className="w-full"
               id={`link-href-${link.key}`}
               name={`link-href-${link.key}`}
               defaultValue={link.value.href}
@@ -171,28 +177,31 @@ export default function UpdatePorfolioForm({
           <div key={item.key} className="flex flex-col relative">
             <p className="text-center">Work {index + 1}</p>
             <label htmlFor={`work-title-${item.key}`}>Title:</label>
-            <input
+            <Input
+              className="w-full"
               id={`work-title-${item.key}`}
               name={`work-title-${item.key}`}
               defaultValue={item.value.title}
               required
             />
             <label htmlFor={`work-company-${item.key}`}>Company:</label>
-            <input
+            <Input
+              className="w-full"
               id={`work-company-${item.key}`}
               name={`work-company-${item.key}`}
               defaultValue={item.value.company}
               required
             />
             <label htmlFor={`work-description-${item.key}`}>Description:</label>
-            <textarea
+            <TextArea
               id={`work-description-${item.key}`}
               name={`work-description-${item.key}`}
               defaultValue={item.value.description}
               required
             />
             <label htmlFor={`work-start_date-${item.key}`}>Start Date:</label>
-            <input
+            <Input
+              className="w-full"
               id={`work-start_date-${item.key}`}
               name={`work-start_date-${item.key}`}
               type="month"
@@ -203,7 +212,8 @@ export default function UpdatePorfolioForm({
               required
             />
             <label htmlFor={`work-end_date-${item.key}`}>End Date:</label>
-            <input
+            <Input
+              className="w-full"
               id={`work-end_date-${item.key}`}
               name={`work-end_date-${item.key}`}
               type="month"
@@ -225,21 +235,24 @@ export default function UpdatePorfolioForm({
           <div key={item.key} className="flex flex-col relative">
             <p className="text-center">Education {index + 1}</p>
             <label htmlFor={`education-school-${item.key}`}>School:</label>
-            <input
+            <Input
+              className="w-full"
               id={`education-school-${item.key}`}
               name={`education-school-${item.key}`}
               defaultValue={item.value.school}
               required
             />
             <label htmlFor={`education-degree-${item.key}`}>Degree:</label>
-            <input
+            <Input
+              className="w-full"
               id={`education-degree-${item.key}`}
               name={`education-degree-${item.key}`}
               defaultValue={item.value.degree}
               required
             />
             <label htmlFor={`education-major-${item.key}`}>Major:</label>
-            <input
+            <Input
+              className="w-full"
               id={`education-major-${item.key}`}
               name={`education-major-${item.key}`}
               defaultValue={item.value.major || ""}
@@ -247,7 +260,7 @@ export default function UpdatePorfolioForm({
             <label htmlFor={`education-description-${item.key}`}>
               Description:
             </label>
-            <textarea
+            <TextArea
               id={`education-description-${item.key}`}
               name={`education-description-${item.key}`}
               defaultValue={item.value.description}
@@ -256,7 +269,8 @@ export default function UpdatePorfolioForm({
             <label htmlFor={`education-start_date-${item.key}`}>
               Start Date:
             </label>
-            <input
+            <Input
+              className="w-full"
               id={`education-start_date-${item.key}`}
               name={`education-start_date-${item.key}`}
               type="month"
@@ -267,7 +281,8 @@ export default function UpdatePorfolioForm({
               required
             />
             <label htmlFor={`education-end_date-${item.key}`}>End Date:</label>
-            <input
+            <Input
+              className="w-full"
               id={`education-end_date-${item.key}`}
               name={`education-end_date-${item.key}`}
               type="month"
