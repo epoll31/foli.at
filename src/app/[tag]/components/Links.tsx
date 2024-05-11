@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import Github from "@/components/icons/github";
 import LinkedIn from "@/components/icons/linkedin";
-import Portfolio from "@/components/icons/portfolio";
+import Briefcase from "@/components/icons/briefcase";
 import Twitter from "@/components/icons/twitter";
 import LinkIcon from "@/components/icons/link";
 import { useMemo } from "react";
@@ -68,7 +68,7 @@ export default function Links({ links }: { links: Link[] }) {
           ) : link.type === "twitter" ? (
             <Twitter className="w-6 h-6" />
           ) : link.type === "portfolio" ? (
-            <Portfolio className="w-6 h-6" />
+            <Briefcase className="w-6 h-6" />
           ) : (
             <LinkIcon className="w-6 h-6" />
           )}
