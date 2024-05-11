@@ -10,6 +10,7 @@ import {
   AccordionContent,
   AccordionTrigger,
 } from "@/components/ui/Accordion";
+import Button from "@/components/ui/Button";
 
 export default function LinksSection({ links: startLinks }: { links: Link[] }) {
   const {
@@ -26,7 +27,7 @@ export default function LinksSection({ links: startLinks }: { links: Link[] }) {
       <AccordionTrigger className="text-center bg-neutral-100 py-3 border-y border-neutral-200">
         Links
       </AccordionTrigger>
-      <AccordionContent>
+      <AccordionContent className="flex flex-col justify-center">
         {links.map((link) => (
           <div key={link.key} className="flex flex-col ps-6 ">
             <div className="flex flex-row">
@@ -64,9 +65,13 @@ export default function LinksSection({ links: startLinks }: { links: Link[] }) {
             <span className="w-full h-px my-3 bg-gradient-to-r from-transparent via-blue-300 to-transparent" />
           </div>
         ))}
-        <button type="button" onClick={addLink} className="w-full text-center">
+        <Button
+          type="button"
+          onClick={addLink}
+          className=" mx-auto w-fit text-center"
+        >
           Add Link
-        </button>
+        </Button>
       </AccordionContent>
     </Accordion>
   );
