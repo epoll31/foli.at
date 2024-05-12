@@ -6,6 +6,7 @@ import PortfolioInfoSection from "./PortfolioInfoSection";
 import LinksSection from "./LinksSection";
 import WorkSection from "./WorkSection";
 import EducationSection from "./EducationSection";
+import Button from "@/components/ui/Button";
 
 export default function UpdatePorfolioForm({
   portfolioGroup,
@@ -23,7 +24,9 @@ export default function UpdatePorfolioForm({
       <WorkSection workEntries={portfolioGroup.workEntries} />
       <EducationSection educationEntries={portfolioGroup.educationEntries} />
 
-      <button formAction={handleSubmit}>Save</button>
+      <Button className="w-full p-3" formAction={handleSubmit}>
+        <span className="m-1 inline-block text-lg ">Save</span>
+      </Button>
     </form>
   );
 }

@@ -67,7 +67,7 @@ export default function EducationSection({
       </AccordionTrigger>
       <AccordionContent className="flex flex-col justify-center">
         {educationKeys.map((item, index) => (
-          <>
+          <div key={item.key} className="flex flex-col justify-center">
             <div key={item.key} className="flex flex-col relative px-6 gap-3">
               <div className="grid grid-cols-[min-content_1fr] items-baseline gap-3">
                 <label htmlFor={`education-school-${item.key}`}>School:</label>
@@ -136,7 +136,7 @@ export default function EducationSection({
               />
             </div>
             <span className="w-full h-px my-3 bg-gradient-to-r from-transparent via-blue-300 to-transparent" />
-          </>
+          </div>
         ))}
         <Button
           type="button"

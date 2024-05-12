@@ -64,8 +64,8 @@ export default function WorkSection({
       </AccordionTrigger>
       <AccordionContent className="flex flex-col justify-center">
         {workKeys.map((item) => (
-          <>
-            <div key={item.key} className="flex flex-col relative px-6 gap-3">
+          <div className="flex flex-col justify-center" key={item.key}>
+            <div className="flex flex-col relative px-6 gap-3">
               <div className="w-full grid grid-cols-[min-content_1fr] items-baseline gap-x-3 gap-y-3">
                 <label htmlFor={`work-title-${item.key}`}>Title:</label>
                 <div className="grid grid-cols-[1fr_min-content] gap-4">
@@ -124,7 +124,7 @@ export default function WorkSection({
               />
             </div>
             <span className="w-full h-px my-3 bg-gradient-to-r from-transparent via-blue-300 to-transparent" />
-          </>
+          </div>
         ))}
         <Button
           type="button"
