@@ -11,8 +11,12 @@ import {
   AccordionTrigger,
 } from "@/components/ui/Accordion";
 import Button from "@/components/ui/Button";
+import ChevronUp from "@/components/icons/chevron-up";
+import { cn } from "@/utils/cn";
+import { useState } from "react";
 
 export default function LinksSection({ links: startLinks }: { links: Link[] }) {
+  const [open, setOpen] = useState(false);
   const {
     items: links,
     addItem: addLink,
@@ -23,9 +27,17 @@ export default function LinksSection({ links: startLinks }: { links: Link[] }) {
   });
 
   return (
-    <Accordion className="flex flex-col ">
-      <AccordionTrigger className="text-center bg-neutral-100 py-3 border-y border-neutral-200">
+    <Accordion className="flex flex-col" onOpenChange={setOpen}>
+      <AccordionTrigger className="relative text-center bg-neutral-100 py-3 border-y border-neutral-200">
         Links
+        {
+          <ChevronUp
+            className={cn(
+              `absolute top-0 h-full end-3 -rotate-180 transition-transform  text-neutral-400`,
+              open && "rotate-0"
+            )}
+          />
+        }
       </AccordionTrigger>
       <AccordionContent className="flex flex-col justify-center-4">
         {links.map((link) => (

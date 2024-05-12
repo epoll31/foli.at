@@ -10,6 +10,9 @@ import {
   AccordionContent,
   AccordionTrigger,
 } from "@/components/ui/Accordion";
+import { useState } from "react";
+import ChevronUp from "@/components/icons/chevron-up";
+import { cn } from "@/utils/cn";
 
 type PartialWorkEntry = Omit<NoId<WorkEntry>, "start_date" | "end_date"> & {
   start_date: Date | undefined;
@@ -20,6 +23,8 @@ export default function WorkSection({
 }: {
   workEntries: WorkEntry[];
 }) {
+  const [open, setOpen] = useState(false);
+
   const {
     items: workKeys,
     addItem: addWork,
@@ -39,9 +44,17 @@ export default function WorkSection({
   );
 
   return (
-    <Accordion className="flex flex-col">
-      <AccordionTrigger className="text-center bg-neutral-100 py-3 border-y border-neutral-200">
-        Work
+    <Accordion className="flex flex-col" onOpenChange={setOpen}>
+      <AccordionTrigger className="relative text-center bg-neutral-100 py-3 border-y border-neutral-200">
+        Work{" "}
+        {
+          <ChevronUp
+            className={cn(
+              `absolute top-0 h-full end-3 -rotate-180 transition-transform text-neutral-400`,
+              open && "rotate-0"
+            )}
+          />
+        }
       </AccordionTrigger>
       <AccordionContent className="flex flex-col justify-center">
         {workKeys.map((item, index) => (

@@ -11,12 +11,18 @@ const AccordionContext = createContext({
 export function Accordion({
   children,
   className,
+  onOpenChange,
   ...props
 }: React.HTMLAttributes<HTMLDivElement> & {
   children: React.ReactNode;
+  onOpenChange?: (open: boolean) => void;
 }) {
   const [open, setOpen] = useState(false);
-  const toggle = () => setOpen(!open);
+  const toggle = () => {
+    const newOpen = !open;
+    setOpen(newOpen);
+    onOpenChange?.(newOpen);
+  };
 
   return (
     <AccordionContext.Provider value={{ open, toggle }}>
