@@ -9,7 +9,7 @@ export default function AuthLayout({
 }>) {
   return (
     <>
-      <BackgroundGrid size={30} />
+      <BackgroundGrid size={30} fade={"0%"} />
       <Card className="p-0 border border-neutral-200">
         <div className="px-4 py-4 rounded-t-xl bg-neutral-100 border-neutral-200 border-b">
           <Tabs

@@ -33,7 +33,7 @@ export default async function ProfilePage() {
   return (
     // <div className="flex flex-col items-center ">
     <>
-      <BackgroundGrid size={30} />
+      <BackgroundGrid size={30} fade={"40%"} />
       <Card className="p-0 border border-neutral-200">
         <div className="px-20 py-6 rounded-t-xl bg-neutral-100 border-neutral-200 border-b">
           <h2 className="text-4xl text-center">Edit Your Portfolio</h2>
