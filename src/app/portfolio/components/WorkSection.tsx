@@ -43,9 +43,14 @@ export default function WorkSection({
     }
   );
 
+  //TODO: fix border doubling between form sections (work, education, links, etc.)
   return (
     <Accordion className="flex flex-col" onOpenChange={setOpen}>
-      <AccordionTrigger className="relative text-center bg-neutral-100 py-3 border-y border-neutral-200">
+      <AccordionTrigger
+        className={cn(
+          "relative text-center bg-neutral-100 py-3 border-y border-neutral-200"
+        )}
+      >
         Work{" "}
         {
           <ChevronUp
