@@ -7,6 +7,7 @@ import NavTab, { Tab } from "./NavTab";
 import Logout from "../icons/logout";
 import Pencil from "../icons/pencil";
 import { getTagFromUserId } from "@/utils/supabase/actions/getTagFromUserId";
+import { motion } from "framer-motion";
 
 function getLoggedInTabs(tag: string): Tab[] {
   return [
@@ -61,10 +62,10 @@ export default async function Nav() {
 
     tabs = getLoggedInTabs(tag);
   }
-
+  //TODO: add resizing to navbar to make it more minimal when closed
   return (
     <GlowContainer
-      className="fixed bottom-8 shadow-xl scale-95 hover:scale-100 transition-transform z-40"
+      className="fixed bottom-8 shadow-xl z-40"
       glowColor="#fb3b53"
     >
       <nav className="rounded-full flex flex-row flex-nowrap h-fit gap-px z-50">
