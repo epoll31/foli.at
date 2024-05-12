@@ -64,63 +64,67 @@ export default function WorkSection({
       </AccordionTrigger>
       <AccordionContent className="flex flex-col justify-center">
         {workKeys.map((item) => (
-          <div key={item.key} className="flex flex-col relative px-6 gap-3">
-            <div className="w-full grid grid-cols-[min-content_1fr] items-baseline gap-x-3 gap-y-3">
-              <label htmlFor={`work-title-${item.key}`}>Title:</label>
-              <div className="grid grid-cols-[1fr_min-content] gap-4">
+          <>
+            <div key={item.key} className="flex flex-col relative px-6 gap-3">
+              <div className="w-full grid grid-cols-[min-content_1fr] items-baseline gap-x-3 gap-y-3">
+                <label htmlFor={`work-title-${item.key}`}>Title:</label>
+                <div className="grid grid-cols-[1fr_min-content] gap-4">
+                  <Input
+                    className="w-full"
+                    id={`work-title-${item.key}`}
+                    name={`work-title-${item.key}`}
+                    defaultValue={item.value.title}
+                    required
+                  />
+                  <TrashButton onClick={() => removeWork(item.key)} />
+                </div>
+                <label htmlFor={`work-company-${item.key}`}>Company:</label>
                 <Input
                   className="w-full"
-                  id={`work-title-${item.key}`}
-                  name={`work-title-${item.key}`}
-                  defaultValue={item.value.title}
+                  id={`work-company-${item.key}`}
+                  name={`work-company-${item.key}`}
+                  defaultValue={item.value.company}
                   required
                 />
-                <TrashButton onClick={() => removeWork(item.key)} />
               </div>
-              <label htmlFor={`work-company-${item.key}`}>Company:</label>
-              <Input
-                className="w-full"
-                id={`work-company-${item.key}`}
-                name={`work-company-${item.key}`}
-                defaultValue={item.value.company}
+              <div className="flex flex-row items-baseline gap-x-3 gap-y-3">
+                <label htmlFor={`work-start_date-${item.key}`}>From:</label>
+                <Input
+                  className="w-full"
+                  id={`work-start_date-${item.key}`}
+                  name={`work-start_date-${item.key}`}
+                  type="month"
+                  defaultValue={
+                    item.value.start_date &&
+                    item.value.start_date.toISOString().slice(0, 7)
+                  }
+                  required
+                />
+                <label htmlFor={`work-end_date-${item.key}`}>To:</label>
+                <Input
+                  className="w-full"
+                  id={`work-end_date-${item.key}`}
+                  name={`work-end_date-${item.key}`}
+                  type="month"
+                  defaultValue={
+                    item.value.end_date &&
+                    item.value.end_date.toISOString().slice(0, 7)
+                  }
+                />
+              </div>
+              <label htmlFor={`work-description-${item.key}`}>
+                Description:
+              </label>
+              <TextArea
+                className="h-32"
+                id={`work-description-${item.key}`}
+                name={`work-description-${item.key}`}
+                defaultValue={item.value.description}
                 required
               />
             </div>
-            <div className="flex flex-row items-baseline gap-x-3 gap-y-3">
-              <label htmlFor={`work-start_date-${item.key}`}>From:</label>
-              <Input
-                className="w-full"
-                id={`work-start_date-${item.key}`}
-                name={`work-start_date-${item.key}`}
-                type="month"
-                defaultValue={
-                  item.value.start_date &&
-                  item.value.start_date.toISOString().slice(0, 7)
-                }
-                required
-              />
-              <label htmlFor={`work-end_date-${item.key}`}>To:</label>
-              <Input
-                className="w-full"
-                id={`work-end_date-${item.key}`}
-                name={`work-end_date-${item.key}`}
-                type="month"
-                defaultValue={
-                  item.value.end_date &&
-                  item.value.end_date.toISOString().slice(0, 7)
-                }
-              />
-            </div>
-            <label htmlFor={`work-description-${item.key}`}>Description:</label>
-            <TextArea
-              className="h-32"
-              id={`work-description-${item.key}`}
-              name={`work-description-${item.key}`}
-              defaultValue={item.value.description}
-              required
-            />
             <span className="w-full h-px my-3 bg-gradient-to-r from-transparent via-blue-300 to-transparent" />
-          </div>
+          </>
         ))}
         <Button
           type="button"

@@ -36,7 +36,7 @@ export default async function ProfilePage() {
       <BackgroundGrid size={30} />
       <Card className="p-0 border border-neutral-200">
         <div className="px-20 py-6 rounded-t-xl bg-neutral-100 border-neutral-200 border-b">
-          <h2 className="text-4xl">Edit Your Portfolio</h2>
+          <h2 className="text-4xl text-center">Edit Your Portfolio</h2>
         </div>
         {portfolioGroup && (
           <UpdatePorfolioForm portfolioGroup={portfolioGroup} />

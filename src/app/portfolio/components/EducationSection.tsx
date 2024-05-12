@@ -13,6 +13,7 @@ import {
 import ChevronUp from "@/components/icons/chevron-up";
 import { cn } from "@/utils/cn";
 import { useState } from "react";
+import Button from "@/components/ui/Button";
 
 type PartialEducationEntry = Omit<
   NoId<EducationEntry>,
@@ -66,76 +67,84 @@ export default function EducationSection({
       </AccordionTrigger>
       <AccordionContent className="flex flex-col justify-center">
         {educationKeys.map((item, index) => (
-          <div key={item.key} className="flex flex-col relative">
-            <p className="text-center">Education {index + 1}</p>
-            <label htmlFor={`education-school-${item.key}`}>School:</label>
-            <Input
-              className="w-full"
-              id={`education-school-${item.key}`}
-              name={`education-school-${item.key}`}
-              defaultValue={item.value.school}
-              required
-            />
-            <label htmlFor={`education-degree-${item.key}`}>Degree:</label>
-            <Input
-              className="w-full"
-              id={`education-degree-${item.key}`}
-              name={`education-degree-${item.key}`}
-              defaultValue={item.value.degree}
-              required
-            />
-            <label htmlFor={`education-major-${item.key}`}>Major:</label>
-            <Input
-              className="w-full"
-              id={`education-major-${item.key}`}
-              name={`education-major-${item.key}`}
-              defaultValue={item.value.major || ""}
-            />
-            <label htmlFor={`education-description-${item.key}`}>
-              Description:
-            </label>
-            <TextArea
-              className="h-32"
-              id={`education-description-${item.key}`}
-              name={`education-description-${item.key}`}
-              defaultValue={item.value.description}
-              required
-            />
-            <label htmlFor={`education-start_date-${item.key}`}>
-              Start Date:
-            </label>
-            <Input
-              className="w-full"
-              id={`education-start_date-${item.key}`}
-              name={`education-start_date-${item.key}`}
-              type="month"
-              defaultValue={
-                item.value.start_date &&
-                item.value.start_date.toISOString().slice(0, 7)
-              }
-              required
-            />
-            <label htmlFor={`education-end_date-${item.key}`}>End Date:</label>
-            <Input
-              className="w-full"
-              id={`education-end_date-${item.key}`}
-              name={`education-end_date-${item.key}`}
-              type="month"
-              defaultValue={
-                item.value.end_date &&
-                item.value.end_date.toISOString().slice(0, 7)
-              }
-            />
-            <TrashButton onClick={() => removeEducation(item.key)} />
-          </div>
+          <>
+            <div key={item.key} className="flex flex-col relative px-6 gap-3">
+              <div className="grid grid-cols-[min-content_1fr] items-baseline gap-3">
+                <label htmlFor={`education-school-${item.key}`}>School:</label>
+                <div className="grid grid-cols-[1fr_min-content] gap-3">
+                  <Input
+                    className="w-full"
+                    id={`education-school-${item.key}`}
+                    name={`education-school-${item.key}`}
+                    defaultValue={item.value.school}
+                    required
+                  />
+                  <TrashButton onClick={() => removeEducation(item.key)} />
+                </div>
+                <label htmlFor={`education-degree-${item.key}`}>Degree:</label>
+                <Input
+                  className="w-full"
+                  id={`education-degree-${item.key}`}
+                  name={`education-degree-${item.key}`}
+                  defaultValue={item.value.degree}
+                  required
+                />
+                <label htmlFor={`education-major-${item.key}`}>Major:</label>
+                <Input
+                  className="w-full"
+                  id={`education-major-${item.key}`}
+                  name={`education-major-${item.key}`}
+                  defaultValue={item.value.major || ""}
+                />
+              </div>
+              <div className="flex flex-row items-baseline gap-x-3 gap-y-3">
+                <label htmlFor={`education-start_date-${item.key}`}>
+                  From:
+                </label>
+                <Input
+                  className="w-full"
+                  id={`education-start_date-${item.key}`}
+                  name={`education-start_date-${item.key}`}
+                  type="month"
+                  defaultValue={
+                    item.value.start_date &&
+                    item.value.start_date.toISOString().slice(0, 7)
+                  }
+                  required
+                />
+                <label htmlFor={`education-end_date-${item.key}`}>To:</label>
+                <Input
+                  className="w-full"
+                  id={`education-end_date-${item.key}`}
+                  name={`education-end_date-${item.key}`}
+                  type="month"
+                  defaultValue={
+                    item.value.end_date &&
+                    item.value.end_date.toISOString().slice(0, 7)
+                  }
+                />
+              </div>
+              <label htmlFor={`education-description-${item.key}`}>
+                Description:
+              </label>
+              <TextArea
+                className="h-32"
+                id={`education-description-${item.key}`}
+                name={`education-description-${item.key}`}
+                defaultValue={item.value.description}
+                required
+              />
+            </div>
+            <span className="w-full h-px my-3 bg-gradient-to-r from-transparent via-blue-300 to-transparent" />
+          </>
         ))}
-        <button
+        <Button
           type="button"
           onClick={addEducation}
-          className="w-full text-center"
+          className="w-fit mx-auto text-center"
         >
           Add Education
-        </button>
+        </Button>
       </AccordionContent>
     </Accordion>
   );
