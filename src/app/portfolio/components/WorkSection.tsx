@@ -51,7 +51,7 @@ export default function WorkSection({
           "relative text-center bg-neutral-100 py-3 border-y border-neutral-200"
         )}
       >
-        Work{" "}
+        Work Experience
         {
           <ChevronUp
             className={cn(
