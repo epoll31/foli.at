@@ -1,32 +1,43 @@
 "use client";
 
-import { updatePortfolioFromFormData } from "../utils/actions";
 import { PortfolioGroup } from "@/lib/types";
 import PortfolioInfoSection from "./PortfolioInfoSection";
 import LinksSection from "./LinksSection";
 import WorkSection from "./WorkSection";
 import EducationSection from "./EducationSection";
 import Button from "@/components/ui/Button";
+import { useForm, FormProvider } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { formSchema, type FormSchema } from "../utils/formSchema";
+import { updatePortfolio } from "@/utils/supabase/actions/updatePortfolio";
 
 export default function UpdatePorfolioForm({
   portfolioGroup,
 }: {
   portfolioGroup: PortfolioGroup;
 }) {
-  function handleSubmit(formData: FormData) {
-    updatePortfolioFromFormData(portfolioGroup, formData);
-  }
+  const methods = useForm<FormSchema>({
+    resolver: zodResolver(formSchema),
+    defaultValues: portfolioGroup,
+  });
+
+  const onSubmit = methods.handleSubmit(async (data) => {
+    const validatedData = formSchema.parse(data);
+    await updatePortfolio(validatedData);
+  });
 
   return (
-    <form className="flex flex-col w-full ">
-      <PortfolioInfoSection portfolio={portfolioGroup.portfolio} />
-      <LinksSection links={portfolioGroup.links} />
-      <WorkSection workEntries={portfolioGroup.workEntries} />
-      <EducationSection educationEntries={portfolioGroup.educationEntries} />
+    <FormProvider {...methods}>
+      <form onSubmit={onSubmit} className="flex flex-col w-full">
+        <PortfolioInfoSection portfolio={portfolioGroup.portfolio} />
+        <LinksSection links={portfolioGroup.links} />
+        <WorkSection workEntries={portfolioGroup.workEntries} />
+        <EducationSection educationEntries={portfolioGroup.educationEntries} />
 
-      <Button className="w-full p-3" formAction={handleSubmit}>
-        <span className="m-1 inline-block text-lg ">Save</span>
-      </Button>
-    </form>
+        <Button className="w-full p-3" type="submit">
+          <span className="m-1 inline-block text-lg ">Save</span>
+        </Button>
+      </form>
+    </FormProvider>
   );
 }

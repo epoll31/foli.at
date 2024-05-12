@@ -8,12 +8,14 @@ export interface Portfolio {
   title: string; // text
 }
 
-export type LinkType =
-  | "github"
-  | "linkedin"
-  | "twitter"
-  | "portfolio"
-  | "other";
+export const LinkTypes = [
+  "github",
+  "linkedin",
+  "twitter",
+  "portfolio",
+  "other",
+] as const;
+export type LinkType = (typeof LinkTypes)[number];
 export interface Link {
   id: number; // int8
   href: string; // text

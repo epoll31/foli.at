@@ -1,12 +1,20 @@
+"use client";
 import Input from "@/components/ui/Input";
 import TextArea from "@/components/ui/TextArea";
 import { Portfolio } from "@/lib/types";
+import { useFormContext } from "react-hook-form";
+import { FormSchema } from "../utils/formSchema";
 
 export default function PortfolioInfoSection({
   portfolio,
 }: {
   portfolio: Portfolio;
 }) {
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext<FormSchema>();
+
   return (
     <div className="p-6">
       <div className="flex flex-col">
@@ -14,7 +22,7 @@ export default function PortfolioInfoSection({
         <Input
           className="w-full"
           id="tag"
-          name="tag"
+          {...register("portfolio.tag", { required: true })}
           defaultValue={portfolio.tag}
           required
         />
@@ -22,7 +30,7 @@ export default function PortfolioInfoSection({
         <Input
           className="w-full"
           id="full_name"
-          name="full_name"
+          {...register("portfolio.full_name", { required: true })}
           defaultValue={portfolio.full_name}
           required
         />
@@ -32,7 +40,7 @@ export default function PortfolioInfoSection({
         <Input
           className="w-full"
           id="title"
-          name="title"
+          {...register("portfolio.title", { required: true })}
           defaultValue={portfolio.title}
           required
         />
@@ -42,7 +50,7 @@ export default function PortfolioInfoSection({
         <TextArea
           className="h-32"
           id="bio"
-          name="bio"
+          {...register("portfolio.bio", { required: true })}
           defaultValue={portfolio.bio}
           required
         />

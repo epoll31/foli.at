@@ -14,6 +14,7 @@ import { useState } from "react";
 import ChevronUp from "@/components/icons/chevron-up";
 import { cn } from "@/utils/cn";
 import Button from "@/components/ui/Button";
+import { useFormContext } from "react-hook-form";
 
 type PartialWorkEntry = Omit<NoId<WorkEntry>, "start_date" | "end_date"> & {
   start_date: Date | undefined;
@@ -24,6 +25,7 @@ export default function WorkSection({
 }: {
   workEntries: WorkEntry[];
 }) {
+  const { register } = useFormContext();
   const [open, setOpen] = useState(false);
 
   const {
@@ -72,7 +74,7 @@ export default function WorkSection({
                   <Input
                     className="w-full"
                     id={`work-title-${item.key}`}
-                    name={`work-title-${item.key}`}
+                    {...register(`workEntries[${item.key}].title`)}
                     defaultValue={item.value.title}
                     required
                   />
@@ -82,7 +84,7 @@ export default function WorkSection({
                 <Input
                   className="w-full"
                   id={`work-company-${item.key}`}
-                  name={`work-company-${item.key}`}
+                  {...register(`workEntries[${item.key}].company`)}
                   defaultValue={item.value.company}
                   required
                 />
@@ -92,7 +94,7 @@ export default function WorkSection({
                 <Input
                   className="w-full"
                   id={`work-start_date-${item.key}`}
-                  name={`work-start_date-${item.key}`}
+                  {...register(`workEntries[${item.key}].start_date`)}
                   type="month"
                   defaultValue={
                     item.value.start_date &&
@@ -104,7 +106,7 @@ export default function WorkSection({
                 <Input
                   className="w-full"
                   id={`work-end_date-${item.key}`}
-                  name={`work-end_date-${item.key}`}
+                  {...register(`workEntries[${item.key}].end_date`)}
                   type="month"
                   defaultValue={
                     item.value.end_date &&
@@ -118,7 +120,7 @@ export default function WorkSection({
               <TextArea
                 className="h-32"
                 id={`work-description-${item.key}`}
-                name={`work-description-${item.key}`}
+                {...register(`workEntries[${item.key}].description`)}
                 defaultValue={item.value.description}
                 required
               />

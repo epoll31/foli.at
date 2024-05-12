@@ -14,6 +14,7 @@ import ChevronUp from "@/components/icons/chevron-up";
 import { cn } from "@/utils/cn";
 import { useState } from "react";
 import Button from "@/components/ui/Button";
+import { useFormContext } from "react-hook-form";
 
 type PartialEducationEntry = Omit<
   NoId<EducationEntry>,
@@ -27,6 +28,7 @@ export default function EducationSection({
 }: {
   educationEntries: EducationEntry[];
 }) {
+  const { register } = useFormContext();
   const [open, setOpen] = useState(false);
 
   const {
@@ -75,7 +77,7 @@ export default function EducationSection({
                   <Input
                     className="w-full"
                     id={`education-school-${item.key}`}
-                    name={`education-school-${item.key}`}
+                    {...register(`educationEntries[${index}].school`)}
                     defaultValue={item.value.school}
                     required
                   />
@@ -85,7 +87,7 @@ export default function EducationSection({
                 <Input
                   className="w-full"
                   id={`education-degree-${item.key}`}
-                  name={`education-degree-${item.key}`}
+                  {...register(`educationEntries[${index}].degree`)}
                   defaultValue={item.value.degree}
                   required
                 />
@@ -93,7 +95,7 @@ export default function EducationSection({
                 <Input
                   className="w-full"
                   id={`education-major-${item.key}`}
-                  name={`education-major-${item.key}`}
+                  {...register(`educationEntries[${index}].major`)}
                   defaultValue={item.value.major || ""}
                 />
               </div>
@@ -130,7 +132,7 @@ export default function EducationSection({
               <TextArea
                 className="h-32"
                 id={`education-description-${item.key}`}
-                name={`education-description-${item.key}`}
+                {...register(`educationEntries[${index}].description`)}
                 defaultValue={item.value.description}
                 required
               />

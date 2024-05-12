@@ -14,8 +14,10 @@ import Button from "@/components/ui/Button";
 import ChevronUp from "@/components/icons/chevron-up";
 import { cn } from "@/utils/cn";
 import { useState } from "react";
+import { useFormContext } from "react-hook-form";
 
 export default function LinksSection({ links: startLinks }: { links: Link[] }) {
+  const { register } = useFormContext();
   const [open, setOpen] = useState(false);
   const {
     items: links,
@@ -40,7 +42,7 @@ export default function LinksSection({ links: startLinks }: { links: Link[] }) {
         }
       </AccordionTrigger>
       <AccordionContent className="flex flex-col justify-center-4">
-        {links.map((link) => (
+        {links.map((link, index) => (
           <div key={link.key} className="flex flex-col ps-6 ">
             <div className="flex flex-row">
               <div className="w-full grid grid-cols-[min-content_1fr] items-baseline gap-x-3 gap-y-3">
@@ -54,7 +56,7 @@ export default function LinksSection({ links: startLinks }: { links: Link[] }) {
                     { value: "portfolio", label: "Portfolio" },
                     { value: "other", label: "Other" },
                   ]}
-                  name={`link-type-${link.key}`}
+                  {...register(`links[${index}].type`)} // Using register for DropDown
                   id={`link-type-${link.key}`}
                   required
                   defaultValue={link.value.type}
@@ -63,7 +65,7 @@ export default function LinksSection({ links: startLinks }: { links: Link[] }) {
                 <Input
                   className="w-full"
                   id={`link-href-${link.key}`}
-                  name={`link-href-${link.key}`}
+                  {...register(`links[${index}].href`)} // Using register for Input
                   defaultValue={link.value.href}
                   type="url"
                   required

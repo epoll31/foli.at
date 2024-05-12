@@ -1,27 +1,33 @@
 "use server";
 
+import { FormSchema } from "@/app/portfolio/utils/formSchema";
 import { EducationEntry, Link, NoId, Portfolio, WorkEntry } from "@/lib/types";
 import { createClient } from "@/utils/supabase/server";
 
-export async function updatePortfolio(
-  portfolio: Portfolio,
-  links: NoId<Link>[],
-  workEntries: NoId<WorkEntry>[],
-  educationEntries: NoId<EducationEntry>[]
-) {
+export async function updatePortfolio(data: FormSchema) {
+  // console.log("Updating portfolio:", data);
   const supabase = createClient();
+  const {
+    data: { user },
+    error: userError,
+  } = await supabase.auth.getUser();
+  if (userError) {
+    console.error("Error getting user:", userError.message);
+    return null;
+  }
+
   const { data: newPortfolio, error: portfolioError } = await supabase
     .from("portfolio")
     .update({
-      ...portfolio,
+      ...data.portfolio,
       edited_last: new Date(),
     })
-    .eq("id", portfolio.id)
+    .eq("user_id", user!.id)
     .select()
     .single();
 
   if (portfolioError) {
-    console.error("Error creating portfolio:", portfolioError.message);
+    console.error("Error updating portfolio:", portfolioError.message);
     return null;
   }
 
@@ -64,9 +70,10 @@ export async function updatePortfolio(
     }
   }
 
-  await updateRelatedItems("link", links);
-  await updateRelatedItems("workEntry", workEntries);
-  await updateRelatedItems("educationEntry", educationEntries);
+  await updateRelatedItems("link", data.links);
+  await updateRelatedItems("workEntry", data.workEntries);
+  await updateRelatedItems("educationEntry", data.educationEntries);
 
+  // console.log("Portfolio updated:", newPortfolio);
   return newPortfolio; // Return the created portfolio
 }
