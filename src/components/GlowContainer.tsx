@@ -20,6 +20,8 @@ export default function GlowContainer({
     y: "-100%",
   });
 
+  //TODO: update position on scroll
+
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       if (!ref.current) return;
