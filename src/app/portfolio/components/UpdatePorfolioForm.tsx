@@ -19,6 +19,7 @@ export default function UpdatePorfolioForm({
   const methods = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: portfolioGroup,
+    mode: "onBlur",
   });
 
   const onSubmit = methods.handleSubmit(async (data) => {
