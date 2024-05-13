@@ -70,7 +70,7 @@ export default async function Nav() {
     >
       <nav className="rounded-full flex flex-row flex-nowrap h-fit gap-px z-50">
         {tabs.map((tab) => (
-          <NavTab tab={tab} />
+          <NavTab tab={tab} key={tab.name} />
         ))}
       </nav>
     </GlowContainer>
