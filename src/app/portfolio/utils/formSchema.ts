@@ -6,7 +6,10 @@ const portfolioSchema = z.object({
     .string()
     .min(3, "Tag must be at least 3 characters")
     .max(20, "Tag must be at most 20 characters"),
-  full_name: z.string().min(1, "Full name must not be empty"),
+  full_name: z
+    .string()
+    .min(1, "Full name must not be empty")
+    .max(50, "Full name must be at most 50 characters"),
   bio: z
     .string()
     .min(1, "Bio must not be empty")
