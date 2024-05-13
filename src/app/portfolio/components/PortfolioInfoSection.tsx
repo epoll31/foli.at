@@ -18,8 +18,8 @@ export default function PortfolioInfoSection({
   } = useFormContext<FormSchema>();
 
   return (
-    <div className="p-6">
-      <div className="flex flex-col">
+    <div className="p-6 flex flex-col gap-3">
+      <div className="w-full grid grid-cols-[min-content_1fr] items-baseline gap-x-3 gap-y-3">
         <label htmlFor="tag">Tag:</label>
         <ErrorWrapper error={errors?.portfolio?.tag?.message}>
           <Input
@@ -30,7 +30,9 @@ export default function PortfolioInfoSection({
             required
           />
         </ErrorWrapper>
-        <label htmlFor="full_name">Full Name:</label>
+        <label htmlFor="full_name" className="text-nowrap">
+          Full Name:
+        </label>
         <ErrorWrapper error={errors?.portfolio?.full_name?.message}>
           <Input
             className="w-full"
@@ -40,8 +42,6 @@ export default function PortfolioInfoSection({
             required
           />
         </ErrorWrapper>
-      </div>
-      <div className="flex flex-col">
         <label htmlFor="title">Title:</label>
         <ErrorWrapper error={errors?.portfolio?.title?.message}>
           <Input
@@ -54,7 +54,7 @@ export default function PortfolioInfoSection({
         </ErrorWrapper>
       </div>
       <div className="flex flex-col">
-        <label htmlFor="bio">Bio:</label>
+        <label htmlFor="bio">About Me:</label>
         <ErrorWrapper error={errors?.portfolio?.bio?.message}>
           <TextArea
             className="h-32"
