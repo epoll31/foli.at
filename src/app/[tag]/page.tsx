@@ -19,9 +19,15 @@ export default async function Page({ params }: { params: { tag: string } }) {
       <p className="text-2xl">{portfolioGroup.portfolio.title}</p>
       <p className="text-sm my-4">{portfolioGroup.portfolio.bio}</p>
 
-      <Links links={portfolioGroup?.links} />
-      <WorkHistory workEntries={portfolioGroup?.workEntries} />
-      <EducationHistory educationEntries={portfolioGroup?.educationEntries} />
+      {portfolioGroup.links.length > 0 && (
+        <Links links={portfolioGroup.links} />
+      )}
+      {portfolioGroup.workEntries.length > 0 && (
+        <WorkHistory workEntries={portfolioGroup.workEntries} />
+      )}
+      {portfolioGroup.educationEntries.length > 0 && (
+        <EducationHistory educationEntries={portfolioGroup.educationEntries} />
+      )}
     </>
   );
 }
