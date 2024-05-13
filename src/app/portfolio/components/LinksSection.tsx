@@ -30,7 +30,12 @@ export default function LinksSection({ links: startLinks }: { links: Link[] }) {
 
   return (
     <Accordion className="flex flex-col" onOpenChange={setOpen}>
-      <AccordionTrigger className="relative text-center bg-neutral-100 py-3 border-y border-neutral-200">
+      <AccordionTrigger
+        className={cn(
+          "relative text-center bg-neutral-100 py-3 border-t border-neutral-200 transition-all",
+          open && "border-b"
+        )}
+      >
         Links
         {
           <ChevronUp
