@@ -16,25 +16,46 @@ export default function GlowContainer({
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const [mousePosition, setMousePosition] = useState({
+    x: NaN,
+    y: NaN,
+  });
+  const [relativeMousePosition, setRelativeMousePosition] = useState({
     x: "-100%",
     y: "-100%",
   });
 
-  //TODO: update position on scroll
-
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      if (!ref.current) return;
-      const rect = ref.current.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      setMousePosition({ x: `${x}px`, y: `${y}px` });
+      setMousePosition({ x: e.clientX, y: e.clientY });
     };
+
     document.addEventListener("mousemove", handleMouseMove);
     return () => {
       document.removeEventListener("mousemove", handleMouseMove);
     };
   }, []);
+
+  useEffect(() => {
+    if (!ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    const x = mousePosition.x - rect.left;
+    const y = mousePosition.y - rect.top;
+    setRelativeMousePosition({ x: `${x}px`, y: `${y}px` });
+  }, [mousePosition]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!ref.current) return;
+      const rect = ref.current.getBoundingClientRect();
+      const x = mousePosition.x - rect.left;
+      const y = mousePosition.y - rect.top;
+      setRelativeMousePosition({ x: `${x}px`, y: `${y}px` });
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [ref.current?.getBoundingClientRect()]);
 
   return (
     <div
@@ -49,8 +70,8 @@ export default function GlowContainer({
         className={`absolute h-44 w-44 -translate-x-1/2 -translate-y-1/2  blur-lg pointer-events-none z-0`}
         style={
           {
-            left: mousePosition.x,
-            top: mousePosition.y,
+            left: relativeMousePosition.x,
+            top: relativeMousePosition.y,
             backgroundImage: `radial-gradient(${glowColor} 0%, transparent 50%)`,
           } as CSSProperties
         }
