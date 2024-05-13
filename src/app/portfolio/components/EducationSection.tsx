@@ -81,8 +81,12 @@ export default function EducationSection({
                     {...register(`educationEntries[${index}].school`)}
                     defaultValue={item.value.school}
                     required
+                    tabIndex={open ? 0 : -1}
                   />
-                  <TrashButton onClick={() => removeEducation(item.key)} />
+                  <TrashButton
+                    onClick={() => removeEducation(item.key)}
+                    tabIndex={open ? 0 : -1}
+                  />
                 </div>
                 <label htmlFor={`education-degree-${item.key}`}>Degree:</label>
                 <Input
@@ -91,6 +95,7 @@ export default function EducationSection({
                   {...register(`educationEntries[${index}].degree`)}
                   defaultValue={item.value.degree}
                   required
+                  tabIndex={open ? 0 : -1}
                 />
                 <label htmlFor={`education-major-${item.key}`}>Major:</label>
                 <Input
@@ -98,6 +103,7 @@ export default function EducationSection({
                   id={`education-major-${item.key}`}
                   {...register(`educationEntries[${index}].major`)}
                   defaultValue={item.value.major || ""}
+                  tabIndex={open ? 0 : -1}
                 />
               </div>
               <div className="flex flex-row items-baseline gap-x-3 gap-y-3">
@@ -116,6 +122,7 @@ export default function EducationSection({
                   type="month"
                   defaultValue={formatDateToMonthYear(item.value.start_date)}
                   required
+                  tabIndex={open ? 0 : -1}
                 />
                 <label htmlFor={`education-end_date-${item.key}`}>To:</label>
                 <Input
@@ -129,6 +136,7 @@ export default function EducationSection({
                   }}
                   type="month"
                   defaultValue={formatDateToMonthYear(item.value.end_date)}
+                  tabIndex={open ? 0 : -1}
                 />
               </div>
               <label htmlFor={`education-description-${item.key}`}>
@@ -140,6 +148,7 @@ export default function EducationSection({
                 {...register(`educationEntries[${index}].description`)}
                 defaultValue={item.value.description}
                 required
+                tabIndex={open ? 0 : -1}
               />
             </div>
             <span className="w-full h-px my-3 bg-gradient-to-r from-transparent via-blue-300 to-transparent" />
@@ -149,6 +158,7 @@ export default function EducationSection({
           type="button"
           onClick={addEducation}
           className="w-fit mx-auto text-center"
+          tabIndex={open ? 0 : -1}
         >
           Add Education
         </Button>

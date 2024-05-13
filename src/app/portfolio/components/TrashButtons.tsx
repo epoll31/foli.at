@@ -7,6 +7,7 @@ import { HTMLProps } from "react";
 export default function TrashButton(props: {
   className?: string;
   onClick: HTMLProps<HTMLButtonElement>["onClick"];
+  tabIndex?: number;
 }) {
   return (
     <motion.button

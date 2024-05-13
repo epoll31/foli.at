@@ -78,8 +78,12 @@ export default function WorkSection({
                     {...register(`workEntries[${item.key}].title`)}
                     defaultValue={item.value.title}
                     required
+                    tabIndex={open ? 0 : -1}
                   />
-                  <TrashButton onClick={() => removeWork(item.key)} />
+                  <TrashButton
+                    onClick={() => removeWork(item.key)}
+                    tabIndex={open ? 0 : -1}
+                  />
                 </div>
                 <label htmlFor={`work-company-${item.key}`}>Company:</label>
                 <Input
@@ -88,6 +92,7 @@ export default function WorkSection({
                   {...register(`workEntries[${item.key}].company`)}
                   defaultValue={item.value.company}
                   required
+                  tabIndex={open ? 0 : -1}
                 />
               </div>
               <div className="flex flex-row items-baseline gap-x-3 gap-y-3">
@@ -104,6 +109,7 @@ export default function WorkSection({
                   type="month"
                   defaultValue={formatDateToMonthYear(item.value.start_date)}
                   required
+                  tabIndex={open ? 0 : -1}
                 />
                 <label htmlFor={`work-end_date-${item.key}`}>To:</label>
                 <Input
@@ -117,6 +123,7 @@ export default function WorkSection({
                   }}
                   type="month"
                   defaultValue={formatDateToMonthYear(item.value.end_date)}
+                  tabIndex={open ? 0 : -1}
                 />
               </div>
               <label htmlFor={`work-description-${item.key}`}>
@@ -128,6 +135,7 @@ export default function WorkSection({
                 {...register(`workEntries[${item.key}].description`)}
                 defaultValue={item.value.description}
                 required
+                tabIndex={open ? 0 : -1}
               />
             </div>
             <span className="w-full h-px my-3 bg-gradient-to-r from-transparent via-blue-300 to-transparent" />
@@ -137,6 +145,7 @@ export default function WorkSection({
           type="button"
           onClick={addWork}
           className="mx-auto w-fit text-center"
+          tabIndex={open ? 0 : -1}
         >
           Add Work
         </Button>

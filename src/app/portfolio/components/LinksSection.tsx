@@ -60,6 +60,7 @@ export default function LinksSection({ links: startLinks }: { links: Link[] }) {
                   id={`link-type-${link.key}`}
                   required
                   defaultValue={link.value.type}
+                  tabIndex={open ? 0 : -1}
                 />
                 <label htmlFor={`link-href-${link.key}`}>Link:</label>
                 <Input
@@ -69,11 +70,13 @@ export default function LinksSection({ links: startLinks }: { links: Link[] }) {
                   defaultValue={link.value.href}
                   type="url"
                   required
+                  tabIndex={open ? 0 : -1}
                 />
               </div>
               <TrashButton
                 className="m-4"
                 onClick={() => removeLink(link.key)}
+                tabIndex={open ? 0 : -1}
               />
             </div>
             <span className="w-full h-px my-3 bg-gradient-to-r from-transparent via-blue-300 to-transparent" />
@@ -83,6 +86,7 @@ export default function LinksSection({ links: startLinks }: { links: Link[] }) {
           type="button"
           onClick={addLink}
           className=" mx-auto w-fit text-center"
+          tabIndex={open ? 0 : -1}
         >
           Add Link
         </Button>
