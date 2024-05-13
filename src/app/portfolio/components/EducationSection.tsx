@@ -16,6 +16,8 @@ import { useState } from "react";
 import Button from "@/components/ui/Button";
 import { useFormContext } from "react-hook-form";
 import { formatDateToMonthYear } from "@/utils/formatDate";
+import ErrorWrapper from "./ErrorWrapper";
+import { FormSchema } from "../utils/formSchema";
 
 type PartialEducationEntry = Omit<
   NoId<EducationEntry>,
@@ -29,7 +31,11 @@ export default function EducationSection({
 }: {
   educationEntries: EducationEntry[];
 }) {
-  const { register, setValue } = useFormContext();
+  const {
+    register,
+    setValue,
+    formState: { errors },
+  } = useFormContext<FormSchema>();
   const [open, setOpen] = useState(false);
 
   const {
@@ -75,81 +81,159 @@ export default function EducationSection({
               <div className="grid grid-cols-[min-content_1fr] items-baseline gap-3">
                 <label htmlFor={`education-school-${item.key}`}>School:</label>
                 <div className="grid grid-cols-[1fr_min-content] gap-3">
-                  <Input
-                    className="w-full"
-                    id={`education-school-${item.key}`}
-                    {...register(`educationEntries[${index}].school`)}
-                    defaultValue={item.value.school}
-                    required
-                    tabIndex={open ? 0 : -1}
-                  />
+                  <ErrorWrapper
+                    error={
+                      errors?.educationEntries &&
+                      errors.educationEntries[index]?.school?.message
+                    }
+                  >
+                    <Input
+                      className="w-full"
+                      id={`education-school-${item.key}`}
+                      {...register(`educationEntries.${index}.school`)}
+                      defaultValue={item.value.school}
+                      required
+                      tabIndex={open ? 0 : -1}
+                      glowColor={
+                        errors?.educationEntries &&
+                        errors.educationEntries[index]?.school
+                          ? "#fb3b53"
+                          : "#60a5fa"
+                      }
+                    />
+                  </ErrorWrapper>
                   <TrashButton
                     onClick={() => removeEducation(item.key)}
                     tabIndex={open ? 0 : -1}
                   />
                 </div>
                 <label htmlFor={`education-degree-${item.key}`}>Degree:</label>
-                <Input
-                  className="w-full"
-                  id={`education-degree-${item.key}`}
-                  {...register(`educationEntries[${index}].degree`)}
-                  defaultValue={item.value.degree}
-                  required
-                  tabIndex={open ? 0 : -1}
-                />
+                <ErrorWrapper
+                  error={
+                    errors?.educationEntries &&
+                    errors.educationEntries[index]?.degree?.message
+                  }
+                >
+                  <Input
+                    className="w-full"
+                    id={`education-degree-${item.key}`}
+                    {...register(`educationEntries.${index}.degree`)}
+                    defaultValue={item.value.degree}
+                    required
+                    tabIndex={open ? 0 : -1}
+                    glowColor={
+                      errors?.educationEntries &&
+                      errors.educationEntries[index]?.degree
+                        ? "#fb3b53"
+                        : "#60a5fa"
+                    }
+                  />
+                </ErrorWrapper>
                 <label htmlFor={`education-major-${item.key}`}>Major:</label>
-                <Input
-                  className="w-full"
-                  id={`education-major-${item.key}`}
-                  {...register(`educationEntries[${index}].major`)}
-                  defaultValue={item.value.major || ""}
-                  tabIndex={open ? 0 : -1}
-                />
+                <ErrorWrapper
+                  error={
+                    errors?.educationEntries &&
+                    errors.educationEntries[index]?.major?.message
+                  }
+                >
+                  <Input
+                    className="w-full"
+                    id={`education-major-${item.key}`}
+                    {...register(`educationEntries.${index}.major`)}
+                    defaultValue={item.value.major || ""}
+                    tabIndex={open ? 0 : -1}
+                    glowColor={
+                      errors?.educationEntries &&
+                      errors.educationEntries[index]?.major
+                        ? "#fb3b53"
+                        : "#60a5fa"
+                    }
+                  />
+                </ErrorWrapper>
               </div>
               <div className="flex flex-row items-baseline gap-x-3 gap-y-3">
                 <label htmlFor={`education-start_date-${item.key}`}>
                   From:
                 </label>
-                <Input
-                  className="w-full"
-                  id={`education-start_date-${item.key}`}
-                  onChange={(e) => {
-                    setValue(
-                      `educationEntries[${index}].start_date`,
-                      new Date(e.target.value)
-                    );
-                  }}
-                  type="month"
-                  defaultValue={formatDateToMonthYear(item.value.start_date)}
-                  required
-                  tabIndex={open ? 0 : -1}
-                />
+                <ErrorWrapper
+                  error={
+                    errors?.educationEntries &&
+                    errors.educationEntries[index]?.start_date?.message
+                  }
+                >
+                  <Input
+                    className="w-full"
+                    id={`education-start_date-${item.key}`}
+                    onChange={(e) => {
+                      setValue(
+                        `educationEntries.${index}.start_date`,
+                        new Date(e.target.value)
+                      );
+                    }}
+                    type="month"
+                    defaultValue={formatDateToMonthYear(item.value.start_date)}
+                    required
+                    tabIndex={open ? 0 : -1}
+                    glowColor={
+                      errors?.educationEntries &&
+                      errors.educationEntries[index]?.start_date
+                        ? "#fb3b53"
+                        : "#60a5fa"
+                    }
+                  />
+                </ErrorWrapper>
                 <label htmlFor={`education-end_date-${item.key}`}>To:</label>
-                <Input
-                  className="w-full"
-                  id={`education-end_date-${item.key}`}
-                  onChange={(e) => {
-                    setValue(
-                      `educationEntries[${index}].end_date`,
-                      new Date(e.target.value)
-                    );
-                  }}
-                  type="month"
-                  defaultValue={formatDateToMonthYear(item.value.end_date)}
-                  tabIndex={open ? 0 : -1}
-                />
+                <ErrorWrapper
+                  error={
+                    errors?.educationEntries &&
+                    errors.educationEntries[index]?.end_date?.message
+                  }
+                >
+                  <Input
+                    className="w-full"
+                    id={`education-end_date-${item.key}`}
+                    onChange={(e) => {
+                      setValue(
+                        `educationEntries.${index}.end_date`,
+                        new Date(e.target.value)
+                      );
+                    }}
+                    type="month"
+                    defaultValue={formatDateToMonthYear(item.value.end_date)}
+                    tabIndex={open ? 0 : -1}
+                    glowColor={
+                      errors?.educationEntries &&
+                      errors.educationEntries[index]?.end_date
+                        ? "#fb3b53"
+                        : "#60a5fa"
+                    }
+                  />
+                </ErrorWrapper>
               </div>
               <label htmlFor={`education-description-${item.key}`}>
                 Description:
               </label>
-              <TextArea
-                className="h-32"
-                id={`education-description-${item.key}`}
-                {...register(`educationEntries[${index}].description`)}
-                defaultValue={item.value.description}
-                required
-                tabIndex={open ? 0 : -1}
-              />
+              <ErrorWrapper
+                error={
+                  errors?.educationEntries &&
+                  errors.educationEntries[index]?.description?.message
+                }
+              >
+                <TextArea
+                  className="h-32"
+                  id={`education-description-${item.key}`}
+                  {...register(`educationEntries.${index}.description`)}
+                  defaultValue={item.value.description}
+                  required
+                  tabIndex={open ? 0 : -1}
+                  glowColor={
+                    errors?.educationEntries &&
+                    errors.educationEntries[index]?.description
+                      ? "#fb3b53"
+                      : "#60a5fa"
+                  }
+                />
+              </ErrorWrapper>
             </div>
             <span className="w-full h-px my-3 bg-gradient-to-r from-transparent via-blue-300 to-transparent" />
           </div>

@@ -19,7 +19,7 @@ export default function UpdatePorfolioForm({
   const methods = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: portfolioGroup,
-    mode: "onBlur",
+    mode: "onChange",
   });
 
   const onSubmit = methods.handleSubmit(async (data) => {
@@ -35,7 +35,11 @@ export default function UpdatePorfolioForm({
         <WorkSection workEntries={portfolioGroup.workEntries} />
         <EducationSection educationEntries={portfolioGroup.educationEntries} />
 
-        <Button className=" m-3" type="submit">
+        <Button
+          className="m-3"
+          type="submit"
+          glowColor={methods.formState?.isValid ? "#34d399" : "#fb3b53"}
+        >
           <span className="m-1 inline-block text-lg ">Save</span>
         </Button>
       </form>

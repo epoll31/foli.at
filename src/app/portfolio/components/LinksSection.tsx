@@ -13,11 +13,16 @@ import {
 import Button from "@/components/ui/Button";
 import ChevronUp from "@/components/icons/chevron-up";
 import { cn } from "@/utils/cn";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
+import ErrorWrapper from "./ErrorWrapper";
+import { FormSchema } from "../utils/formSchema";
 
 export default function LinksSection({ links: startLinks }: { links: Link[] }) {
-  const { register } = useFormContext();
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext<FormSchema>();
   const [open, setOpen] = useState(false);
   const {
     items: links,
@@ -52,31 +57,50 @@ export default function LinksSection({ links: startLinks }: { links: Link[] }) {
             <div className="flex flex-row">
               <div className="w-full grid grid-cols-[min-content_1fr] items-baseline gap-x-3 gap-y-3">
                 <label htmlFor={`link-type-${link.key}`}>Type:</label>
-                <DropDown
-                  className="w-full"
-                  options={[
-                    { value: "github", label: "Github" },
-                    { value: "linkedin", label: "LinkedIn" },
-                    { value: "twitter", label: "Twitter" },
-                    { value: "portfolio", label: "Portfolio" },
-                    { value: "other", label: "Other" },
-                  ]}
-                  {...register(`links[${index}].type`)} // Using register for DropDown
-                  id={`link-type-${link.key}`}
-                  required
-                  defaultValue={link.value.type}
-                  tabIndex={open ? 0 : -1}
-                />
+                <ErrorWrapper
+                  error={errors?.links && errors.links[index]?.message}
+                >
+                  <DropDown
+                    className="w-full"
+                    options={[
+                      { value: "github", label: "Github" },
+                      { value: "linkedin", label: "LinkedIn" },
+                      { value: "twitter", label: "Twitter" },
+                      { value: "portfolio", label: "Portfolio" },
+                      { value: "other", label: "Other" },
+                    ]}
+                    // {...register(`links[${index}].type`)} // Using register for DropDown
+                    {...register(`links.${index}.type`, { required: true })} // Using register for DropDown
+                    id={`link-type-${link.key}`}
+                    required
+                    defaultValue={link.value.type}
+                    tabIndex={open ? 0 : -1}
+                    glowColor={
+                      errors?.links && errors.links[index]?.type
+                        ? "#fb3b53"
+                        : "#60a5fa"
+                    }
+                  />
+                </ErrorWrapper>
                 <label htmlFor={`link-href-${link.key}`}>Link:</label>
-                <Input
-                  className="w-full"
-                  id={`link-href-${link.key}`}
-                  {...register(`links[${index}].href`)} // Using register for Input
-                  defaultValue={link.value.href}
-                  type="url"
-                  required
-                  tabIndex={open ? 0 : -1}
-                />
+                <ErrorWrapper
+                  error={errors?.links && errors.links[index]?.href?.message}
+                >
+                  <Input
+                    className="w-full"
+                    id={`link-href-${link.key}`}
+                    {...register(`links.${index}.href`)} // Using register for Input
+                    defaultValue={link.value.href}
+                    type="url"
+                    required
+                    tabIndex={open ? 0 : -1}
+                    glowColor={
+                      errors?.links && errors.links[index]?.href
+                        ? "#fb3b53"
+                        : "#60a5fa"
+                    }
+                  />
+                </ErrorWrapper>
               </div>
               <TrashButton
                 className="m-4"

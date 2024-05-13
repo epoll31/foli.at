@@ -4,11 +4,17 @@ import React from "react";
 
 const Input = React.forwardRef(
   (
-    { className, ...props }: React.InputHTMLAttributes<HTMLInputElement>,
+    {
+      className,
+      glowColor,
+      ...props
+    }: React.InputHTMLAttributes<HTMLInputElement> & {
+      glowColor?: string;
+    },
     ref: React.Ref<HTMLInputElement>
   ) => {
     return (
-      <GlowContainer padding="2px">
+      <GlowContainer padding="2px" glowColor={glowColor}>
         <input
           className={cn(
             className,

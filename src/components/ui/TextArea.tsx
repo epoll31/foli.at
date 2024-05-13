@@ -4,11 +4,21 @@ import React from "react";
 
 const TextArea = React.forwardRef(
   (
-    { className, ...props }: React.TextareaHTMLAttributes<HTMLTextAreaElement>,
+    {
+      className,
+      glowColor,
+      ...props
+    }: React.TextareaHTMLAttributes<HTMLTextAreaElement> & {
+      glowColor?: string;
+    },
     ref: React.Ref<HTMLTextAreaElement>
   ) => {
     return (
-      <GlowContainer padding="2px" className="rounded-[0.5rem]">
+      <GlowContainer
+        padding="2px"
+        className="rounded-[0.5rem]"
+        glowColor={glowColor}
+      >
         <textarea
           className={cn(
             className,

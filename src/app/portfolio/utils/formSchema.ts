@@ -36,7 +36,7 @@ const educationEntrySchema = z.object({
     .string()
     .min(1, "Degree must not be empty")
     .max(50, "Degree must be at most 50 characters"),
-  major: z.string().min(1, "Major must not be empty").nullable(),
+  major: z.string().max(50, "Major must be at most 50 characters").nullable(),
   description: z
     .string()
     .min(1, "Description must not be empty")

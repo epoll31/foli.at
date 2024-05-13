@@ -28,6 +28,7 @@ export default function PortfolioInfoSection({
             {...register("portfolio.tag", { required: true })}
             defaultValue={portfolio.tag}
             required
+            glowColor={errors?.portfolio?.tag ? "#fb3b53" : "#60a5fa"}
           />
         </ErrorWrapper>
         <label htmlFor="full_name" className="text-nowrap">
@@ -40,6 +41,7 @@ export default function PortfolioInfoSection({
             {...register("portfolio.full_name", { required: true })}
             defaultValue={portfolio.full_name}
             required
+            glowColor={errors?.portfolio?.full_name ? "#fb3b53" : "#60a5fa"}
           />
         </ErrorWrapper>
         <label htmlFor="title">Title:</label>
@@ -50,6 +52,7 @@ export default function PortfolioInfoSection({
             {...register("portfolio.title", { required: true })}
             defaultValue={portfolio.title}
             required
+            glowColor={errors?.portfolio?.title ? "#fb3b53" : "#60a5fa"}
           />
         </ErrorWrapper>
       </div>
@@ -62,6 +65,7 @@ export default function PortfolioInfoSection({
             {...register("portfolio.bio", { required: true })}
             defaultValue={portfolio.bio}
             required
+            glowColor={errors?.portfolio?.bio ? "#fb3b53" : "#60a5fa"}
           />
         </ErrorWrapper>
       </div>

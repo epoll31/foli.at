@@ -12,14 +12,20 @@ const DropDown = React.forwardRef(
     {
       className,
       options,
+      glowColor,
       ...props
     }: React.SelectHTMLAttributes<HTMLSelectElement> & {
       options: Option[];
+      glowColor?: string;
     },
     ref: React.Ref<HTMLSelectElement>
   ) => {
     return (
-      <GlowContainer padding="2px" className="rounded-[0.5rem] w-full">
+      <GlowContainer
+        padding="2px"
+        className="rounded-[0.5rem] w-full"
+        glowColor={glowColor}
+      >
         <select
           className={cn(
             "w-full px-4 py-1 rounded-[calc(0.5rem-2px)] outline-blue-300 focus-visible:outline-2 border-none bg-white/80 z-20",
