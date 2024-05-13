@@ -35,7 +35,7 @@ export default function UpdatePorfolioForm({
         <WorkSection workEntries={portfolioGroup.workEntries} />
         <EducationSection educationEntries={portfolioGroup.educationEntries} />
 
-        <Button className="w-full p-3" type="submit">
+        <Button className=" m-3" type="submit">
           <span className="m-1 inline-block text-lg ">Save</span>
         </Button>
       </form>
