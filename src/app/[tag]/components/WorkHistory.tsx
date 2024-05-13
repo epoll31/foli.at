@@ -1,6 +1,6 @@
 import Timeline from "@/components/Timeline";
 import { WorkEntry } from "@/lib/types";
-import formatDate from "@/utils/formatDate";
+import { formatDate } from "@/utils/formatDate";
 
 export default function WorkHistory({
   workEntries: unoderedWorkHistory,

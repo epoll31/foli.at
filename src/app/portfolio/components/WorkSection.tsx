@@ -10,11 +10,12 @@ import {
   AccordionContent,
   AccordionTrigger,
 } from "@/components/ui/Accordion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ChevronUp from "@/components/icons/chevron-up";
 import { cn } from "@/utils/cn";
 import Button from "@/components/ui/Button";
 import { useFormContext } from "react-hook-form";
+import { formatDateToMonthYear } from "@/utils/formatDate";
 
 type PartialWorkEntry = Omit<NoId<WorkEntry>, "start_date" | "end_date"> & {
   start_date: Date | undefined;
@@ -25,7 +26,7 @@ export default function WorkSection({
 }: {
   workEntries: WorkEntry[];
 }) {
-  const { register } = useFormContext();
+  const { register, setValue } = useFormContext();
   const [open, setOpen] = useState(false);
 
   const {
@@ -94,24 +95,28 @@ export default function WorkSection({
                 <Input
                   className="w-full"
                   id={`work-start_date-${item.key}`}
-                  {...register(`workEntries[${item.key}].start_date`)}
+                  onChange={(e) => {
+                    setValue(
+                      `workEntries[${item.key}].start_date`,
+                      new Date(e.target.value)
+                    );
+                  }}
                   type="month"
-                  defaultValue={
-                    item.value.start_date &&
-                    item.value.start_date.toISOString().slice(0, 7)
-                  }
+                  defaultValue={formatDateToMonthYear(item.value.start_date)}
                   required
                 />
                 <label htmlFor={`work-end_date-${item.key}`}>To:</label>
                 <Input
                   className="w-full"
                   id={`work-end_date-${item.key}`}
-                  {...register(`workEntries[${item.key}].end_date`)}
+                  onChange={(e) => {
+                    setValue(
+                      `workEntries[${item.key}].end_date`,
+                      new Date(e.target.value)
+                    );
+                  }}
                   type="month"
-                  defaultValue={
-                    item.value.end_date &&
-                    item.value.end_date.toISOString().slice(0, 7)
-                  }
+                  defaultValue={formatDateToMonthYear(item.value.end_date)}
                 />
               </div>
               <label htmlFor={`work-description-${item.key}`}>

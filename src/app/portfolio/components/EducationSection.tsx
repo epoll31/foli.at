@@ -15,6 +15,7 @@ import { cn } from "@/utils/cn";
 import { useState } from "react";
 import Button from "@/components/ui/Button";
 import { useFormContext } from "react-hook-form";
+import { formatDateToMonthYear } from "@/utils/formatDate";
 
 type PartialEducationEntry = Omit<
   NoId<EducationEntry>,
@@ -28,7 +29,7 @@ export default function EducationSection({
 }: {
   educationEntries: EducationEntry[];
 }) {
-  const { register } = useFormContext();
+  const { register, setValue } = useFormContext();
   const [open, setOpen] = useState(false);
 
   const {
@@ -106,24 +107,28 @@ export default function EducationSection({
                 <Input
                   className="w-full"
                   id={`education-start_date-${item.key}`}
-                  name={`education-start_date-${item.key}`}
+                  onChange={(e) => {
+                    setValue(
+                      `educationEntries[${index}].start_date`,
+                      new Date(e.target.value)
+                    );
+                  }}
                   type="month"
-                  defaultValue={
-                    item.value.start_date &&
-                    item.value.start_date.toISOString().slice(0, 7)
-                  }
+                  defaultValue={formatDateToMonthYear(item.value.start_date)}
                   required
                 />
                 <label htmlFor={`education-end_date-${item.key}`}>To:</label>
                 <Input
                   className="w-full"
                   id={`education-end_date-${item.key}`}
-                  name={`education-end_date-${item.key}`}
+                  onChange={(e) => {
+                    setValue(
+                      `educationEntries[${index}].end_date`,
+                      new Date(e.target.value)
+                    );
+                  }}
                   type="month"
-                  defaultValue={
-                    item.value.end_date &&
-                    item.value.end_date.toISOString().slice(0, 7)
-                  }
+                  defaultValue={formatDateToMonthYear(item.value.end_date)}
                 />
               </div>
               <label htmlFor={`education-description-${item.key}`}>

@@ -1,6 +1,6 @@
 import Timeline from "@/components/Timeline";
 import { EducationEntry } from "@/lib/types";
-import formatDate from "@/utils/formatDate";
+import { formatDate } from "@/utils/formatDate";
 
 const options = {
   month: "short",
