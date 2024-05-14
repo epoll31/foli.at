@@ -25,7 +25,7 @@ export default function WorkHistory({
           node: (
             <>
               <h4 className="text-xl font-semibold">{work.title}</h4>
-              <div className="flex flex-wrap justify-between">
+              <div className="flex flex-wrap justify-between items-baseline">
                 <p className=""> {work.company}</p>
                 <p className="text-sm">
                   {formatDate(work.start_date)}

@@ -24,7 +24,7 @@ export default function RootLayout({
           "min-w-[100dvw] min-h-[100dvh] flex flex-col items-center justify-center overflow-auto"
         )}
       >
-        <div className="min-h-full flex flex-col justify-center items-center max-w-prose py-32">
+        <div className="min-h-full flex flex-col justify-center items-center max-w-prose mx-8 py-12 sm:py-24 md:py-32">
           {children}
         </div>
         <NavBar />

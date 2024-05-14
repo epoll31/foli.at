@@ -15,8 +15,10 @@ export default async function Page({ params }: { params: { tag: string } }) {
 
   return (
     <>
-      <h2 className="text-4xl">{portfolioGroup.portfolio.full_name}</h2>
-      <p className="text-2xl">{portfolioGroup.portfolio.title}</p>
+      <h2 className="text-4xl text-center">
+        {portfolioGroup.portfolio.full_name}
+      </h2>
+      <p className="text-2xl text-center">{portfolioGroup.portfolio.title}</p>
       <p className="text-sm my-4">{portfolioGroup.portfolio.bio}</p>
 
       {portfolioGroup.links.length > 0 && (

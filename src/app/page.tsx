@@ -7,7 +7,7 @@ import {
 export default function Home() {
   return (
     <>
-      <h2 className="text-4xl">Build Your Portfolio Now!</h2>
+      <h2 className="text-4xl text-center">Build Your Portfolio Now!</h2>
       <Accordion className="w-full">
         <AccordionTrigger className=" ">Work</AccordionTrigger>
         <AccordionContent className="bg-blue-300">
