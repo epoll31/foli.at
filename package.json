@@ -1,7 +1,9 @@
 {
-  "name": "resume",
+  "name": "foli.at",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://foli.at",
+  "author": "Ethan Pollack",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
