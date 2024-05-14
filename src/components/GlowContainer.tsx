@@ -15,33 +15,72 @@ export default function GlowContainer({
   padding?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const [mousePosition, setMousePosition] = useState({
-    x: NaN,
-    y: NaN,
-  });
+  const [opacity, setOpacity] = useState(0);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [relativeMousePosition, setRelativeMousePosition] = useState({
     x: "-100%",
     y: "-100%",
   });
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
 
-    document.addEventListener("mousemove", handleMouseMove);
-    return () => {
-      document.removeEventListener("mousemove", handleMouseMove);
-    };
-  }, []);
-
-  useEffect(() => {
+  const handleMouseMove = (e: MouseEvent) => {
     if (!ref.current) return;
     const rect = ref.current.getBoundingClientRect();
-    const x = mousePosition.x - rect.left;
-    const y = mousePosition.y - rect.top;
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    setMousePosition({ x: e.clientX, y: e.clientY });
     setRelativeMousePosition({ x: `${x}px`, y: `${y}px` });
-  }, [mousePosition]);
+    setOpacity(1);
+  };
 
+  const handleTouchStart = (e: TouchEvent) => {
+    if (!ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    const touch = e.touches[0];
+    const x = touch.clientX - rect.left;
+    const y = touch.clientY - rect.top;
+    setMousePosition({ x: touch.clientX, y: touch.clientY });
+    setRelativeMousePosition({ x: `${x}px`, y: `${y}px` });
+    setOpacity(1);
+  };
+
+  const handleTouchMove = (e: TouchEvent) => {
+    if (!ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    const touch = e.touches[0];
+    const x = touch.clientX - rect.left;
+    const y = touch.clientY - rect.top;
+    setMousePosition({ x: touch.clientX, y: touch.clientY });
+    setRelativeMousePosition({ x: `${x}px`, y: `${y}px` });
+  };
+
+  const handleEnd = () => {
+    setTimeout(() => {
+      setOpacity(0);
+    }, 100);
+  };
+  const handleScroll = () => {
+    if (!ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    const x = parseFloat(relativeMousePosition.x) - rect.left;
+    const y = parseFloat(relativeMousePosition.y) - rect.top;
+    setRelativeMousePosition({ x: `${x}px`, y: `${y}px` });
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("touchstart", handleTouchStart);
+    document.addEventListener("touchmove", handleTouchMove);
+    document.addEventListener("touchend", handleEnd);
+    document.addEventListener("touchcancel", handleEnd);
+
+    return () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("touchstart", handleTouchStart);
+      document.removeEventListener("touchmove", handleTouchMove);
+      document.removeEventListener("touchend", handleEnd);
+      document.removeEventListener("touchcancel", handleEnd);
+    };
+  }, []);
   useEffect(() => {
     const handleScroll = () => {
       if (!ref.current) return;
@@ -54,7 +93,7 @@ export default function GlowContainer({
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [mousePosition.x, mousePosition.y]);
+  }, [mousePosition]);
 
   return (
     <div
@@ -66,9 +105,10 @@ export default function GlowContainer({
       ref={ref}
     >
       <span
-        className={`absolute h-44 w-44 -translate-x-1/2 -translate-y-1/2  blur-lg pointer-events-none z-0`}
+        className={`absolute h-44 w-44 -translate-x-1/2 -translate-y-1/2 blur-lg pointer-events-none z-0 transition-opacity`}
         style={
           {
+            opacity: opacity,
             left: relativeMousePosition.x,
             top: relativeMousePosition.y,
             backgroundImage: `radial-gradient(${glowColor} 0%, transparent 50%)`,
