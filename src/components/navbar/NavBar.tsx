@@ -66,7 +66,7 @@ export default async function Nav() {
   //TODO: add mobile navbar option
   return (
     <GlowContainer
-      className="fixed bottom-8 shadow-xl z-40"
+      className="fixed bottom-4 sm:bottom-8 shadow-xl z-40"
       glowColor="#fb3b53"
     >
       <nav className="rounded-full flex flex-row flex-nowrap h-fit gap-px z-50">
