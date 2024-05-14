@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/utils/cn";
-import { CSSProperties, useEffect, useRef, useState } from "react";
+import { CSSProperties, use, useEffect, useRef, useState } from "react";
 
 export default function GlowContainer({
   className,
@@ -35,18 +35,18 @@ export default function GlowContainer({
     };
   }, []);
 
+  const rect = ref.current?.getBoundingClientRect();
+
   useEffect(() => {
-    if (!ref.current) return;
-    const rect = ref.current.getBoundingClientRect();
+    if (!ref.current || !rect) return;
     const x = mousePosition.x - rect.left;
     const y = mousePosition.y - rect.top;
     setRelativeMousePosition({ x: `${x}px`, y: `${y}px` });
-  }, [mousePosition]);
+  }, [mousePosition, rect]);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (!ref.current) return;
-      const rect = ref.current.getBoundingClientRect();
+      if (!ref.current || !rect) return;
       const x = mousePosition.x - rect.left;
       const y = mousePosition.y - rect.top;
       setRelativeMousePosition({ x: `${x}px`, y: `${y}px` });
@@ -55,7 +55,35 @@ export default function GlowContainer({
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [ref.current?.getBoundingClientRect()]);
+  }, [rect, mousePosition.x, mousePosition.y]);
+
+  // useEffect(() => {
+  //   const handleTouchStart = (e: TouchEvent) => {
+  //     setMousePosition({ x: e.touches[0].clientX, y: e.touches[0].clientY });
+  //   };
+  //   document.addEventListener("touchstart", handleTouchStart);
+  //   return () => {
+  //     document.removeEventListener("touchstart", handleTouchStart);
+  //   };
+  // }, []);
+  // useEffect(() => {
+  //   const handleTouchMove = (e: TouchEvent) => {
+  //     setMousePosition({ x: e.touches[0].clientX, y: e.touches[0].clientY });
+  //   };
+  //   document.addEventListener("touchmove", handleTouchMove);
+  //   return () => {
+  //     document.removeEventListener("touchmove", handleTouchMove);
+  //   };
+  // }, []);
+  // useEffect(() => {
+  //   const handleTouchEnd = () => {
+  //     setMousePosition({ x: NaN, y: NaN });
+  //   };
+  //   document.addEventListener("touchend", handleTouchEnd);
+  //   return () => {
+  //     document.removeEventListener("touchend", handleTouchEnd);
+  //   };
+  // }, []);
 
   return (
     <div

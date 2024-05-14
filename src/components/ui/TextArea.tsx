@@ -32,4 +32,5 @@ const TextArea = React.forwardRef(
   }
 );
 
+TextArea.displayName = "TextArea";
 export default TextArea;
