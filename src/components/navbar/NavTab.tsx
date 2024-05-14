@@ -44,6 +44,10 @@ export default function NavTab({ tab }: { tab: Tab }) {
         className="relative flex flex-row justify-center items-center px-4 h-10 first:pl-6 last:pr-6  bg-white/50"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
+        onTouchStart={() => {
+          setIsHovered(true);
+          setTimeout(() => setIsHovered(false), 1000);
+        }}
         variants={{
           open: {
             gap: "0.5rem",
