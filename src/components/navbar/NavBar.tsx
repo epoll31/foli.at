@@ -63,6 +63,7 @@ export default async function Nav() {
     tabs = getLoggedInTabs(tag);
   }
   //TODO: add resizing to navbar to make it more minimal when closed
+  //TODO: add mobile navbar option
   return (
     <GlowContainer
       className="fixed bottom-8 shadow-xl z-40"
