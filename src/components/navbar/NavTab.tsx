@@ -23,7 +23,12 @@ function Outer({ children, tab }: { children: React.ReactNode; tab: Tab }) {
 
   if (tab.href) {
     return (
-      <Link onClick={handleClick} href={tab.href} className={className}>
+      <Link
+        onClick={handleClick}
+        href={tab.href}
+        className={className}
+        prefetch={false}
+      >
         {children}
       </Link>
     );
