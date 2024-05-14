@@ -3,7 +3,6 @@
 import logout from "@/utils/supabase/actions/logout";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export interface Tab {
@@ -23,12 +22,7 @@ function Outer({ children, tab }: { children: React.ReactNode; tab: Tab }) {
 
   if (tab.href) {
     return (
-      <Link
-        onClick={handleClick}
-        href={tab.href}
-        className={className}
-        prefetch={false}
-      >
+      <Link onClick={handleClick} href={tab.href} className={className} replace>
         {children}
       </Link>
     );
