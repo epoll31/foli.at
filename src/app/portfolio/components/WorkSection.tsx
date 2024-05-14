@@ -120,7 +120,7 @@ export default function WorkSection({
                   />
                 </ErrorWrapper>
               </div>
-              <div className="flex flex-row items-baseline gap-x-3 gap-y-3">
+              <div className="grid grid-cols-[min-content_1fr] md:flex flex-row items-baseline gap-x-3 gap-y-3">
                 <label htmlFor={`work-start_date-${item.key}`}>From:</label>
                 <ErrorWrapper
                   error={errors?.workEntries?.[item.key]?.start_date?.message}

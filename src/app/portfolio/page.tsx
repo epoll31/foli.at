@@ -31,18 +31,18 @@ export default async function ProfilePage() {
   const portfolioGroup = await loadPortfolioGroup(user_id);
 
   return (
-    // <div className="flex flex-col items-center ">
     <>
       <BackgroundGrid size={30} fade={"40%"} />
-      <Card className="p-0 border border-neutral-200">
-        <div className="px-20 py-6 rounded-t-xl bg-neutral-100 border-neutral-200 border-b">
-          <h2 className="text-4xl text-center">Edit Your Portfolio</h2>
+      <Card className="p-0 border border-neutral-200 mx-4 w-fit overflow-x-scroll">
+        <div className="px-0 py-6 rounded-t-xl bg-neutral-100 border-neutral-200 border-b">
+          <h2 className="text-3xl md:text-4xl text-center text-nowrap">
+            Edit Your Portfolio
+          </h2>
         </div>
         {portfolioGroup && (
           <UpdatePorfolioForm portfolioGroup={portfolioGroup} />
         )}
       </Card>
     </>
-    // </div>
   );
 }
