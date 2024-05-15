@@ -5,7 +5,7 @@ import { Portfolio } from "@/lib/types";
 import { useFormContext } from "react-hook-form";
 import { FormSchema } from "../utils/formSchema";
 import { AnimatePresence, motion } from "framer-motion";
-import ErrorWrapper from "./ErrorWrapper";
+import ErrorWrapper from "../../../components/forms/ErrorWrapper";
 
 export default function PortfolioInfoSection({
   portfolio,

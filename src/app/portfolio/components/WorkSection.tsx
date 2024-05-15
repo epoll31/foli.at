@@ -17,7 +17,7 @@ import Button from "@/components/ui/Button";
 import { useFormContext } from "react-hook-form";
 import { formatDateToMonthYear } from "@/utils/formatDate";
 import { FormSchema } from "../utils/formSchema";
-import ErrorWrapper from "./ErrorWrapper";
+import ErrorWrapper from "../../../components/forms/ErrorWrapper";
 
 type PartialWorkEntry = Omit<NoId<WorkEntry>, "start_date" | "end_date"> & {
   start_date: Date | undefined;

@@ -16,7 +16,7 @@ import { useState } from "react";
 import Button from "@/components/ui/Button";
 import { useFormContext } from "react-hook-form";
 import { formatDateToMonthYear } from "@/utils/formatDate";
-import ErrorWrapper from "./ErrorWrapper";
+import ErrorWrapper from "../../../components/forms/ErrorWrapper";
 import { FormSchema } from "../utils/formSchema";
 
 type PartialEducationEntry = Omit<

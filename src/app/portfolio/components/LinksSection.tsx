@@ -15,7 +15,7 @@ import ChevronUp from "@/components/icons/chevron-up";
 import { cn } from "@/utils/cn";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import ErrorWrapper from "./ErrorWrapper";
+import ErrorWrapper from "../../../components/forms/ErrorWrapper";
 import { FormSchema } from "../utils/formSchema";
 
 export default function LinksSection({ links: startLinks }: { links: Link[] }) {
