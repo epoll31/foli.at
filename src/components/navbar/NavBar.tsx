@@ -1,4 +1,3 @@
-import { createClient } from "@/utils/supabase/server";
 import Home from "../icons/home";
 import Briefcase from "../icons/briefcase";
 import User from "../icons/user";
@@ -7,7 +6,7 @@ import NavTab, { Tab } from "./NavTab";
 import Logout from "../icons/logout";
 import Pencil from "../icons/pencil";
 import { getTagFromUserId } from "@/utils/supabase/actions/getTagFromUserId";
-import { motion } from "framer-motion";
+import { auth } from "@/auth";
 
 function getLoggedInTabs(tag: string): Tab[] {
   return [
@@ -41,29 +40,21 @@ const loggedOutTabs: Tab[] = [
     icon: <Home />,
   },
   {
-    name: "Log In",
-    href: "/login",
+    name: "Sign In",
+    href: "/signin",
     icon: <User />,
   },
 ];
 
 export default async function Nav() {
-  const supabase = createClient();
-  const {
-    error,
-    data: { user },
-  } = await supabase.auth.getUser();
-  // const tabs = error ? loggedOutTabs : loggedInTabs;
+  const session = await auth();
 
   let tabs = loggedOutTabs;
 
-  if (!error) {
-    const tag = await getTagFromUserId(user!.id);
-
-    tabs = getLoggedInTabs(tag);
+  if (session) {
+    tabs = getLoggedInTabs("ethan");
   }
-  //TODO: add resizing to navbar to make it more minimal when closed
-  //TODO: add mobile navbar option
+
   return (
     <GlowContainer
       className="fixed bottom-8 shadow-xl z-40"

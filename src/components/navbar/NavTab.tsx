@@ -1,9 +1,9 @@
 "use client";
 
-import logout from "@/utils/supabase/actions/logout";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { useState } from "react";
+import { signOut } from "next-auth/react";
 
 export interface Tab {
   name: string;
@@ -15,7 +15,9 @@ export interface Tab {
 function Outer({ children, tab }: { children: React.ReactNode; tab: Tab }) {
   const handleClick = () => {
     if (tab.action === "logout") {
-      logout();
+      signOut({
+        callbackUrl: "/",
+      });
     }
   };
   const className = "first:rounded-l-full last:rounded-r-full overflow-hidden";
