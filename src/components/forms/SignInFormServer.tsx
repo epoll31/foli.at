@@ -6,7 +6,7 @@ import { signIn } from "@/auth";
 
 export default async function SignInForm() {
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3 p-6">
       <form
         action={async (formData) => {
           "use server";
@@ -24,19 +24,19 @@ export default async function SignInForm() {
           Sign in
         </Button>
       </form>
+      <span className="w-full h-px bg-gradient-to-r from-transparent via-blue-300 to-transparent" />
       <form
         action={async () => {
           "use server";
           return await signIn("google");
         }}
       >
-        <button
-          type="submit"
-          className="border-2 border-blue-200 bg-transparent hover:bg-blue-200 active:bg-blue-300 rounded-lg px-3 py-2 text-xl w-full flex items-center gap-3 transition-colors duration-500"
-        >
-          <Google className="text-2xl" />
-          <span className="mx-auto text-nowrap">Sign in with Google</span>
-        </button>
+        <Button type="submit" className="w-full">
+          <span className="flex items-center gap-3 px-3 py-2 ">
+            <Google className="text-2xl" />
+            <span className="mx-auto text-nowrap">Sign in with Google</span>
+          </span>
+        </Button>
       </form>
       <form
         action={async () => {
@@ -44,13 +44,12 @@ export default async function SignInForm() {
           return await signIn("github");
         }}
       >
-        <button
-          type="submit"
-          className="border-2 border-blue-200 bg-transparent hover:bg-blue-200 active:bg-blue-300 rounded-lg px-3 py-2 w-full  text-xl flex items-center gap-3 transition-colors duration-500"
-        >
-          <Github className="text-2xl" />
-          <span className="mx-auto text-nowrap">Sign in with GitHub</span>
-        </button>
+        <Button type="submit" className="w-full">
+          <span className="flex items-center gap-3 px-3 py-2 ">
+            <Github className="text-2xl" />
+            <span className="mx-auto text-nowrap">Sign in with GitHub</span>
+          </span>
+        </Button>
       </form>
     </div>
   );
