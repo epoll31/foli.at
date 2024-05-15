@@ -30,19 +30,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           const { email, password } = await signInSchema.parseAsync(
             credentials
           );
-          console.log("email", email);
-          console.log("password", password);
-
           // logic to verify if user exists
           user = await getUser(email, password);
-          console.log("user", user);
 
           if (!user) {
             // No user found, so this is their first attempt to login
             // meaning this is also the place you could do registration
             // logic to salt and hash password
             const { hash, salt } = hashPassword(password);
-            console.log("pwHash", hash);
 
             user = await createUser(email, hash, salt);
           }
