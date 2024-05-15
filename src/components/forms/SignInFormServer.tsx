@@ -10,7 +10,11 @@ export default async function SignInForm() {
       <form
         action={async (formData) => {
           "use server";
-          return await signIn("credentials", formData);
+          return await signIn("credentials", {
+            email: formData.get("email"),
+            password: formData.get("password"),
+            redirectTo: "/",
+          });
         }}
         className="flex flex-col gap-3"
       >
@@ -28,7 +32,7 @@ export default async function SignInForm() {
       <form
         action={async () => {
           "use server";
-          return await signIn("google");
+          return await signIn("google", { callbackUrl: "/" });
         }}
       >
         <Button type="submit" className="w-full">
@@ -41,7 +45,7 @@ export default async function SignInForm() {
       <form
         action={async () => {
           "use server";
-          return await signIn("github");
+          return await signIn("github", { callbackUrl: "/" });
         }}
       >
         <Button type="submit" className="w-full">
