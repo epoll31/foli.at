@@ -10,7 +10,6 @@ import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { formSchema, type FormSchema } from "@/lib/zod/portfolioSchema";
 import setPortfolio from "@/utils/actions/setPortfolio";
-import { RedirectType, redirect } from "next/navigation";
 
 export default function PorfolioForm({
   portfolio,
@@ -37,11 +36,7 @@ export default function PorfolioForm({
   const onSubmit = methods.handleSubmit(async (data) => {
     const validatedData = formSchema.parse(data);
 
-    const updatedPortfolio = await setPortfolio(
-      validatedData,
-      email,
-      undefined
-    );
+    const updatedPortfolio = await setPortfolio({ email }, validatedData);
 
     console.log("Updated portfolio:", updatedPortfolio);
     document.location.reload();

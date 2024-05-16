@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
 
-import getUserId from "@/utils/actions/getUserId";
+import getUserByEmail from "@/utils/actions/getUserByEmail";
 import SignOutButton from "./SignOutButton";
 import getPortfolio from "@/utils/actions/getPortfolio";
 
@@ -10,7 +10,7 @@ export default async function SettingsPage() {
   if (!email) {
     return <p className="text-center">You are not authenticated.</p>;
   }
-  const userId = await getUserId(email);
+  const { id: userId } = await getUserByEmail(email);
   console.log("User ID:", userId);
   const portfolio = await getPortfolio({ email });
 

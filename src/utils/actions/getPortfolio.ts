@@ -1,63 +1,50 @@
-import { Portfolio } from "@/lib/types";
+import prisma from "@/lib/prisma";
 
-function fixDates(portfolio: Portfolio) {
-  const workHistories = portfolio.workHistories.map((workHistory) => {
-    return {
-      ...workHistory,
-      startDate: new Date(workHistory.startDate),
-      endDate: workHistory.endDate ? new Date(workHistory.endDate) : null,
-    };
-  });
-
-  const educationHistories = portfolio.educationHistories.map(
-    (educationHistory) => {
-      return {
-        ...educationHistory,
-        startDate: new Date(educationHistory.startDate),
-        endDate: educationHistory.endDate
-          ? new Date(educationHistory.endDate)
-          : null,
-      };
-    }
-  );
-
-  return {
-    ...portfolio,
-    workHistories,
-    educationHistories,
-  } as Portfolio;
-}
-
-export default async function getPortfolio(where: {
-  email?: string;
+export default async function getPortfolio({
+  userId,
+  email,
+  tag,
+}: {
   userId?: string;
+  email?: string;
   tag?: string;
 }) {
-  console.log(where);
+  let where;
 
-  try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/portfolio`,
-      {
-        method: "POST",
-        cache: "no-store",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify(where),
-      }
-    );
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+  if (tag) {
+    where = { tag };
+  } else {
+    if (!userId && !email) {
+      throw new Error("No userId or email found in request");
     }
 
-    const data = await response.json();
+    if (!userId) {
+      const user = await prisma.user.findUnique({
+        where: { email },
+      });
 
-    return fixDates(data.portfolio);
-  } catch (error) {
-    console.error("Failed to fetch portfolio:", error);
-    return null;
+      if (!user) {
+        throw new Error("No user found given email");
+      }
+
+      userId = user.id;
+    }
+
+    where = { userId };
   }
+
+  const portfolio = await prisma.portfolio.findUnique({
+    where,
+    include: {
+      links: true,
+      educationHistories: true,
+      workHistories: true,
+    },
+  });
+
+  if (!portfolio) {
+    throw new Error("No portfolio found");
+  }
+
+  return portfolio;
 }

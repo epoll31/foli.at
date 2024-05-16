@@ -1,50 +1,85 @@
-import { Portfolio } from "@/lib/types";
+// src/utils/actions/setPortfolio.ts
+"use server";
+
+import prisma from "@/lib/prisma";
 import { FormSchema } from "@/lib/zod/portfolioSchema";
 
 export default async function setPortfolio(
-  portfolio: FormSchema,
-  email?: string,
-  userId?: string
+  {
+    userId: rawUserId,
+    email,
+  }: {
+    userId?: string;
+    email?: string;
+  },
+  data: FormSchema
 ) {
-  const {
-    portfolio: { tag, fullName, description, title },
-    links,
-    educationHistories,
-    workHistories,
-  } = portfolio;
+  console.log("userId", rawUserId);
+  console.log("email", email);
 
-  try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/portfolio`,
-      {
-        method: "PUT",
-        cache: "no-store",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({
-          email,
-          userId,
-          tag,
-          fullName,
-          description,
-          title,
-          links,
-          educationHistories,
-          workHistories,
-        }),
-      }
-    );
+  let userId;
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+  if (!rawUserId && !email) {
+    throw new Error("No userId or email found in request");
+  }
+
+  if (!rawUserId) {
+    console.log("prisma:", prisma);
+    const user = await prisma.user.findUnique({
+      where: { email },
+    });
+
+    if (!user) {
+      throw new Error("No user found given email");
     }
 
-    const data = await response.json();
-    return data.portfolio;
-  } catch (error) {
-    console.error("Failed to fetch portfolio:", error);
-    return null;
+    userId = user.id;
+  } else {
+    userId = rawUserId;
   }
+
+  const portfolio = await prisma.portfolio.upsert({
+    where: { userId: userId },
+    create: {
+      userId: userId,
+      tag: data.portfolio.tag,
+      fullName: data.portfolio.fullName,
+      description: data.portfolio.description,
+      title: data.portfolio.title,
+      links: {
+        create: data.links,
+      },
+      educationHistories: {
+        create: data.educationHistories,
+      },
+      workHistories: {
+        create: data.workHistories,
+      },
+    },
+    update: {
+      tag: data.portfolio.tag,
+      fullName: data.portfolio.fullName,
+      description: data.portfolio.description,
+      title: data.portfolio.title,
+      links: {
+        deleteMany: {}, // Remove existing links
+        create: data.links, // Add new links
+      },
+      educationHistories: {
+        deleteMany: {}, // Remove existing education histories
+        create: data.educationHistories, // Add new education histories
+      },
+      workHistories: {
+        deleteMany: {}, // Remove existing work histories
+        create: data.workHistories, // Add new work histories
+      },
+    },
+    include: {
+      links: true,
+      educationHistories: true,
+      workHistories: true,
+    },
+  });
+
+  return portfolio;
 }
