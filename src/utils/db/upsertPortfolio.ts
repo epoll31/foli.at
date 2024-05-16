@@ -1,23 +1,34 @@
-import { auth } from "@/auth";
 import prisma from "@/lib/prisma";
 import { FormSchema } from "@/lib/zod/portfolioSchema";
+import { Session } from "next-auth";
 
-export default async function upsertPortfolio(data: FormSchema) {
+export default async function upsertPortfolio(
+  data: FormSchema,
+  session: Session
+) {
   console.log("Upserting portfolio:", data);
-  const session = await auth();
-  const userId = session?.user?.id;
-  if (!session || !userId) {
+
+  const email = session.user?.email;
+  if (!session || !email) {
     throw new Error("UpsertPortfolio: User is not authenticated.");
   }
-  console.log("Upserting portfolio for user:", userId);
+  console.log("Upserting portfolio for user:", email);
 
   const { portfolio, links, educationHistories, workHistories } = data;
 
   return prisma.$transaction(async (prisma) => {
+    const user = await prisma.user.findUnique({
+      where: { email },
+    });
+
+    if (!user) {
+      throw new Error(`User with email ${email} not found`);
+    }
+
     const userPortfolio = await prisma.portfolio.upsert({
-      where: { userId: userId },
+      where: { userId: user.id },
       create: {
-        userId: userId,
+        userId: user.id,
         tag: portfolio.tag,
         fullName: portfolio.fullName,
         description: portfolio.description,

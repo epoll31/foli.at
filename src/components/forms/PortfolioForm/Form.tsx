@@ -1,6 +1,6 @@
 "use client";
 
-import { LinkType, Portfolio } from "@/lib/types";
+import { Portfolio } from "@/lib/types";
 import PortfolioInfoSection from "./PortfolioInfoSection";
 import LinksSection from "./LinksSection";
 import WorkSection from "./WorkSection";
@@ -9,9 +9,15 @@ import Button from "@/components/ui/Button";
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { formSchema, type FormSchema } from "@/lib/zod/portfolioSchema";
-import upsertPortfolio from "@/utils/db/upsertPortfolio";
+import setPortfolio from "@/utils/actions/setPortfolio";
 
-export default function PorfolioForm({ portfolio }: { portfolio: Portfolio }) {
+export default function PorfolioForm({
+  portfolio,
+  email,
+}: {
+  portfolio: Portfolio;
+  email: string;
+}) {
   const methods = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -27,10 +33,16 @@ export default function PorfolioForm({ portfolio }: { portfolio: Portfolio }) {
     },
     mode: "onChange",
   });
-
   const onSubmit = methods.handleSubmit(async (data) => {
     const validatedData = formSchema.parse(data);
-    await upsertPortfolio(validatedData);
+
+    const updatedPortfolio = await setPortfolio(
+      validatedData,
+      email,
+      undefined
+    );
+
+    console.log("Updated portfolio:", updatedPortfolio);
   });
 
   return (
