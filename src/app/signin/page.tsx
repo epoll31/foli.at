@@ -1,5 +1,5 @@
 import BackgroundGrid from "@/components/BackgroundGrid";
-import SignInForm from "@/components/forms/SignInFormServer";
+import SignInForm from "@/components/forms/SignInForm";
 import Card from "@/components/ui/Card";
 
 export default function SignInPage() {

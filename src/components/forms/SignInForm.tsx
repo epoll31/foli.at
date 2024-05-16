@@ -16,7 +16,7 @@ import {
 export default function SignInForm() {
   const {
     register,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<SignInSchema>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
@@ -27,7 +27,7 @@ export default function SignInForm() {
   });
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3 p-6">
       <form action={signInWithCredentials} className="flex flex-col gap-3">
         <div className="grid grid-cols-[min-content_1fr] gap-3 items-baseline">
           <label htmlFor="email">Email</label>
@@ -35,6 +35,7 @@ export default function SignInForm() {
             <Input
               type="email"
               className="w-full"
+              glowColor={errors?.email ? "#fb3b53" : "#60a5fa"}
               {...register("email", { required: true })}
             />
           </ErrorWrapper>
@@ -43,31 +44,35 @@ export default function SignInForm() {
             <Input
               type="password"
               className="w-full"
+              glowColor={errors?.password ? "#fb3b53" : "#60a5fa"}
               {...register("password", { required: true })}
             />
           </ErrorWrapper>
         </div>
-        <Button type="submit" className="w-full">
+        <Button
+          type="submit"
+          className="w-full"
+          glowColor={isValid ? "#34d399" : "#fb3b53"}
+        >
           Sign in
         </Button>
       </form>
+      <span className="w-full h-px bg-gradient-to-r from-transparent via-blue-300 to-transparent" />
       <form action={signInWithGoogle}>
-        <button
-          type="submit"
-          className="border-2 border-blue-200 bg-transparent hover:bg-blue-200 active:bg-blue-300 rounded-lg px-3 py-2 text-xl w-full flex items-center gap-3 transition-colors duration-500"
-        >
-          <Google className="text-2xl" />
-          <span className="mx-auto text-nowrap">Sign in with Google</span>
-        </button>
+        <Button type="submit" className="w-full">
+          <span className="flex items-center gap-3 px-3 py-2 ">
+            <Google className="text-2xl" />
+            <span className="mx-auto text-nowrap">Sign in with Google</span>
+          </span>
+        </Button>
       </form>
       <form action={signInWithGithub}>
-        <button
-          type="submit"
-          className="border-2 border-blue-200 bg-transparent hover:bg-blue-200 active:bg-blue-300 rounded-lg px-3 py-2 w-full  text-xl flex items-center gap-3 transition-colors duration-500"
-        >
-          <Github className="text-2xl" />
-          <span className="mx-auto text-nowrap">Sign in with GitHub</span>
-        </button>
+        <Button type="submit" className="w-full">
+          <span className="flex items-center gap-3 px-3 py-2 ">
+            <Github className="text-2xl" />
+            <span className="mx-auto text-nowrap">Sign in with GitHub</span>
+          </span>
+        </Button>
       </form>
     </div>
   );
