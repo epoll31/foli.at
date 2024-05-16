@@ -22,10 +22,15 @@ function getLoggedInTabs(tag?: string): Tab[] {
         href: "/portfolio",
         icon: <Pencil />,
       },
+      // {
+      //   name: "Settings",
+      //   href: "/settings",
+      //   icon: <Gear />,
+      // },
       {
-        name: "Settings",
-        href: "/settings",
-        icon: <Gear />,
+        name: "Sign Out",
+        action: "logout",
+        icon: <Logout />,
       },
     ];
   }
@@ -45,10 +50,15 @@ function getLoggedInTabs(tag?: string): Tab[] {
       href: "/portfolio",
       icon: <Pencil />,
     },
+    // {
+    //   name: "Settings",
+    //   href: "/settings",
+    //   icon: <Gear />,
+    // },
     {
-      name: "Settings",
-      href: "/settings",
-      icon: <Gear />,
+      name: "Sign Out",
+      action: "logout",
+      icon: <Logout />,
     },
   ];
 }
