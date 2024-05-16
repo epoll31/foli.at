@@ -7,6 +7,7 @@ import Logout from "../icons/logout";
 import Pencil from "../icons/pencil";
 import { auth } from "@/auth";
 import getPortfolio from "@/utils/actions/getPortfolio";
+import Gear from "../icons/gear";
 
 function getLoggedInTabs(tag?: string): Tab[] {
   if (!tag) {
@@ -22,9 +23,9 @@ function getLoggedInTabs(tag?: string): Tab[] {
         icon: <Pencil />,
       },
       {
-        name: "Log Out",
-        action: "logout",
-        icon: <Logout />,
+        name: "Settings",
+        href: "/settings",
+        icon: <Gear />,
       },
     ];
   }
@@ -45,9 +46,9 @@ function getLoggedInTabs(tag?: string): Tab[] {
       icon: <Pencil />,
     },
     {
-      name: "Log Out",
-      action: "logout",
-      icon: <Logout />,
+      name: "Settings",
+      href: "/settings",
+      icon: <Gear />,
     },
   ];
 }
