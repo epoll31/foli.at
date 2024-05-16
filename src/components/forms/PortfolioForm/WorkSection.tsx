@@ -1,7 +1,7 @@
 "user client";
 
 import useKeyedItems from "@/utils/hooks/useKeyedItems";
-import { NoId, WorkEntry } from "@/lib/types";
+import { WorkHistory } from "@/lib/types";
 import Input from "@/components/ui/Input";
 import TrashButton from "@/components/TrashButtons";
 import TextArea from "@/components/ui/TextArea";
@@ -19,14 +19,17 @@ import { formatDateToMonthYear } from "@/utils/formatDate";
 import { FormSchema } from "@/lib/zod/portfolioSchema";
 import ErrorWrapper from "@/components/forms/ErrorWrapper";
 
-type PartialWorkEntry = Omit<NoId<WorkEntry>, "start_date" | "end_date"> & {
-  start_date: Date | undefined;
-  end_date: Date | undefined;
+type PartialWorkHistory = Omit<
+  WorkHistory,
+  "id" | "startDate" | "endDate" | "portfolioId"
+> & {
+  startDate: Date | undefined;
+  endDate: Date | undefined;
 };
 export default function WorkSection({
-  workEntries,
+  workHistories,
 }: {
-  workEntries: WorkEntry[];
+  workHistories: WorkHistory[];
 }) {
   const {
     register,
@@ -39,17 +42,20 @@ export default function WorkSection({
     items: workKeys,
     addItem: addWork,
     removeItem: removeWork,
-  } = useKeyedItems<PartialWorkEntry>(
-    workEntries.map((entry) => ({
-      ...entry,
-      end_date: entry.end_date ? entry.end_date : undefined,
+  } = useKeyedItems<PartialWorkHistory>(
+    workHistories.map((item) => ({
+      title: item.title,
+      company: item.company,
+      description: item.description,
+      startDate: item.startDate,
+      endDate: item.endDate ?? undefined,
     })),
     {
       title: "",
       company: "",
       description: "",
-      start_date: undefined,
-      end_date: undefined,
+      startDate: undefined,
+      endDate: undefined,
     }
   );
 
@@ -77,20 +83,22 @@ export default function WorkSection({
           <div className="flex flex-col justify-center" key={item.key}>
             <div className="flex flex-col relative px-6 gap-3">
               <div className="w-full grid grid-cols-[min-content_1fr] items-baseline gap-x-3 gap-y-3">
-                <label htmlFor={`work-title-${item.key}`}>Title:</label>
+                <label htmlFor={`workHistories.${item.key}.title}`}>
+                  Title:
+                </label>
                 <div className="grid grid-cols-[1fr_min-content] gap-4">
                   <ErrorWrapper
-                    error={errors?.workEntries?.[item.key]?.title?.message}
+                    error={errors?.workHistories?.[item.key]?.title?.message}
                   >
                     <Input
                       className="w-full"
-                      id={`work-title-${item.key}`}
-                      {...register(`workEntries.${item.key}.title`)}
+                      id={`workHistories.${item.key}.title`}
+                      {...register(`workHistories.${item.key}.title`)}
                       defaultValue={item.value.title}
                       required
                       tabIndex={open ? 0 : -1}
                       glowColor={
-                        errors?.workEntries?.[item.key]?.title
+                        errors?.workHistories?.[item.key]?.title
                           ? "#fb3b53"
                           : "#60a5fa"
                       }
@@ -101,19 +109,21 @@ export default function WorkSection({
                     tabIndex={open ? 0 : -1}
                   />
                 </div>
-                <label htmlFor={`work-company-${item.key}`}>Company:</label>
+                <label htmlFor={`workHistories.${item.key}.company`}>
+                  Company:
+                </label>
                 <ErrorWrapper
-                  error={errors?.workEntries?.[item.key]?.company?.message}
+                  error={errors?.workHistories?.[item.key]?.company?.message}
                 >
                   <Input
                     className="w-full"
-                    id={`work-company-${item.key}`}
-                    {...register(`workEntries.${item.key}.company`)}
+                    id={`workHistories.${item.key}.company}`}
+                    {...register(`workHistories.${item.key}.company`)}
                     defaultValue={item.value.company}
                     required
                     tabIndex={open ? 0 : -1}
                     glowColor={
-                      errors?.workEntries?.[item.key]?.company
+                      errors?.workHistories?.[item.key]?.company
                         ? "#fb3b53"
                         : "#60a5fa"
                     }
@@ -121,69 +131,71 @@ export default function WorkSection({
                 </ErrorWrapper>
               </div>
               <div className="grid grid-cols-[min-content_1fr] md:flex flex-row items-baseline gap-x-3 gap-y-3">
-                <label htmlFor={`work-start_date-${item.key}`}>From:</label>
+                <label htmlFor={`workHistories.${item.key}.startDate`}>
+                  From:
+                </label>
                 <ErrorWrapper
-                  error={errors?.workEntries?.[item.key]?.start_date?.message}
+                  error={errors?.workHistories?.[item.key]?.startDate?.message}
                 >
                   <Input
                     className="w-full"
-                    id={`work-start_date-${item.key}`}
+                    id={`workHistories.${item.key}.startDate`}
                     onChange={(e) => {
                       setValue(
-                        `workEntries.${item.key}.start_date`,
+                        `workHistories.${item.key}.startDate`,
                         new Date(e.target.value)
                       );
                     }}
                     type="month"
-                    defaultValue={formatDateToMonthYear(item.value.start_date)}
+                    defaultValue={formatDateToMonthYear(item.value.startDate)}
                     required
                     tabIndex={open ? 0 : -1}
                     glowColor={
-                      errors?.workEntries?.[item.key]?.start_date
+                      errors?.workHistories?.[item.key]?.startDate
                         ? "#fb3b53"
                         : "#60a5fa"
                     }
                   />
                 </ErrorWrapper>
-                <label htmlFor={`work-end_date-${item.key}`}>To:</label>
+                <label htmlFor={`workHistories.${item.key}.endDate`}>To:</label>
                 <ErrorWrapper
-                  error={errors?.workEntries?.[item.key]?.end_date?.message}
+                  error={errors?.workHistories?.[item.key]?.endDate?.message}
                 >
                   <Input
                     className="w-full"
-                    id={`work-end_date-${item.key}`}
+                    id={`workHistories.${item.key}.endDate`}
                     onChange={(e) => {
                       setValue(
-                        `workEntries.${item.key}.end_date`,
+                        `workHistories.${item.key}.endDate`,
                         new Date(e.target.value)
                       );
                     }}
                     type="month"
-                    defaultValue={formatDateToMonthYear(item.value.end_date)}
+                    defaultValue={formatDateToMonthYear(item.value.endDate)}
                     tabIndex={open ? 0 : -1}
                     glowColor={
-                      errors?.workEntries?.[item.key]?.end_date
+                      errors?.workHistories?.[item.key]?.endDate
                         ? "#fb3b53"
                         : "#60a5fa"
                     }
                   />
                 </ErrorWrapper>
               </div>
-              <label htmlFor={`work-description-${item.key}`}>
+              <label htmlFor={`workHistories.${item.key}.description`}>
                 Description:
               </label>
               <ErrorWrapper
-                error={errors?.workEntries?.[item.key]?.description?.message}
+                error={errors?.workHistories?.[item.key]?.description?.message}
               >
                 <TextArea
                   className="h-32"
-                  id={`work-description-${item.key}`}
-                  {...register(`workEntries.${item.key}.description`)}
+                  id={`workHistories.${item.key}.description`}
+                  {...register(`workHistories.${item.key}.description`)}
                   defaultValue={item.value.description}
                   required
                   tabIndex={open ? 0 : -1}
                   glowColor={
-                    errors?.workEntries?.[item.key]?.description
+                    errors?.workHistories?.[item.key]?.description
                       ? "#fb3b53"
                       : "#60a5fa"
                   }

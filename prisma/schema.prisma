@@ -92,9 +92,17 @@ model Portfolio {
   @@index([userId])
 }
 
+enum LinkType {
+  GITHUB
+  LINKEDIN
+  TWITTER
+  PORTFOLIO
+  OTHER
+}
+
 model Link {
   id                  String    @id @default(cuid())
-  type                String
+  type                LinkType
   href                String
   portfolioId         String
 

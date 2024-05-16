@@ -1,7 +1,6 @@
 "use server";
 
-import { FormSchema } from "@/lib/zod/formSchema";
-import { EducationEntry, Link, NoId, Portfolio, WorkEntry } from "@/lib/types";
+import { FormSchema } from "@/lib/zod/portfolioSchema";
 import { createClient } from "@/utils/supabase/server";
 
 export async function updatePortfolio(data: FormSchema) {
@@ -71,8 +70,8 @@ export async function updatePortfolio(data: FormSchema) {
   }
 
   await updateRelatedItems("link", data.links);
-  await updateRelatedItems("workEntry", data.workEntries);
-  await updateRelatedItems("educationEntry", data.educationEntries);
+  await updateRelatedItems("workEntry", data.workHistories);
+  await updateRelatedItems("educationEntry", data.educationHistories);
 
   // console.log("Portfolio updated:", newPortfolio);
   return newPortfolio; // Return the created portfolio

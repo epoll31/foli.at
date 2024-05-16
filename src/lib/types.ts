@@ -1,49 +1,29 @@
-export type NoId<T> = Omit<T, "id">;
+import { Prisma } from "@prisma/client";
 
-export interface Portfolio {
-  id: number; // int8
-  tag: string; // text
-  full_name: string; // text
-  bio: string; // text
-  title: string; // text
-}
+export type Portfolio = Prisma.PortfolioGetPayload<{
+  include: {
+    links: true;
+    educationHistories: true;
+    workHistories: true;
+  };
+}>;
 
-export const LinkTypes = [
-  "github",
-  "linkedin",
-  "twitter",
-  "portfolio",
-  "other",
-] as const;
-export type LinkType = (typeof LinkTypes)[number];
-export interface Link {
-  id: number; // int8
-  href: string; // text
-  type: LinkType; // text
-}
+export type Link = Prisma.LinkGetPayload<{}>;
+export type WorkHistory = Prisma.WorkHistoryGetPayload<{}>;
+export type EducationHistory = Prisma.EducationHistoryGetPayload<{}>;
 
-export interface EducationEntry {
-  id: number; // int8
-  school: string; // text
-  degree: string; // text
-  major: string | null; // text
-  description: string; // text
-  start_date: Date; // timestamptz
-  end_date: Date | null; // timestamptz
-}
+export { LinkType } from "@prisma/client";
 
-export interface WorkEntry {
-  id: number; // int8
-  title: string; // text
-  company: string; // text
-  description: string; // text
-  start_date: Date; // timestamptz
-  end_date: Date | null; // timestamptz
-}
-
-export interface PortfolioGroup {
-  portfolio: Portfolio;
-  links: Link[];
-  educationEntries: EducationEntry[];
-  workEntries: WorkEntry[];
-}
+export const EmptyPortfolio: Portfolio = {
+  id: "",
+  userId: "",
+  tag: "",
+  fullName: "",
+  title: "",
+  description: "",
+  links: [],
+  educationHistories: [],
+  workHistories: [],
+  createdAt: new Date(),
+  updatedAt: new Date(),
+};

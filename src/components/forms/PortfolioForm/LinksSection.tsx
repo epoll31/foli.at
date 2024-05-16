@@ -2,7 +2,7 @@
 
 import DropDown from "@/components/ui/DropDown";
 import useKeyedItems from "@/utils/hooks/useKeyedItems";
-import { Link } from "@/lib/types";
+import { Link, LinkType } from "@/lib/types";
 import Input from "@/components/ui/Input";
 import TrashButton from "@/components/TrashButtons";
 import {
@@ -13,11 +13,12 @@ import {
 import Button from "@/components/ui/Button";
 import ChevronUp from "@/components/icons/chevron-up";
 import { cn } from "@/utils/cn";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import ErrorWrapper from "@/components/forms/ErrorWrapper";
 import { FormSchema } from "@/lib/zod/portfolioSchema";
 
+type PartialLink = Omit<Link, "id" | "portfolioId">;
 export default function LinksSection({ links: startLinks }: { links: Link[] }) {
   const {
     register,
@@ -28,8 +29,8 @@ export default function LinksSection({ links: startLinks }: { links: Link[] }) {
     items: links,
     addItem: addLink,
     removeItem: removeLink,
-  } = useKeyedItems<{ type: string; href: string }>(startLinks, {
-    type: "other",
+  } = useKeyedItems<PartialLink>(startLinks, {
+    type: LinkType.OTHER,
     href: "",
   });
 
@@ -56,22 +57,21 @@ export default function LinksSection({ links: startLinks }: { links: Link[] }) {
           <div key={link.key} className="flex flex-col ps-6 ">
             <div className="flex flex-row">
               <div className="w-full grid grid-cols-[min-content_1fr] items-baseline gap-x-3 gap-y-3">
-                <label htmlFor={`link-type-${link.key}`}>Type:</label>
+                <label htmlFor={`links.${index}.type`}>Type:</label>
                 <ErrorWrapper
                   error={errors?.links && errors.links[index]?.message}
                 >
                   <DropDown
                     className="w-full"
                     options={[
-                      { value: "github", label: "Github" },
-                      { value: "linkedin", label: "LinkedIn" },
-                      { value: "twitter", label: "Twitter" },
-                      { value: "portfolio", label: "Portfolio" },
-                      { value: "other", label: "Other" },
+                      { value: LinkType.GITHUB, label: "Github" },
+                      { value: LinkType.LINKEDIN, label: "LinkedIn" },
+                      { value: LinkType.TWITTER, label: "Twitter" },
+                      { value: LinkType.PORTFOLIO, label: "Portfolio" },
+                      { value: LinkType.OTHER, label: "Other" },
                     ]}
-                    // {...register(`links[${index}].type`)} // Using register for DropDown
                     {...register(`links.${index}.type`, { required: true })} // Using register for DropDown
-                    id={`link-type-${link.key}`}
+                    id={`links.${index}.type`}
                     required
                     defaultValue={link.value.type}
                     tabIndex={open ? 0 : -1}
@@ -82,13 +82,13 @@ export default function LinksSection({ links: startLinks }: { links: Link[] }) {
                     }
                   />
                 </ErrorWrapper>
-                <label htmlFor={`link-href-${link.key}`}>Link:</label>
+                <label htmlFor={`links.${index}.href`}>Link:</label>
                 <ErrorWrapper
                   error={errors?.links && errors.links[index]?.href?.message}
                 >
                   <Input
                     className="w-full"
-                    id={`link-href-${link.key}`}
+                    id={`links.${index}.href`}
                     {...register(`links.${index}.href`)} // Using register for Input
                     defaultValue={link.value.href}
                     type="url"

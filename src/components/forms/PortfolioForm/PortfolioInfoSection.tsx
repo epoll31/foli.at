@@ -19,28 +19,28 @@ export default function PortfolioInfoSection({
   return (
     <div className="p-6 flex flex-col gap-3">
       <div className="w-full grid grid-cols-[min-content_1fr] items-baseline gap-x-3 gap-y-3">
-        <label htmlFor="tag">Tag:</label>
+        <label htmlFor="portfolio.tag">Tag:</label>
         <ErrorWrapper error={errors?.portfolio?.tag?.message}>
           <Input
             className="w-full"
-            id="tag"
+            id="portfolio.tag"
             {...register("portfolio.tag", { required: true })}
             defaultValue={portfolio.tag}
             required
             glowColor={errors?.portfolio?.tag ? "#fb3b53" : "#60a5fa"}
           />
         </ErrorWrapper>
-        <label htmlFor="full_name" className="text-nowrap">
+        <label htmlFor="portfolio.fullName" className="text-nowrap">
           Full Name:
         </label>
-        <ErrorWrapper error={errors?.portfolio?.full_name?.message}>
+        <ErrorWrapper error={errors?.portfolio?.fullName?.message}>
           <Input
             className="w-full"
-            id="full_name"
-            {...register("portfolio.full_name", { required: true })}
-            defaultValue={portfolio.full_name}
+            id="portfolio.fullName"
+            {...register("portfolio.fullName", { required: true })}
+            defaultValue={portfolio.fullName}
             required
-            glowColor={errors?.portfolio?.full_name ? "#fb3b53" : "#60a5fa"}
+            glowColor={errors?.portfolio?.fullName ? "#fb3b53" : "#60a5fa"}
           />
         </ErrorWrapper>
         <label htmlFor="title">Title:</label>
@@ -56,15 +56,15 @@ export default function PortfolioInfoSection({
         </ErrorWrapper>
       </div>
       <div className="flex flex-col">
-        <label htmlFor="bio">About Me:</label>
-        <ErrorWrapper error={errors?.portfolio?.bio?.message}>
+        <label htmlFor="portfolio.description">About Me:</label>
+        <ErrorWrapper error={errors?.portfolio?.description?.message}>
           <TextArea
             className="h-32"
-            id="bio"
-            {...register("portfolio.bio", { required: true })}
-            defaultValue={portfolio.bio}
+            id="portfolio.description"
+            {...register("portfolio.description", { required: true })}
+            defaultValue={portfolio.description}
             required
-            glowColor={errors?.portfolio?.bio ? "#fb3b53" : "#60a5fa"}
+            glowColor={errors?.portfolio?.description ? "#fb3b53" : "#60a5fa"}
           />
         </ErrorWrapper>
       </div>
