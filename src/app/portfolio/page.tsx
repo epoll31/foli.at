@@ -1,5 +1,5 @@
 import { RedirectType, redirect } from "next/navigation";
-import UpdatePorfolioForm from "@/components/forms/PortfolioForm/Form";
+import PortfolioForm from "@/components/forms/PortfolioForm/Form";
 
 import BackgroundGrid from "@/components/BackgroundGrid";
 import Card from "@/components/ui/Card";
@@ -11,11 +11,11 @@ import getPortfolio from "@/utils/actions/getPortfolio";
 
 export default async function PortfolioPage() {
   const session = await auth();
-  if (!session || !session.user?.email) {
+  const email = session?.user?.email;
+  if (!session || !email) {
     redirect("/signin", RedirectType.replace);
   }
-  const portfolio =
-    (await getPortfolio({ email: session.user.email })) || EmptyPortfolio;
+  const portfolio = (await getPortfolio({ email })) || EmptyPortfolio;
 
   return (
     <SessionProvider session={session}>
@@ -26,12 +26,7 @@ export default async function PortfolioPage() {
             Edit Your Portfolio
           </h2>
         </div>
-        {portfolio && (
-          <UpdatePorfolioForm
-            portfolio={portfolio}
-            email={session.user.email}
-          />
-        )}
+        {portfolio && <PortfolioForm portfolio={portfolio} email={email} />}
       </Card>
     </SessionProvider>
   );
