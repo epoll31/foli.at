@@ -1,18 +1,7 @@
-import { auth } from "@/auth";
-import getUserId from "@/utils/actions/getUserId";
-
 export default async function Home() {
-  const session = await auth();
-  const email = session?.user?.email;
-  if (!email) {
-    return <p className="text-center">You are not authenticated.</p>;
-  }
-  const userId = await getUserId(email);
-  console.log("User ID:", userId);
   return (
     <>
       <h2 className="text-4xl text-center">Build Your Portfolio Now!</h2>
-      <p className="text-center">User ID: {userId ? userId : "null"}</p>
     </>
   );
 }
