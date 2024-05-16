@@ -6,8 +6,28 @@ import NavTab, { Tab } from "./NavTab";
 import Logout from "../icons/logout";
 import Pencil from "../icons/pencil";
 import { auth } from "@/auth";
+import getPortfolio from "@/utils/actions/getPortfolio";
 
-function getLoggedInTabs(tag: string): Tab[] {
+function getLoggedInTabs(tag?: string): Tab[] {
+  if (!tag) {
+    return [
+      {
+        name: "Home",
+        href: "/",
+        icon: <Home />,
+      },
+      {
+        name: "Edit Portfolio",
+        href: "/portfolio",
+        icon: <Pencil />,
+      },
+      {
+        name: "Log Out",
+        action: "logout",
+        icon: <Logout />,
+      },
+    ];
+  }
   return [
     {
       name: "Home",
@@ -51,7 +71,16 @@ export default async function Nav() {
   let tabs = loggedOutTabs;
 
   if (session) {
-    tabs = getLoggedInTabs("ethan");
+    const email = session.user?.email;
+    if (!email) {
+      return null;
+    }
+
+    const portfolio = await getPortfolio({
+      email,
+    });
+
+    tabs = getLoggedInTabs(portfolio?.tag);
   }
 
   return (

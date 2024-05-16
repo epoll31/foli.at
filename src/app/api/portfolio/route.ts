@@ -5,32 +5,39 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
-    let { userId, email } = await req.json();
+    let { userId, email, tag } = await req.json();
+    let where;
 
-    if (!userId && !email) {
-      return NextResponse.json(
-        { error: "No userId or email found in request" },
-        { status: 400 }
-      );
-    }
-
-    if (!userId) {
-      const user = await prisma.user.findUnique({
-        where: { email },
-      });
-
-      if (!user) {
+    if (tag) {
+      where = { tag };
+    } else {
+      if (!userId && !email) {
         return NextResponse.json(
-          { error: "No user found given email" },
-          { status: 404 }
+          { error: "No userId or email found in request" },
+          { status: 400 }
         );
       }
 
-      userId = user.id;
+      if (!userId) {
+        const user = await prisma.user.findUnique({
+          where: { email },
+        });
+
+        if (!user) {
+          return NextResponse.json(
+            { error: "No user found given email" },
+            { status: 404 }
+          );
+        }
+
+        userId = user.id;
+      }
+
+      where = { userId };
     }
 
     const portfolio = await prisma.portfolio.findUnique({
-      where: { userId },
+      where,
       include: {
         links: true,
         educationHistories: true,
@@ -52,7 +59,7 @@ export async function PUT(req: NextRequest) {
   try {
     let userId;
     const {
-      rawUserId,
+      userId: rawUserId,
       email,
       tag,
       fullName,

@@ -1,4 +1,40 @@
-export default async function getPortfolio(email?: string, userId?: string) {
+import { Portfolio } from "@/lib/types";
+
+function fixDates(portfolio: Portfolio) {
+  const workHistories = portfolio.workHistories.map((workHistory) => {
+    return {
+      ...workHistory,
+      startDate: new Date(workHistory.startDate),
+      endDate: workHistory.endDate ? new Date(workHistory.endDate) : null,
+    };
+  });
+
+  const educationHistories = portfolio.educationHistories.map(
+    (educationHistory) => {
+      return {
+        ...educationHistory,
+        startDate: new Date(educationHistory.startDate),
+        endDate: educationHistory.endDate
+          ? new Date(educationHistory.endDate)
+          : null,
+      };
+    }
+  );
+
+  return {
+    ...portfolio,
+    workHistories,
+    educationHistories,
+  } as Portfolio;
+}
+
+export default async function getPortfolio(where: {
+  email?: string;
+  userId?: string;
+  tag?: string;
+}) {
+  console.log(where);
+
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/api/portfolio`,
@@ -9,10 +45,7 @@ export default async function getPortfolio(email?: string, userId?: string) {
           "Content-Type": "application/json",
         },
         credentials: "include",
-        body: JSON.stringify({
-          email,
-          userId,
-        }),
+        body: JSON.stringify(where),
       }
     );
 
@@ -21,7 +54,8 @@ export default async function getPortfolio(email?: string, userId?: string) {
     }
 
     const data = await response.json();
-    return data.portfolio;
+
+    return fixDates(data.portfolio);
   } catch (error) {
     console.error("Failed to fetch portfolio:", error);
     return null;

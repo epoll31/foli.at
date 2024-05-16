@@ -15,7 +15,7 @@ export default async function PortfolioPage() {
     redirect("/signin", RedirectType.replace);
   }
   const portfolio =
-    (await getPortfolio(session.user.email, undefined)) || EmptyPortfolio;
+    (await getPortfolio({ email: session.user.email })) || EmptyPortfolio;
 
   return (
     <SessionProvider session={session}>
