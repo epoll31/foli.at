@@ -1,5 +1,5 @@
 import Timeline from "@/components/Timeline";
-import { EducationEntry } from "@/lib/types";
+import { EducationHistory } from "@/lib/types";
 import { formatDate } from "@/utils/formatDate";
 
 const options = {
@@ -7,19 +7,19 @@ const options = {
   year: "numeric",
 } as Intl.DateTimeFormatOptions;
 
-export default function WorkHistory({
-  educationEntries: unorderedEducationHistory,
+export default function EducationSection({
+  educationHistories: unorderedEducationHistory,
 }: {
-  educationEntries: EducationEntry[];
+  educationHistories: EducationHistory[];
 }) {
   const educationHistory = unorderedEducationHistory.sort((a, b) => {
-    if (!b.end_date) {
+    if (!b.endDate) {
       return 1;
     }
-    if (!a.end_date) {
+    if (!a.endDate) {
       return -1;
     }
-    return b.end_date.getTime() - a.end_date.getTime();
+    return b.endDate.getTime() - a.endDate.getTime();
   });
 
   return (
@@ -41,16 +41,16 @@ export default function WorkHistory({
                   )}
                 </p>
                 <p className="text-sm ">
-                  {formatDate(education.start_date)} {" - "}{" "}
-                  {education.end_date
-                    ? formatDate(education.end_date)
+                  {formatDate(education.startDate)} {" - "}{" "}
+                  {education.endDate
+                    ? formatDate(education.endDate)
                     : "Present"}
                 </p>
               </div>
               <p>{education.description}</p>
             </>
           ),
-          active: !education.end_date,
+          active: !education.endDate,
         }))}
       />
     </div>

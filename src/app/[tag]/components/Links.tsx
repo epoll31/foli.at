@@ -13,17 +13,17 @@ import Link from "next/link";
 export default function Links({ links }: { links: LinkType[] }) {
   const orderedLinks = useMemo(() => {
     return links.sort((a, b) => {
-      if (a.type === "linkedin") return -1;
-      if (b.type === "linkedin") return 1;
+      if (a.type === "LINKEDIN") return -1;
+      if (b.type === "LINKEDIN") return 1;
 
-      if (a.type === "github") return -1;
-      if (b.type === "github") return 1;
+      if (a.type === "GITHUB") return -1;
+      if (b.type === "GITHUB") return 1;
 
-      if (a.type === "twitter") return -1;
-      if (b.type === "twitter") return 1;
+      if (a.type === "TWITTER") return -1;
+      if (b.type === "TWITTER") return 1;
 
-      if (a.type === "portfolio") return -1;
-      if (b.type === "portfolio") return 1;
+      if (a.type === "PORTFOLIO") return -1;
+      if (b.type === "PORTFOLIO") return 1;
 
       return 0;
     });
@@ -61,13 +61,13 @@ export default function Links({ links }: { links: LinkType[] }) {
               },
             }}
           >
-            {link.type === "linkedin" ? (
+            {link.type === "LINKEDIN" ? (
               <LinkedIn className="w-6 h-6" />
-            ) : link.type === "github" ? (
+            ) : link.type === "GITHUB" ? (
               <Github className="w-6 h-6 " />
-            ) : link.type === "twitter" ? (
+            ) : link.type === "TWITTER" ? (
               <Twitter className="w-6 h-6" />
-            ) : link.type === "portfolio" ? (
+            ) : link.type === "PORTFOLIO" ? (
               <BriefcaseFilled className="w-6 h-6" />
             ) : (
               <LinkIcon className="w-6 h-6" />

@@ -5,7 +5,6 @@ import GlowContainer from "../GlowContainer";
 import NavTab, { Tab } from "./NavTab";
 import Logout from "../icons/logout";
 import Pencil from "../icons/pencil";
-import { getTagFromUserId } from "@/utils/supabase/actions/getTagFromUserId";
 import { auth } from "@/auth";
 
 function getLoggedInTabs(tag: string): Tab[] {

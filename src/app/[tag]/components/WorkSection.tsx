@@ -1,20 +1,20 @@
 import Timeline from "@/components/Timeline";
-import { WorkEntry } from "@/lib/types";
+import { WorkHistory } from "@/lib/types";
 import { formatDate } from "@/utils/formatDate";
 
-export default function WorkHistory({
-  workEntries: unoderedWorkHistory,
+export default function WorkSection({
+  workHistory: unoderedWorkHistory,
 }: {
-  workEntries: WorkEntry[];
+  workHistory: WorkHistory[];
 }) {
   const workHistory = unoderedWorkHistory.sort((a, b) => {
-    if (!b.end_date) {
+    if (!b.endDate) {
       return 1;
     }
-    if (!a.end_date) {
+    if (!a.endDate) {
       return -1;
     }
-    return b.end_date.getTime() - a.end_date.getTime();
+    return b.endDate.getTime() - a.endDate.getTime();
   });
 
   return (
@@ -28,15 +28,15 @@ export default function WorkHistory({
               <div className="flex flex-wrap justify-between items-baseline">
                 <p className=""> {work.company}</p>
                 <p className="text-sm">
-                  {formatDate(work.start_date)}
+                  {formatDate(work.startDate)}
                   {" - "}
-                  {work.end_date ? formatDate(work.end_date) : "Present"}
+                  {work.endDate ? formatDate(work.endDate) : "Present"}
                 </p>
               </div>
               <p>{work.description}</p>
             </>
           ),
-          active: !work.end_date,
+          active: !work.endDate,
         }))}
       />
     </div>

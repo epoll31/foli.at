@@ -16,8 +16,6 @@
     "@prisma/adapter-pg": "^5.14.0",
     "@prisma/client": "^5.14.0",
     "@prisma/extension-accelerate": "^1.0.0",
-    "@supabase/ssr": "^0.3.0",
-    "@supabase/supabase-js": "^2.43.1",
     "@vercel/postgres": "^0.8.0",
     "clsx": "^2.1.1",
     "framer-motion": "^11.1.7",

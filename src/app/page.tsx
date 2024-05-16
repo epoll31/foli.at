@@ -1,5 +1,4 @@
-import { auth, signOut } from "@/auth";
-import SignInForm from "@/components/forms/SignInFormServer";
+import { auth } from "@/auth";
 
 export default async function Home() {
   const session = await auth();
