@@ -1,6 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 import { RedirectType, redirect } from "next/navigation";
-import UpdatePorfolioForm from "./components/UpdatePorfolioForm";
+import UpdatePorfolioForm from "@/components/forms/PortfolioForm/Form";
 import { loadPortfolioGroup } from "@/utils/supabase/actions/loadPortfolioGroup";
 import BackgroundGrid from "@/components/BackgroundGrid";
 import Card from "@/components/ui/Card";

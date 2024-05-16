@@ -8,10 +8,10 @@ import EducationSection from "./EducationSection";
 import Button from "@/components/ui/Button";
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { formSchema, type FormSchema } from "../utils/formSchema";
+import { formSchema, type FormSchema } from "@/lib/zod/portfolioSchema";
 import { updatePortfolio } from "@/utils/supabase/actions/updatePortfolio";
 
-export default function UpdatePorfolioForm({
+export default function PorfolioForm({
   portfolioGroup,
 }: {
   portfolioGroup: PortfolioGroup;

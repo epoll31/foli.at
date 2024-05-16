@@ -1,10 +1,10 @@
 "use client";
 
 import DropDown from "@/components/ui/DropDown";
-import useKeyedItems from "../utils/useKeyedItems";
+import useKeyedItems from "@/utils/hooks/useKeyedItems";
 import { Link } from "@/lib/types";
 import Input from "@/components/ui/Input";
-import TrashButton from "./TrashButtons";
+import TrashButton from "@/components/TrashButtons";
 import {
   Accordion,
   AccordionContent,
@@ -15,8 +15,8 @@ import ChevronUp from "@/components/icons/chevron-up";
 import { cn } from "@/utils/cn";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import ErrorWrapper from "../../../components/forms/ErrorWrapper";
-import { FormSchema } from "../utils/formSchema";
+import ErrorWrapper from "@/components/forms/ErrorWrapper";
+import { FormSchema } from "@/lib/zod/portfolioSchema";
 
 export default function LinksSection({ links: startLinks }: { links: Link[] }) {
   const {

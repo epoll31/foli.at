@@ -1,9 +1,9 @@
 "user client";
 
-import useKeyedItems from "../utils/useKeyedItems";
+import useKeyedItems from "@/utils/hooks/useKeyedItems";
 import { EducationEntry, NoId } from "@/lib/types";
 import Input from "@/components/ui/Input";
-import TrashButton from "./TrashButtons";
+import TrashButton from "@/components/TrashButtons";
 import TextArea from "@/components/ui/TextArea";
 import {
   Accordion,
@@ -16,8 +16,8 @@ import { useState } from "react";
 import Button from "@/components/ui/Button";
 import { useFormContext } from "react-hook-form";
 import { formatDateToMonthYear } from "@/utils/formatDate";
-import ErrorWrapper from "../../../components/forms/ErrorWrapper";
-import { FormSchema } from "../utils/formSchema";
+import ErrorWrapper from "@/components/forms/ErrorWrapper";
+import { FormSchema } from "@/lib/zod/portfolioSchema";
 
 type PartialEducationEntry = Omit<
   NoId<EducationEntry>,

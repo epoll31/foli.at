@@ -3,9 +3,8 @@ import Input from "@/components/ui/Input";
 import TextArea from "@/components/ui/TextArea";
 import { Portfolio } from "@/lib/types";
 import { useFormContext } from "react-hook-form";
-import { FormSchema } from "../utils/formSchema";
-import { AnimatePresence, motion } from "framer-motion";
-import ErrorWrapper from "../../../components/forms/ErrorWrapper";
+import { FormSchema } from "@/lib/zod/portfolioSchema";
+import ErrorWrapper from "@/components/forms/ErrorWrapper";
 
 export default function PortfolioInfoSection({
   portfolio,

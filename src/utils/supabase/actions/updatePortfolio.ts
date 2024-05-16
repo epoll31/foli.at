@@ -1,6 +1,6 @@
 "use server";
 
-import { FormSchema } from "@/app/portfolio/utils/formSchema";
+import { FormSchema } from "@/lib/zod/formSchema";
 import { EducationEntry, Link, NoId, Portfolio, WorkEntry } from "@/lib/types";
 import { createClient } from "@/utils/supabase/server";
 
