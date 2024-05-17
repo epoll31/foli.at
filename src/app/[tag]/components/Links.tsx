@@ -30,7 +30,7 @@ export default function Links({ links }: { links: LinkType[] }) {
   }, [links]);
 
   return (
-    <div className="flex flex-row gap-2">
+    <div className="flex flex-row gap-3">
       {orderedLinks.map((link, i) => (
         <Link key={i} href={link.href} passHref legacyBehavior>
           <motion.a

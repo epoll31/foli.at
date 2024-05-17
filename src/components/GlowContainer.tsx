@@ -97,10 +97,7 @@ export default function GlowContainer({
 
   return (
     <div
-      className={cn(
-        "relative overflow-hidden rounded-full bg-neutral-300",
-        className
-      )}
+      className={cn("relative overflow-hidden rounded-full ", className)}
       style={{ padding }}
       ref={ref}
     >

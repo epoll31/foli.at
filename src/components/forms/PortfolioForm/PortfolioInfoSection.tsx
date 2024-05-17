@@ -31,7 +31,7 @@ export default function PortfolioInfoSection({
           />
         </ErrorWrapper>
         <label htmlFor="portfolio.fullName" className="text-nowrap">
-          Full Name:
+          Name:
         </label>
         <ErrorWrapper error={errors?.portfolio?.fullName?.message}>
           <Input

@@ -23,12 +23,12 @@ const DropDown = React.forwardRef(
     return (
       <GlowContainer
         padding="2px"
-        className="rounded-[0.5rem] w-full"
+        className="rounded-[0.5rem] w-full  bg-zinc-700/60 backdrop-blur-sm"
         glowColor={glowColor}
       >
         <select
           className={cn(
-            "w-full px-4 py-1 rounded-[calc(0.5rem-2px)] outline-blue-300 focus-visible:outline-2 border-none bg-white/80 z-20",
+            "w-full px-2 py-1 rounded-[calc(0.5rem-2px)] focus-visible:outline-none border-2 border-transparent focus-visible:border-blue-300/50 bg-zinc-800/50 text-white/60 z-20",
             className
           )}
           ref={ref}

@@ -1,26 +1,25 @@
-export default async function Home() {
+import React from "react";
+
+function FoliDotAt() {
   return (
-    <>
-      <h2 className="text-4xl text-center">Build Your Portfolio Now!</h2>
-    </>
+    <div className=" bg-clip-text backdrop-blur-sm bg-white/10 p-2 ">
+      <p
+        className=" transition-all text-transparent font-playfair-display pointer-events-none select-none"
+        style={{
+          WebkitTextStroke: "1px rgba(255,255,255,0.2)",
+          fontSize: "min(30vw, 375px)",
+        }}
+      >
+        foli.at
+      </p>
+    </div>
   );
 }
 
-// export default function Home() {
-//   const [userId, setUserId] = useState("");
-//   getUserId()
-//     .then((data) => {
-//       console.log("User ID:", data);
-//       setUserId(data.id);
-//     })
-//     .catch((error) => {
-//       console.error("Failed to fetch user ID:", error);
-//       setUserId(error.message);
-//     });
-//   return (
-//     <>
-//       <h2 className="text-4xl text-center">Build Your Portfolio Now!</h2>
-//       <p className="text-center">User ID: {userId}</p>
-//     </>
-//   );
-// }
+export default async function Home() {
+  return (
+    <div className="">
+      <FoliDotAt />
+    </div>
+  );
+}

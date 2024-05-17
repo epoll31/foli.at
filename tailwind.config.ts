@@ -17,8 +17,38 @@ const config: Config = {
         "nav-bar-tab": "0.125rem 0.125rem 0.125rem 0.125rem",
         "nav-bar-left": "2rem 0.125rem 0.125rem 2rem",
       },
+      fontFamily: {
+        "playfair-display": ["Playfair Display", "serif"],
+        "poetsen-one": ["Poetsen One", "sans-serif"],
+      },
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addBase, theme }: any) {
+      const extractColorVars = (
+        colorObj: Record<string, string | Record<string, string>>,
+        colorGroup = ""
+      ): Record<string, string> => {
+        return Object.keys(colorObj).reduce((vars, colorKey) => {
+          const value = colorObj[colorKey];
+          const cssVariable =
+            colorKey === "DEFAULT"
+              ? `--color${colorGroup}`
+              : `--color${colorGroup}-${colorKey}`;
+
+          const newVars =
+            typeof value === "string"
+              ? { [cssVariable]: value }
+              : extractColorVars(value, `-${colorKey}`);
+
+          return { ...vars, ...newVars };
+        }, {} as Record<string, string>);
+      };
+
+      addBase({
+        ":root": extractColorVars(theme("colors")),
+      });
+    },
+  ],
 };
 export default config;

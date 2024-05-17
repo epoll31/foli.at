@@ -43,7 +43,7 @@ export default function NavTab({ tab }: { tab: Tab }) {
   return (
     <Outer tab={tab}>
       <motion.div
-        className="relative flex flex-row justify-center items-center px-4 h-10 first:pl-6 last:pr-6  bg-white/50"
+        className="relative flex flex-row justify-center items-center px-4 h-10 first:pl-6 last:pr-6  bg-zinc-800/50 text-white/60"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         onTouchStart={() => {

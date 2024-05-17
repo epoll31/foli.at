@@ -12,7 +12,7 @@ export default async function Page({ params }: { params: { tag: string } }) {
   }
 
   return (
-    <>
+    <div className="max-w-prose flex flex-col gap-3 items-center">
       <h2 className="text-4xl text-center">{portfolio.fullName}</h2>
       <p className="text-2xl text-center">{portfolio.title}</p>
       <p className="text-sm my-4">{portfolio.description}</p>
@@ -24,6 +24,6 @@ export default async function Page({ params }: { params: { tag: string } }) {
       {portfolio.educationHistories.length > 0 && (
         <EducationSection educationHistories={portfolio.educationHistories} />
       )}
-    </>
+    </div>
   );
 }

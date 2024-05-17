@@ -68,20 +68,16 @@ export function AccordionContent({
       variants={{
         open: {
           height: "auto",
-          paddingTop: 16,
-          paddingBottom: 16,
           opacity: 1,
         },
         closed: {
           height: 0,
-          paddingTop: 0,
-          paddingBottom: 0,
           opacity: 0,
         },
       }}
       initial="closed"
       animate={open ? "open" : "closed"}
-      transition={{ duration: 0.3, ease: "easeInOut" }}
+      transition={{ duration: 0.3, ease: "easeInOut", type: "tween" }}
     >
       {children}
     </motion.div>

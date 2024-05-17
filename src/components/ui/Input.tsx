@@ -6,7 +6,7 @@ const Input = React.forwardRef(
   (
     {
       className,
-      glowColor,
+      glowColor = "#ffffff33",
       ...props
     }: React.InputHTMLAttributes<HTMLInputElement> & {
       glowColor?: string;
@@ -14,11 +14,15 @@ const Input = React.forwardRef(
     ref: React.Ref<HTMLInputElement>
   ) => {
     return (
-      <GlowContainer padding="2px" glowColor={glowColor}>
+      <GlowContainer
+        padding="2px"
+        glowColor={glowColor}
+        className=" bg-zinc-700/60 backdrop-blur-sm"
+      >
         <input
           className={cn(
             className,
-            "px-4 py-1 rounded-full outline-blue-300 focus-visible:outline-2 border-none bg-white/80 z-20"
+            "px-4 py-1 rounded-full border-2 border-transparent focus-visible:outline-none focus-visible:border-blue-300/50 bg-zinc-800/50 text-white/60 z-20"
           )}
           ref={ref}
           {...props}

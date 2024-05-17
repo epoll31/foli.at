@@ -19,15 +19,17 @@ export default async function PortfolioPage() {
 
   return (
     <SessionProvider session={session}>
-      <BackgroundGrid size={30} fade={"40%"} />
-      <Card className="p-0 border border-neutral-200 mx-4 w-fit">
-        <div className="px-0 py-6 rounded-t-xl bg-neutral-100 border-neutral-200 border-b">
+      <BackgroundGrid size={30} fade fadeFrom="20%" fadeTo="100%" />
+      <div className="rounded-xl overflow-hidden bg-zinc-700 shadow-lg">
+        <div className="sm:px-16  py-6 bg-zinc-600 text-zinc-800">
           <h2 className="text-3xl md:text-4xl text-center text-nowrap">
             Edit Your Portfolio
           </h2>
         </div>
-        {portfolio && <PortfolioForm portfolio={portfolio} email={email} />}
-      </Card>
+        <div className="">
+          <PortfolioForm portfolio={portfolio} email={email} />
+        </div>
+      </div>
     </SessionProvider>
   );
 }

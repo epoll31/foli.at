@@ -3,10 +3,14 @@ import { cn } from "@/utils/cn";
 export default function BackgroundGrid({
   size = "35px",
   fade,
+  fadeFrom = "0%",
+  fadeTo = "100%",
   className,
 }: {
   size?: string | number;
-  fade?: `${number}%`;
+  fadeFrom?: `${number}%`;
+  fadeTo?: `${number}%`;
+  fade?: boolean;
   className?: string;
 }) {
   return (
@@ -19,13 +23,10 @@ export default function BackgroundGrid({
         backgroundImage: "url(/lines.svg)",
         backgroundRepeat: "repeat",
         backgroundSize: size,
+        maskImage: fade
+          ? `radial-gradient(circle at 50% 50%, transparent ${fadeFrom}, black ${fadeTo})`
+          : "",
       }}
-    >
-      {fade && (
-        <span
-          className={`w-full h-full bg-gradient-radial from-white from-[${fade}] to-transparent`}
-        />
-      )}
-    </div>
+    ></div>
   );
 }

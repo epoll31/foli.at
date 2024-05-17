@@ -96,8 +96,8 @@ export default async function Nav() {
 
   return (
     <GlowContainer
-      className="fixed bottom-8 shadow-xl z-40"
-      glowColor="#fb3b53"
+      className="fixed bottom-8 shadow-xl z-40 bg-zinc-700/60 backdrop-blur-sm"
+      glowColor="#ffffff33"
     >
       <nav className="rounded-full flex flex-row flex-nowrap h-fit gap-px z-50">
         {tabs.map((tab) => (

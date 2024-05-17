@@ -1,10 +1,14 @@
 "use client";
 
 import Trash from "@/components/icons/trash";
+import { cn } from "@/utils/cn";
 import { motion } from "framer-motion";
 import { HTMLProps } from "react";
 
-export default function TrashButton(props: {
+export default function TrashButton({
+  className,
+  ...props
+}: {
   className?: string;
   onClick: HTMLProps<HTMLButtonElement>["onClick"];
   tabIndex?: number;
@@ -12,7 +16,10 @@ export default function TrashButton(props: {
   return (
     <motion.button
       type="button"
-      className="text-red-400 "
+      className={cn(
+        "text-red-400 m-auto aspect-square p-0.5 rounded-md border-2 border-transparent focus-visible:outline-none  focus-visible:border-blue-300/50",
+        className
+      )}
       initial={{
         scale: 1,
         color: "#737373",
