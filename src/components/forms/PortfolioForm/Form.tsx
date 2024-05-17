@@ -40,15 +40,8 @@ export default function PorfolioForm({
   );
 
   const onSubmit = methods.handleSubmit(async (data) => {
-    console.log("Data:", data);
     const validatedData = formSchema.parse(data);
-
-    console.log("Validated data:", validatedData);
-
-    const updatedPortfolio = await setPortfolio({ email }, validatedData);
-
-    console.log("Updated portfolio:", updatedPortfolio);
-    // document.location.reload();
+    await setPortfolio({ email }, validatedData);
   });
 
   useEffect(() => {});
