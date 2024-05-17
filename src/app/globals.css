@@ -4,7 +4,29 @@
 @tailwind components;
 @tailwind utilities;
 
+
 :root {
-  background-color: var(--color-zinc-800);
-  color: var(--color-zinc-200);
+  --theme-black: rgba(34, 34, 34, 1);
+  --theme-black-1: rgba(36, 37, 36, 1);
+  --theme-black-2: rgba(36, 37, 36, 1);
+  --theme-black-light: rgba(42, 43, 42, 1);
+  --theme-gray: rgba(145, 144, 142, 1);
+  --theme-white: rgba(255, 252, 249, 1);
+  --theme-green: rgba(6, 214, 160, 1);
+  --theme-red: rgba(239, 71, 111, 1);
+  --theme-yellow: rgba(255, 209, 102, 1);
+  --theme-blue: rgba(126, 178, 221, 1);
+  --theme-purple: rgba(151, 153, 202, 1);
+
+  --theme-white-10: rgba(255, 252, 249, 0.1);
+  --theme-white-20: rgba(255, 252, 249, 0.2);
+  --theme-white-50: rgba(255, 252, 249, 0.5);
+
+  --theme-black-light-50: rgba(42, 43, 42, 0.5);
+  --theme-black-light-80: rgba(42, 43, 42, 0.8);
+
+  --theme-gray-50: rgba(145, 144, 142, 0.5);
+
+  background-color: var(--theme-black-light);
+  color: var(--theme-gray);
 }

@@ -6,62 +6,29 @@ import NavTab, { Tab } from "./NavTab";
 import Logout from "../icons/logout";
 import Pencil from "../icons/pencil";
 import { auth } from "@/auth";
-import getPortfolio from "@/utils/actions/getPortfolio";
-import Gear from "../icons/gear";
 
-function getLoggedInTabs(tag?: string): Tab[] {
-  if (!tag) {
-    return [
-      {
-        name: "Home",
-        href: "/",
-        icon: <Home />,
-      },
-      {
-        name: "Edit Portfolio",
-        href: "/portfolio",
-        icon: <Pencil />,
-      },
-      // {
-      //   name: "Settings",
-      //   href: "/settings",
-      //   icon: <Gear />,
-      // },
-      {
-        name: "Sign Out",
-        action: "logout",
-        icon: <Logout />,
-      },
-    ];
-  }
-  return [
-    {
-      name: "Home",
-      href: "/",
-      icon: <Home />,
-    },
-    {
-      name: "View Portfolio",
-      href: `/${tag}`,
-      icon: <Briefcase />,
-    },
-    {
-      name: "Edit Portfolio",
-      href: "/portfolio",
-      icon: <Pencil />,
-    },
-    // {
-    //   name: "Settings",
-    //   href: "/settings",
-    //   icon: <Gear />,
-    // },
-    {
-      name: "Sign Out",
-      action: "logout",
-      icon: <Logout />,
-    },
-  ];
-}
+const loggedInTabs: Tab[] = [
+  {
+    name: "Home",
+    href: "/",
+    icon: <Home />,
+  },
+  {
+    name: "View Portfolio",
+    action: "tag",
+    icon: <Briefcase />,
+  },
+  {
+    name: "Edit Portfolio",
+    href: "/portfolio",
+    icon: <Pencil />,
+  },
+  {
+    name: "Sign Out",
+    action: "logout",
+    icon: <Logout />,
+  },
+];
 
 const loggedOutTabs: Tab[] = [
   {
@@ -78,30 +45,18 @@ const loggedOutTabs: Tab[] = [
 
 export default async function Nav() {
   const session = await auth();
+  const email = session?.user?.email ?? undefined;
 
-  let tabs = loggedOutTabs;
-
-  if (session) {
-    const email = session.user?.email;
-    if (!email) {
-      return null;
-    }
-
-    const portfolio = await getPortfolio({
-      email,
-    });
-
-    tabs = getLoggedInTabs(portfolio?.tag);
-  }
+  let tabs = session ? loggedInTabs : loggedOutTabs;
 
   return (
     <GlowContainer
-      className="fixed bottom-8 shadow-xl z-40 bg-zinc-700/60 backdrop-blur-sm"
-      glowColor="#ffffff33"
+      className="fixed bottom-8 shadow-xl z-40 bg-theme-white/10 backdrop-blur-sm"
+      glowColor="var(--theme-white-20)"
     >
       <nav className="rounded-full flex flex-row flex-nowrap h-fit gap-px z-50">
         {tabs.map((tab) => (
-          <NavTab tab={tab} key={tab.name} />
+          <NavTab tab={tab} key={tab.name} email={email} />
         ))}
       </nav>
     </GlowContainer>

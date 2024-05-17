@@ -13,16 +13,17 @@ const Input = React.forwardRef(
     },
     ref: React.Ref<HTMLInputElement>
   ) => {
+    //TODO: fix color of date picker icon thing
     return (
       <GlowContainer
         padding="2px"
         glowColor={glowColor}
-        className=" bg-zinc-700/60 backdrop-blur-sm"
+        className="backdrop-blur-sm"
       >
         <input
           className={cn(
             className,
-            "px-4 py-1 rounded-full border-2 border-transparent focus-visible:outline-none focus-visible:border-blue-300/50 bg-zinc-800/50 text-white/60 z-20"
+            "px-4 py-1 rounded-full outline-2 outline-transparent outline-offset-1 focus-visible:outline-theme-blue bg-theme-black-light z-20"
           )}
           ref={ref}
           {...props}

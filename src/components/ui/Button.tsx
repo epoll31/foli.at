@@ -12,19 +12,22 @@ export default function Button({
   glowClassName?: string;
 }) {
   return (
-    <button className={cn(className)} {...props}>
-      <GlowContainer
-        padding="2px"
+    <GlowContainer
+      padding="0px"
+      className={cn(glowClassName, "rounded-[0.6rem] backdrop-blur-sm ")}
+      glowColor={glowColor}
+    >
+      <button
         className={cn(
-          glowClassName,
-          "rounded-[0.6rem]  bg-zinc-700/60 backdrop-blur-sm"
+          "focus-visible:outline-none border-2 border-transparent focus-visible:border-theme-blue rounded-[calc(0.6rem+0px)]",
+          className
         )}
-        glowColor={glowColor}
+        {...props}
       >
-        <div className="rounded-[calc(0.6rem-1px)] px-3 py-1  focus-visible:outline-none border-2 border-transparent focus-visible:border-blue-300/50 bg-zinc-800/50 text-white/60 z-20">
+        <div className="rounded-[calc(0.6rem-1px)] px-3 py-1 bg-theme-black-light text-theme-white/60 z-20">
           {children}
         </div>
-      </GlowContainer>
-    </button>
+      </button>
+    </GlowContainer>
   );
 }

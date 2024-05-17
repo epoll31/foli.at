@@ -14,6 +14,7 @@ import {
 } from "@/utils/auth/actions";
 import { Accordion, AccordionContent, AccordionTrigger } from "../ui/Accordion";
 import { useState } from "react";
+import Hr from "@/components/ui/Hr";
 
 export default function SignInForm() {
   const {
@@ -28,19 +29,21 @@ export default function SignInForm() {
     mode: "onChange",
   });
   const [open, setOpen] = useState(false);
-
+  //TODO: fix tabindex on accordion closed things
   return (
     <div className="flex flex-col gap-3 p-6">
       <form action={signInWithCredentials} className="flex flex-col gap-3">
         <Accordion open={open}>
           <AccordionContent>
-            <div className="grid grid-cols-[min-content_1fr] mb-3 gap-3 items-baseline">
+            <div className="grid grid-cols-[min-content_1fr] mb-3 gap-3 items-baseline text-theme-gray">
               <label htmlFor="email">Email</label>
               <ErrorWrapper error={errors?.email?.message}>
                 <Input
                   type="email"
                   className="w-full"
-                  glowColor={errors?.email ? "#fb3b53" : "#60a5fa"}
+                  glowColor={
+                    errors?.email ? "var(--theme-red)" : "var(--theme-blue)"
+                  }
                   {...register("email", { required: true })}
                 />
               </ErrorWrapper>
@@ -49,7 +52,9 @@ export default function SignInForm() {
                 <Input
                   type="password"
                   className="w-full"
-                  glowColor={errors?.password ? "#fb3b53" : "#60a5fa"}
+                  glowColor={
+                    errors?.password ? "var(--theme-red)" : "var(--theme-blue)"
+                  }
                   {...register("password", { required: true })}
                 />
               </ErrorWrapper>
@@ -61,18 +66,26 @@ export default function SignInForm() {
               setOpen(!open);
             }}
             className="w-full"
-            glowColor={open ? (isValid ? "#34d399" : "#fb3b53") : "#60a5fa"}
+            glowColor={
+              open
+                ? isValid
+                  ? "var(--theme-green)"
+                  : "var(--theme-red)"
+                : "var(--theme-blue)"
+            }
           >
-            Sign in with Email
+            <span className="inline-flex py-2">Sign in with Email</span>
           </Button>
         </Accordion>
       </form>
-      <span className="w-full h-px bg-gradient-to-r from-transparent via-blue-300 to-transparent" />
+      <Hr />
       <form action={signInWithGoogle}>
         <Button type="submit" className="w-full">
           <span className="flex items-center gap-3 px-3 py-2 ">
             <Google className="text-2xl" />
-            <span className="mx-auto text-nowrap">Sign in with Google</span>
+            <span className="mx-auto text-nowrap text-theme-gray">
+              Sign in with Google
+            </span>
           </span>
         </Button>
       </form>
@@ -80,7 +93,9 @@ export default function SignInForm() {
         <Button type="submit" className="w-full">
           <span className="flex items-center gap-3 px-3 py-2 ">
             <Github className="text-2xl" />
-            <span className="mx-auto text-nowrap">Sign in with GitHub</span>
+            <span className="mx-auto text-nowrap text-theme-gray">
+              Sign in with GitHub
+            </span>
           </span>
         </Button>
       </form>

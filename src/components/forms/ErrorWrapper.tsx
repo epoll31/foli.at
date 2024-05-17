@@ -13,7 +13,7 @@ export default function ErrorWrapper({
       <AnimatePresence>
         {error && (
           <motion.p
-            className="text-center text-red-400 text-sm"
+            className="text-center text-theme-red text-sm"
             variants={{
               hidden: { opacity: 0, height: 0 },
               visible: { opacity: 1, height: "auto" },

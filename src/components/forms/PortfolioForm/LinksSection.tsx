@@ -1,8 +1,7 @@
 "use client";
 
 import DropDown from "@/components/ui/DropDown";
-import useKeyedItems from "@/utils/hooks/useKeyedItems";
-import { Link, LinkType } from "@/lib/types";
+import { LinkType } from "@/lib/types";
 import Input from "@/components/ui/Input";
 import TrashButton from "@/components/TrashButtons";
 import {
@@ -13,49 +12,30 @@ import {
 import Button from "@/components/ui/Button";
 import ChevronUp from "@/components/icons/chevron-up";
 import { cn } from "@/utils/cn";
-import { useContext, useState } from "react";
-import { useFormContext } from "react-hook-form";
+import { useState } from "react";
+import { useFieldArray, useFormContext } from "react-hook-form";
 import ErrorWrapper from "@/components/forms/ErrorWrapper";
 import { FormSchema } from "@/lib/zod/portfolioSchema";
-import { ConfirmReloadContext } from "./Form";
+import Hr from "@/components/ui/Hr";
 
-type PartialLink = Omit<Link, "id" | "portfolioId">;
-export default function LinksSection({ links: startLinks }: { links: Link[] }) {
+export default function LinksSection() {
   const {
+    control,
     register,
     formState: { errors },
   } = useFormContext<FormSchema>();
   const [open, setOpen] = useState(false);
-  const { setConfirmReload } = useContext(ConfirmReloadContext);
-  const {
-    items: links,
-    addItem: addLink2,
-    removeItem: removeLink2,
-  } = useKeyedItems<PartialLink>(startLinks, {
-    type: LinkType.OTHER,
-    href: "",
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "links",
   });
-
-  function addLink() {
-    const link = addLink2();
-    setConfirmReload(true);
-
-    setTimeout(() => {
-      document.getElementById(`links.${link.key}.type`)?.focus();
-    }, 100);
-
-    return link;
-  }
-  function removeLink(key: number) {
-    removeLink2(key);
-    setConfirmReload(true);
-  }
 
   return (
     <Accordion className="flex flex-col" onOpenChange={setOpen}>
       <AccordionTrigger
         className={cn(
-          "relative text-center py-3 border-t border-zinc-600 transition-all",
+          "relative text-center py-3 border-t border-theme-white/10 transition-all text-theme-gray",
           open && "border-b"
         )}
       >
@@ -63,7 +43,7 @@ export default function LinksSection({ links: startLinks }: { links: Link[] }) {
         {
           <ChevronUp
             className={cn(
-              `absolute top-0 h-full end-3 -rotate-180 transition-transform  text-neutral-400`,
+              `absolute top-0 h-full end-3 -rotate-180 transition-transform  text-theme-gray`,
               open && "rotate-0"
             )}
           />
@@ -71,13 +51,13 @@ export default function LinksSection({ links: startLinks }: { links: Link[] }) {
       </AccordionTrigger>
       <AccordionContent>
         <div className="flex flex-col justify-center py-4">
-          {links.map((link) => (
-            <div key={link.key} className="flex flex-col ps-6 ">
+          {fields.map((item, index) => (
+            <div key={item.id} className="flex flex-col ps-6 ">
               <div className="flex flex-row">
                 <div className="w-full grid grid-cols-[min-content_1fr] items-baseline gap-x-3 gap-y-3">
-                  <label htmlFor={`links.${link.key}.type`}>Type:</label>
+                  <label htmlFor={`links.${index}.type`}>Type:</label>
                   <ErrorWrapper
-                    error={errors?.links && errors.links[link.key]?.message}
+                    error={errors?.links && errors.links[index]?.message}
                   >
                     <DropDown
                       className="w-full"
@@ -88,59 +68,62 @@ export default function LinksSection({ links: startLinks }: { links: Link[] }) {
                         { value: LinkType.PORTFOLIO, label: "Portfolio" },
                         { value: LinkType.OTHER, label: "Other" },
                       ]}
-                      {...register(`links.${link.key}.type`, {
+                      {...register(`links.${index}.type`, {
                         required: true,
                       })} // Using register for DropDown
-                      id={`links.${link.key}.type`}
+                      id={`links.${index}.type`}
                       required
-                      defaultValue={link.value.type}
+                      defaultValue={item.type}
                       tabIndex={open ? 0 : -1}
                       glowColor={
-                        errors?.links && errors.links[link.key]?.type
-                          ? "#fb3b53"
-                          : "#60a5fa"
+                        errors?.links && errors.links[index]?.type
+                          ? "var(--theme-red)"
+                          : "var(--theme-blue)"
                       }
                     />
                   </ErrorWrapper>
-                  <label htmlFor={`links.${link.key}.href`}>Link:</label>
+                  <label htmlFor={`links.${index}.href`}>Link:</label>
                   <ErrorWrapper
-                    error={
-                      errors?.links && errors.links[link.key]?.href?.message
-                    }
+                    error={errors?.links && errors.links[index]?.href?.message}
                   >
                     <Input
                       className="w-full"
-                      id={`links.${link.key}.href`}
-                      {...register(`links.${link.key}.href`)} // Using register for Input
-                      defaultValue={link.value.href}
+                      id={`links.${index}.href`}
+                      {...register(`links.${index}.href`)} // Using register for Input
+                      defaultValue={item.href}
                       type="url"
                       required
                       tabIndex={open ? 0 : -1}
                       glowColor={
-                        errors?.links && errors.links[link.key]?.href
-                          ? "#fb3b53"
-                          : "#60a5fa"
+                        errors?.links && errors.links[index]?.href
+                          ? "var(--theme-red)"
+                          : "var(--theme-blue)"
                       }
                     />
                   </ErrorWrapper>
                 </div>
                 <TrashButton
                   className="mx-4"
-                  onClick={() => removeLink(link.key)}
+                  onClick={() => remove(index)}
                   tabIndex={open ? 0 : -1}
                 />
               </div>
-              <span className="w-full h-px my-3 bg-gradient-to-r from-transparent via-blue-300 to-transparent" />
+              <Hr className=" my-3" />
             </div>
           ))}
-          <Button
-            type="button"
-            onClick={addLink}
-            className=" mx-auto w-fit text-center"
-            tabIndex={open ? 0 : -1}
-          >
-            Add Link
-          </Button>
+
+          <span className="mx-auto w-fit">
+            <Button
+              type="button"
+              onClick={() => {
+                append({ type: LinkType.OTHER, href: "" });
+              }}
+              className="text-center"
+              tabIndex={open ? 0 : -1}
+            >
+              Add Link
+            </Button>
+          </span>
         </div>
       </AccordionContent>
     </Accordion>

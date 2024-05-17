@@ -2,17 +2,27 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { signOut } from "next-auth/react";
+import getPortfolio from "@/utils/actions/getPortfolio";
+import { useTag } from "@/utils/hooks/useTag";
 
 export interface Tab {
   name: string;
   href?: string;
-  action?: "logout";
+  action?: "logout" | "tag";
   icon: React.ReactNode;
 }
 
-function Outer({ children, tab }: { children: React.ReactNode; tab: Tab }) {
+function Outer({
+  children,
+  tab,
+  tag,
+}: {
+  children: React.ReactNode;
+  tab: Tab;
+  tag?: string;
+}) {
   const handleClick = () => {
     if (tab.action === "logout") {
       signOut({
@@ -22,9 +32,10 @@ function Outer({ children, tab }: { children: React.ReactNode; tab: Tab }) {
   };
   const className = "first:rounded-l-full last:rounded-r-full overflow-hidden";
 
-  if (tab.href) {
+  if (tab.href || tab.action === "tag") {
+    const href = (tab.action === "tag" ? `/${tag}` : tab.href) as string;
     return (
-      <Link onClick={handleClick} href={tab.href} className={className} replace>
+      <Link onClick={handleClick} href={href} className={className} replace>
         {children}
       </Link>
     );
@@ -37,13 +48,18 @@ function Outer({ children, tab }: { children: React.ReactNode; tab: Tab }) {
   );
 }
 
-export default function NavTab({ tab }: { tab: Tab }) {
+export default function NavTab({ tab, email }: { tab: Tab; email?: string }) {
   const [isHovered, setIsHovered] = useState(false);
+  const tag = useTag(email); // i think that this is very inefficient
+
+  if (tab.action === "tag" && !tag) {
+    return null;
+  }
 
   return (
-    <Outer tab={tab}>
+    <Outer tab={tab} tag={tag}>
       <motion.div
-        className="relative flex flex-row justify-center items-center px-4 h-10 first:pl-6 last:pr-6  bg-zinc-800/50 text-white/60"
+        className="relative flex flex-row justify-center items-center px-4 h-10 first:pl-6 last:pr-6 bg-theme-black-light/50 text-theme-gray"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         onTouchStart={() => {

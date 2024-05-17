@@ -21,6 +21,30 @@ const config: Config = {
         "playfair-display": ["Playfair Display", "serif"],
         "poetsen-one": ["Poetsen One", "sans-serif"],
       },
+      colors: {
+        theme: {
+          black: "var(--theme-black)",
+          "black-1": "var(--theme-black-1)",
+          "black-2": "var(--theme-black-2)",
+          "black-light": "var(--theme-black-light)",
+          gray: "var(--theme-gray)",
+          white: "var(--theme-white)",
+          green: "var(--theme-green)",
+          red: "var(--theme-red)",
+          yellow: "var(--theme-yellow)",
+          blue: "var(--theme-blue)",
+          purple: "var(--theme-purple)",
+
+          "white/10": "var(--theme-white-10)",
+          "white/20": "var(--theme-white-20)",
+          "white/50": "var(--theme-white-50)",
+
+          "black-light/50": "var(--theme-black-light-50)",
+          "black-light/80:": "var(--theme-black-light-80)",
+
+          "gray/50": "var(--theme-gray-50)",
+        },
+      },
     },
   },
   plugins: [

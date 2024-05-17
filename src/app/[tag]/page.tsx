@@ -1,7 +1,7 @@
 import { RedirectType, redirect } from "next/navigation";
 import Links from "./components/Links";
 import WorkSection from "./components/WorkSection";
-import EducationSection from "./components/EducationHistory";
+import EducationSection from "./components/EducationSection";
 import getPortfolio from "@/utils/actions/getPortfolio";
 
 export default async function Page({ params }: { params: { tag: string } }) {

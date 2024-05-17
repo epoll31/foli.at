@@ -1,7 +1,5 @@
 "user client";
 
-import useKeyedItems from "@/utils/hooks/useKeyedItems";
-import { WorkHistory } from "@/lib/types";
 import Input from "@/components/ui/Input";
 import TrashButton from "@/components/TrashButtons";
 import TextArea from "@/components/ui/TextArea";
@@ -10,77 +8,35 @@ import {
   AccordionContent,
   AccordionTrigger,
 } from "@/components/ui/Accordion";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import ChevronUp from "@/components/icons/chevron-up";
 import { cn } from "@/utils/cn";
 import Button from "@/components/ui/Button";
-import { useFormContext } from "react-hook-form";
+import { useFieldArray, useFormContext } from "react-hook-form";
 import { formatDateToMonthYear } from "@/utils/formatDate";
 import { FormSchema } from "@/lib/zod/portfolioSchema";
 import ErrorWrapper from "@/components/forms/ErrorWrapper";
-import { ConfirmReloadContext } from "./Form";
+import Hr from "@/components/ui/Hr";
 
-type PartialWorkHistory = Omit<
-  WorkHistory,
-  "id" | "startDate" | "endDate" | "portfolioId"
-> & {
-  startDate: Date | undefined;
-  endDate: Date | undefined;
-};
-export default function WorkSection({
-  workHistories,
-}: {
-  workHistories: WorkHistory[];
-}) {
+export default function WorkSection() {
   const {
+    control,
     register,
     setValue,
     formState: { errors },
   } = useFormContext<FormSchema>();
   const [open, setOpen] = useState(false);
-  const { setConfirmReload } = useContext(ConfirmReloadContext);
 
-  const {
-    items: workKeys,
-    addItem: addWork2,
-    removeItem: removeWork2,
-  } = useKeyedItems<PartialWorkHistory>(
-    workHistories.map((item) => ({
-      title: item.title,
-      company: item.company,
-      description: item.description,
-      startDate: item.startDate,
-      endDate: item.endDate ?? undefined,
-    })),
-    {
-      title: "",
-      company: "",
-      description: "",
-      startDate: undefined,
-      endDate: undefined,
-    }
-  );
-
-  function addWork() {
-    const work = addWork2();
-    setConfirmReload(true);
-
-    setTimeout(() => {
-      document.getElementById(`workHistories.${work.key}.title`)?.focus();
-    }, 100);
-
-    return work;
-  }
-  function removeWork(key: number) {
-    removeWork2(key);
-    setConfirmReload(true);
-  }
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "workHistories",
+  });
 
   return (
     <Accordion className="flex flex-col" onOpenChange={setOpen}>
       <AccordionTrigger
         className={cn(
-          "relative text-center py-3 border-t border-zinc-600 transition-all",
+          "relative text-center py-3 border-t border-theme-white/10 transition-all text-theme-gray",
           open && "border-b"
         )}
       >
@@ -88,7 +44,7 @@ export default function WorkSection({
         {
           <ChevronUp
             className={cn(
-              `absolute top-0 h-full end-3 -rotate-180 transition-transform text-neutral-400`,
+              `absolute top-0 h-full end-3 -rotate-180 transition-transform text-theme-gray`,
               open && "rotate-0"
             )}
           />
@@ -96,146 +52,150 @@ export default function WorkSection({
       </AccordionTrigger>
       <AccordionContent>
         <div className="flex flex-col justify-center py-4">
-          {workKeys.map((item) => (
-            <div className="flex flex-col justify-center" key={item.key}>
+          {fields.map((item, index) => (
+            <div className="flex flex-col justify-center" key={item.id}>
               <div className="flex flex-col relative px-6 gap-3">
                 <div className="w-full grid grid-cols-[min-content_1fr] items-baseline gap-x-3 gap-y-3">
-                  <label htmlFor={`workHistories.${item.key}.title}`}>
+                  <label htmlFor={`workHistories.${index}.title}`}>
                     Title:
                   </label>
                   <div className="grid grid-cols-[1fr_min-content] gap-4">
                     <ErrorWrapper
-                      error={errors?.workHistories?.[item.key]?.title?.message}
+                      error={errors?.workHistories?.[index]?.title?.message}
                     >
                       <Input
                         className="w-full"
-                        id={`workHistories.${item.key}.title`}
-                        {...register(`workHistories.${item.key}.title`)}
-                        defaultValue={item.value.title}
+                        id={`workHistories.${index}.title`}
+                        {...register(`workHistories.${index}.title`)}
+                        defaultValue={item.title}
                         required
                         tabIndex={open ? 0 : -1}
                         glowColor={
-                          errors?.workHistories?.[item.key]?.title
-                            ? "#fb3b53"
-                            : "#60a5fa"
+                          errors?.workHistories?.[index]?.title
+                            ? "var(--theme-red)"
+                            : "var(--theme-blue)"
                         }
                       />
                     </ErrorWrapper>
                     <TrashButton
-                      onClick={() => removeWork(item.key)}
+                      onClick={() => remove(index)}
                       tabIndex={open ? 0 : -1}
                     />
                   </div>
-                  <label htmlFor={`workHistories.${item.key}.company`}>
+                  <label htmlFor={`workHistories.${index}.company`}>
                     Company:
                   </label>
                   <ErrorWrapper
-                    error={errors?.workHistories?.[item.key]?.company?.message}
+                    error={errors?.workHistories?.[index]?.company?.message}
                   >
                     <Input
                       className="w-full"
-                      id={`workHistories.${item.key}.company}`}
-                      {...register(`workHistories.${item.key}.company`)}
-                      defaultValue={item.value.company}
+                      id={`workHistories.${index}.company}`}
+                      {...register(`workHistories.${index}.company`)}
+                      defaultValue={item.company}
                       required
                       tabIndex={open ? 0 : -1}
                       glowColor={
-                        errors?.workHistories?.[item.key]?.company
-                          ? "#fb3b53"
-                          : "#60a5fa"
+                        errors?.workHistories?.[index]?.company
+                          ? "var(--theme-red)"
+                          : "var(--theme-blue)"
                       }
                     />
                   </ErrorWrapper>
                 </div>
-                <div className="grid grid-cols-[min-content_1fr] md:flex flex-row items-baseline gap-x-3 gap-y-3">
-                  <label htmlFor={`workHistories.${item.key}.startDate`}>
+                <div className="grid grid-cols-[min-content_1fr] md:grid-cols-[min-content_1fr_min-content_1fr] items-baseline gap-x-3 gap-y-3">
+                  <label htmlFor={`workHistories.${index}.startDate`}>
                     From:
                   </label>
                   <ErrorWrapper
-                    error={
-                      errors?.workHistories?.[item.key]?.startDate?.message
-                    }
+                    error={errors?.workHistories?.[index]?.startDate?.message}
                   >
                     <Input
                       className="w-full"
-                      id={`workHistories.${item.key}.startDate`}
+                      id={`workHistories.${index}.startDate`}
                       onChange={(e) => {
                         setValue(
-                          `workHistories.${item.key}.startDate`,
+                          `workHistories.${index}.startDate`,
                           new Date(e.target.value)
                         );
                       }}
                       type="month"
-                      defaultValue={formatDateToMonthYear(item.value.startDate)}
+                      defaultValue={formatDateToMonthYear(item.startDate)}
                       required
                       tabIndex={open ? 0 : -1}
                       glowColor={
-                        errors?.workHistories?.[item.key]?.startDate
-                          ? "#fb3b53"
-                          : "#60a5fa"
+                        errors?.workHistories?.[index]?.startDate
+                          ? "var(--theme-red)"
+                          : "var(--theme-blue)"
                       }
                     />
                   </ErrorWrapper>
-                  <label htmlFor={`workHistories.${item.key}.endDate`}>
-                    To:
-                  </label>
+                  <label htmlFor={`workHistories.${index}.endDate`}>To:</label>
                   {/* <ErrorWrapper
-                    error={errors?.workHistories?.[item.key]?.endDate?.message}
+                    error={errors?.workHistories?.[index]?.endDate?.message}
                   > */}
                   <Input
                     className="w-full"
-                    id={`workHistories.${item.key}.endDate`}
+                    id={`workHistories.${index}.endDate`}
                     onChange={(e) => {
                       setValue(
-                        `workHistories.${item.key}.endDate`,
-                        new Date(e.target.value)
+                        `workHistories.${index}.endDate`,
+                        e.target.value ? new Date(e.target.value) : null
                       );
                     }}
                     type="month"
-                    defaultValue={formatDateToMonthYear(item.value.endDate)}
+                    defaultValue={formatDateToMonthYear(item.endDate)}
                     tabIndex={open ? 0 : -1}
                     glowColor={
-                      errors?.workHistories?.[item.key]?.endDate
-                        ? "#fb3b53"
-                        : "#60a5fa"
+                      errors?.workHistories?.[index]?.endDate
+                        ? "var(--theme-red)"
+                        : "var(--theme-blue)"
                     }
                   />
                   {/* </ErrorWrapper> */}
                 </div>
-                <label htmlFor={`workHistories.${item.key}.description`}>
+                <label htmlFor={`workHistories.${index}.description`}>
                   Description:
                 </label>
                 <ErrorWrapper
-                  error={
-                    errors?.workHistories?.[item.key]?.description?.message
-                  }
+                  error={errors?.workHistories?.[index]?.description?.message}
                 >
                   <TextArea
                     className="h-32"
-                    id={`workHistories.${item.key}.description`}
-                    {...register(`workHistories.${item.key}.description`)}
-                    defaultValue={item.value.description}
+                    id={`workHistories.${index}.description`}
+                    {...register(`workHistories.${index}.description`)}
+                    defaultValue={item.description}
                     required
                     tabIndex={open ? 0 : -1}
                     glowColor={
-                      errors?.workHistories?.[item.key]?.description
-                        ? "#fb3b53"
-                        : "#60a5fa"
+                      errors?.workHistories?.[index]?.description
+                        ? "var(--theme-red)"
+                        : "var(--theme-blue)"
                     }
                   />
                 </ErrorWrapper>
               </div>
-              <span className="w-full h-px my-3 bg-gradient-to-r from-transparent via-blue-300 to-transparent" />
+              <Hr className=" my-3" />
             </div>
           ))}
-          <Button
-            type="button"
-            onClick={addWork}
-            className="mx-auto w-fit text-center"
-            tabIndex={open ? 0 : -1}
-          >
-            Add Work
-          </Button>
+          <span className="mx-auto w-fit">
+            <Button
+              type="button"
+              onClick={() => {
+                append({
+                  title: "",
+                  company: "",
+                  startDate: {} as Date,
+                  endDate: null,
+                  description: "",
+                });
+              }}
+              className="text-center"
+              tabIndex={open ? 0 : -1}
+            >
+              Add Work
+            </Button>
+          </span>
         </div>
       </AccordionContent>
     </Accordion>

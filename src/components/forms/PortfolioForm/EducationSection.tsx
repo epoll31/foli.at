@@ -1,6 +1,5 @@
 "user client";
 
-import useKeyedItems from "@/utils/hooks/useKeyedItems";
 import Input from "@/components/ui/Input";
 import TrashButton from "@/components/TrashButtons";
 import TextArea from "@/components/ui/TextArea";
@@ -11,85 +10,40 @@ import {
 } from "@/components/ui/Accordion";
 import ChevronUp from "@/components/icons/chevron-up";
 import { cn } from "@/utils/cn";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import Button from "@/components/ui/Button";
-import { useFormContext } from "react-hook-form";
+import { useFieldArray, useFormContext } from "react-hook-form";
 import { formatDateToMonthYear } from "@/utils/formatDate";
 import ErrorWrapper from "@/components/forms/ErrorWrapper";
 import { FormSchema } from "@/lib/zod/portfolioSchema";
-import { EducationHistory } from "@/lib/types";
-import { ConfirmReloadContext } from "./Form";
+import Hr from "@/components/ui/Hr";
 
-type PartialEducationHistory = Omit<
-  EducationHistory,
-  "id" | "startDate" | "endDate" | "portfolioId"
-> & {
-  startDate: Date | undefined;
-  endDate: Date | undefined;
-};
-export default function EducationSection({
-  educationHistories,
-}: {
-  educationHistories: EducationHistory[];
-}) {
+export default function EducationSection() {
   const {
+    control,
     register,
     setValue,
     formState: { errors },
   } = useFormContext<FormSchema>();
   const [open, setOpen] = useState(false);
-  const { setConfirmReload } = useContext(ConfirmReloadContext);
 
-  const {
-    items: educationKeys,
-    addItem: addEducation2,
-    removeItem: removeEducation2,
-  } = useKeyedItems<PartialEducationHistory>(
-    educationHistories.map((item) => ({
-      school: item.school,
-      degree: item.degree,
-      major: item.major,
-      description: item.description,
-      startDate: item.startDate,
-      endDate: item.endDate ?? undefined,
-    })),
-    {
-      school: "",
-      degree: "",
-      major: "",
-      description: "",
-      startDate: undefined,
-      endDate: undefined,
-    }
-  );
-
-  function addEducation() {
-    const education = addEducation2();
-    setConfirmReload(true);
-
-    setTimeout(() => {
-      document
-        .getElementById(`educationHistories.${education.key}.school`)
-        ?.focus();
-    }, 100);
-
-    return education;
-  }
-  function removeEducation(key: number) {
-    removeEducation2(key);
-    setConfirmReload(true);
-  }
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "educationHistories",
+  });
 
   return (
     <Accordion className="flex flex-col" onOpenChange={setOpen}>
       <AccordionTrigger
-        className={cn("relative text-center py-3 border-y border-zinc-600")}
+        className={cn(
+          "relative text-center py-3 border-y border-theme-white/10  text-theme-gray"
+        )}
       >
         Education History
         {
           <ChevronUp
             className={cn(
-              `absolute top-0 h-full end-3 -rotate-180 transition-transform text-neutral-400`,
+              `absolute top-0 h-full end-3 -rotate-180 transition-transform text-theme-gray`,
               open && "rotate-0"
             )}
           />
@@ -97,183 +51,192 @@ export default function EducationSection({
       </AccordionTrigger>
       <AccordionContent>
         <div className="flex flex-col justify-center pt-4 pb-1">
-          {educationKeys.map((item) => (
-            <div key={item.key} className="flex flex-col justify-center">
-              <div key={item.key} className="flex flex-col relative px-6 gap-3">
+          {fields.map((item, index) => (
+            <div key={item.id} className="flex flex-col justify-center">
+              <div className="flex flex-col relative px-6 gap-3">
                 <div className="grid grid-cols-[min-content_1fr] items-baseline gap-3">
-                  <label htmlFor={`educationHistories.${item.key}.school`}>
+                  <label htmlFor={`educationHistories.${index}.school`}>
                     School:
                   </label>
                   <div className="grid grid-cols-[1fr_min-content] gap-3">
                     <ErrorWrapper
                       error={
                         errors?.educationHistories &&
-                        errors.educationHistories[item.key]?.school?.message
+                        errors.educationHistories[index]?.school?.message
                       }
                     >
                       <Input
                         className="w-full"
-                        id={`educationHistories.${item.key}.school`}
-                        {...register(`educationHistories.${item.key}.school`)}
-                        defaultValue={item.value.school}
+                        id={`educationHistories.${index}.school`}
+                        {...register(`educationHistories.${index}.school`)}
+                        defaultValue={item.school}
                         required
                         tabIndex={open ? 0 : -1}
                         glowColor={
                           errors?.educationHistories &&
-                          errors.educationHistories[item.key]?.school
-                            ? "#fb3b53"
-                            : "#60a5fa"
+                          errors.educationHistories[index]?.school
+                            ? "var(--theme-red)"
+                            : "var(--theme-blue)"
                         }
                       />
                     </ErrorWrapper>
                     <TrashButton
-                      onClick={() => removeEducation(item.key)}
+                      onClick={() => remove(index)}
                       tabIndex={open ? 0 : -1}
                     />
                   </div>
-                  <label htmlFor={`edueducationHistories.${item.key}.degree`}>
+                  <label htmlFor={`edueducationHistories.${index}.degree`}>
                     Degree:
                   </label>
                   <ErrorWrapper
                     error={
                       errors?.educationHistories &&
-                      errors.educationHistories[item.key]?.degree?.message
+                      errors.educationHistories[index]?.degree?.message
                     }
                   >
                     <Input
                       className="w-full"
-                      id={`educationHistories.${item.key}.degree`}
-                      {...register(`educationHistories.${item.key}.degree`)}
-                      defaultValue={item.value.degree}
+                      id={`educationHistories.${index}.degree`}
+                      {...register(`educationHistories.${index}.degree`)}
+                      defaultValue={item.degree}
                       required
                       tabIndex={open ? 0 : -1}
                       glowColor={
                         errors?.educationHistories &&
-                        errors.educationHistories[item.key]?.degree
-                          ? "#fb3b53"
-                          : "#60a5fa"
+                        errors.educationHistories[index]?.degree
+                          ? "var(--theme-red)"
+                          : "var(--theme-blue)"
                       }
                     />
                   </ErrorWrapper>
-                  <label htmlFor={`educationHistories.${item.key}.major`}>
+                  <label htmlFor={`educationHistories.${index}.major`}>
                     Major:
                   </label>
                   <ErrorWrapper
                     error={
                       errors?.educationHistories &&
-                      errors.educationHistories[item.key]?.major?.message
+                      errors.educationHistories[index]?.major?.message
                     }
                   >
                     <Input
                       className="w-full"
-                      id={`educationHistories.${item.key}.major`}
-                      {...register(`educationHistories.${item.key}.major`)}
-                      defaultValue={item.value.major || ""}
+                      id={`educationHistories.${index}.major`}
+                      {...register(`educationHistories.${index}.major`)}
+                      defaultValue={item.major || ""}
                       tabIndex={open ? 0 : -1}
                       glowColor={
                         errors?.educationHistories &&
-                        errors.educationHistories[item.key]?.major
-                          ? "#fb3b53"
-                          : "#60a5fa"
+                        errors.educationHistories[index]?.major
+                          ? "var(--theme-red)"
+                          : "var(--theme-blue)"
                       }
                     />
                   </ErrorWrapper>
                 </div>
-                <div className="grid grid-cols-[min-content_1fr] md:flex flex-row items-baseline gap-x-3 gap-y-3">
-                  <label htmlFor={`education-startDate-${item.key}`}>
-                    From:
-                  </label>
+                <div className="grid grid-cols-[min-content_1fr] md:grid-cols-[min-content_1fr_min-content_1fr] items-baseline gap-x-3 gap-y-3">
+                  <label htmlFor={`education-startDate-${index}`}>From:</label>
                   <ErrorWrapper
                     error={
                       errors?.educationHistories &&
-                      errors.educationHistories[item.key]?.startDate?.message
+                      errors.educationHistories[index]?.startDate?.message
                     }
                   >
                     <Input
                       className="w-full"
-                      id={`education-startDate-${item.key}`}
+                      id={`education-startDate-${index}`}
                       onChange={(e) => {
                         setValue(
-                          `educationHistories.${item.key}.startDate`,
+                          `educationHistories.${index}.startDate`,
                           new Date(e.target.value)
                         );
                       }}
                       type="month"
-                      defaultValue={formatDateToMonthYear(item.value.startDate)}
+                      defaultValue={formatDateToMonthYear(item.startDate)}
                       required
                       tabIndex={open ? 0 : -1}
                       glowColor={
                         errors?.educationHistories &&
-                        errors.educationHistories[item.key]?.startDate
-                          ? "#fb3b53"
-                          : "#60a5fa"
+                        errors.educationHistories[index]?.startDate
+                          ? "var(--theme-red)"
+                          : "var(--theme-blue)"
                       }
                     />
                   </ErrorWrapper>
-                  <label htmlFor={`education-endDate-${item.key}`}>To:</label>
+                  <label htmlFor={`education-endDate-${index}`}>To:</label>
                   <ErrorWrapper
                     error={
                       errors?.educationHistories &&
-                      errors.educationHistories[item.key]?.endDate?.message
+                      errors.educationHistories[index]?.endDate?.message
                     }
                   >
                     <Input
                       className="w-full"
-                      id={`education-endDate-${item.key}`}
+                      id={`education-endDate-${index}`}
                       onChange={(e) => {
                         setValue(
-                          `educationHistories.${item.key}.endDate`,
-                          new Date(e.target.value)
+                          `educationHistories.${index}.endDate`,
+                          e.target.value ? new Date(e.target.value) : null
                         );
                       }}
                       type="month"
-                      defaultValue={formatDateToMonthYear(item.value.endDate)}
+                      defaultValue={formatDateToMonthYear(item.endDate)}
                       tabIndex={open ? 0 : -1}
                       glowColor={
                         errors?.educationHistories &&
-                        errors.educationHistories[item.key]?.endDate
-                          ? "#fb3b53"
-                          : "#60a5fa"
+                        errors.educationHistories[index]?.endDate
+                          ? "var(--theme-red)"
+                          : "var(--theme-blue)"
                       }
                     />
                   </ErrorWrapper>
                 </div>
-                <label htmlFor={`educationHistories.${item.key}.description`}>
+                <label htmlFor={`educationHistories.${index}.description`}>
                   Description:
                 </label>
                 <ErrorWrapper
                   error={
                     errors?.educationHistories &&
-                    errors.educationHistories[item.key]?.description?.message
+                    errors.educationHistories[index]?.description?.message
                   }
                 >
                   <TextArea
                     className="h-32"
-                    id={`educationHistories.${item.key}.description`}
-                    {...register(`educationHistories.${item.key}.description`)}
-                    defaultValue={item.value.description}
+                    id={`educationHistories.${index}.description`}
+                    {...register(`educationHistories.${index}.description`)}
+                    defaultValue={item.description}
                     required
                     tabIndex={open ? 0 : -1}
                     glowColor={
                       errors?.educationHistories &&
-                      errors.educationHistories[item.key]?.description
-                        ? "#fb3b53"
-                        : "#60a5fa"
+                      errors.educationHistories[index]?.description
+                        ? "var(--theme-red)"
+                        : "var(--theme-blue)"
                     }
                   />
                 </ErrorWrapper>
               </div>
-              <span className="w-full h-px my-3 bg-gradient-to-r from-transparent via-blue-300 to-transparent" />
+              <Hr className=" my-3" />
             </div>
           ))}
-          <Button
-            type="button"
-            onClick={addEducation}
-            className="w-fit mx-auto text-center"
-            tabIndex={open ? 0 : -1}
-          >
-            Add Education
-          </Button>
+          <span className="mx-auto w-fit">
+            <Button
+              type="button"
+              onClick={() => {
+                append({
+                  school: "",
+                  degree: "",
+                  major: "",
+                  startDate: {} as Date,
+                  endDate: null,
+                  description: "",
+                });
+              }}
+              className="text-center"
+              tabIndex={open ? 0 : -1}
+            >
+              Add Education
+            </Button>
+          </span>
         </div>
       </AccordionContent>
     </Accordion>

@@ -13,11 +13,6 @@ import setPortfolio from "@/utils/actions/setPortfolio";
 import useUnloadConfirmation from "@/utils/hooks/useUnloadConfirmation";
 import { createContext, useEffect, useState } from "react";
 
-export const ConfirmReloadContext = createContext({
-  confirmReload: true,
-  setConfirmReload: (_: boolean) => {},
-});
-
 export default function PorfolioForm({
   portfolio,
   email,
@@ -40,57 +35,46 @@ export default function PorfolioForm({
     },
     mode: "onChange",
   });
-  const [confirmReload, setConfirmReload] = useState(true);
-  const [manuallySetReload, setManuallySetReload] = useState(false);
-
-  useUnloadConfirmation(confirmReload);
-
-  useEffect(() => {
-    if (manuallySetReload) {
-      return;
-    }
-    setConfirmReload(
-      methods.formState.isDirty && !methods.formState.isSubmitting
-    );
-  }, [methods.formState.isDirty, methods.formState.isSubmitting]);
+  useUnloadConfirmation(
+    methods.formState.isDirty && !methods.formState.isSubmitting
+  );
 
   const onSubmit = methods.handleSubmit(async (data) => {
+    console.log("Data:", data);
     const validatedData = formSchema.parse(data);
+
+    console.log("Validated data:", validatedData);
 
     const updatedPortfolio = await setPortfolio({ email }, validatedData);
 
     console.log("Updated portfolio:", updatedPortfolio);
-    document.location.reload();
+    // document.location.reload();
   });
 
   useEffect(() => {});
 
   return (
-    <ConfirmReloadContext.Provider
-      value={{
-        confirmReload,
-        setConfirmReload: (confirmReload) => {
-          setManuallySetReload(true);
-          setConfirmReload(confirmReload);
-        },
-      }}
-    >
-      <FormProvider {...methods}>
-        <form onSubmit={onSubmit} className="flex flex-col w-full">
-          <PortfolioInfoSection portfolio={portfolio} />
-          <LinksSection links={portfolio.links} />
-          <WorkSection workHistories={portfolio.workHistories} />
-          <EducationSection educationHistories={portfolio.educationHistories} />
+    <FormProvider {...methods}>
+      <form onSubmit={onSubmit} className="flex flex-col w-full">
+        <PortfolioInfoSection portfolio={portfolio} />
+        <LinksSection />
+        <WorkSection />
+        <EducationSection />
 
+        <span className="m-3">
           <Button
-            className="m-3"
+            className="w-full"
             type="submit"
-            glowColor={methods.formState?.isValid ? "#34d399" : "#fb3b53"}
+            glowColor={
+              methods.formState?.isValid
+                ? "var(--theme-blue)"
+                : "var(--theme-red)"
+            }
           >
             <span className="m-1 inline-block text-lg ">Save</span>
           </Button>
-        </form>
-      </FormProvider>
-    </ConfirmReloadContext.Provider>
+        </span>
+      </form>
+    </FormProvider>
   );
 }

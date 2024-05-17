@@ -24,12 +24,12 @@ const DropDown = React.forwardRef(
     return (
       <GlowContainer
         padding="2px"
-        className="relative rounded-[0.5rem] w-full  bg-zinc-700/60 backdrop-blur-sm "
+        className="relative rounded-[0.5rem] w-full backdrop-blur-sm "
         glowColor={glowColor}
       >
         <select
           className={cn(
-            "w-full px-2 py-1 rounded-[calc(0.5rem-2px)] focus-visible:outline-none border-2 border-transparent focus-visible:border-blue-300/50 bg-zinc-800/50 text-white/60 z-20",
+            "w-full px-2 py-1 rounded-[calc(0.5rem-2px)] outline-2 outline-transparent outline-offset-1 focus-visible:outline-theme-blue bg-theme-black-light z-20",
             className
           )}
           style={{
@@ -44,7 +44,7 @@ const DropDown = React.forwardRef(
             </option>
           ))}
         </select>
-        <ChevronUp className="absolute w-5 h-5 text-zinc-500 right-1 top-1/2 -translate-y-1/2 py-auto pointer-events-none -scale-y-100" />
+        <ChevronUp className="absolute w-5 h-5 text-theme-gray right-1 top-1/2 -translate-y-1/2 py-auto pointer-events-none -scale-y-100" />
       </GlowContainer>
     );
   }
