@@ -1,8 +1,8 @@
 "use client";
 
 import { cn } from "@/utils/cn";
-import { AnimatePresence, motion } from "framer-motion";
-import { createContext, useContext, useState } from "react";
+import { motion } from "framer-motion";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const AccordionContext = createContext({
   open: false,
@@ -10,19 +10,25 @@ const AccordionContext = createContext({
 });
 export function Accordion({
   children,
+  open: forceOpen = false,
   className,
   onOpenChange,
   ...props
 }: React.HTMLAttributes<HTMLDivElement> & {
   children: React.ReactNode;
+  open?: boolean;
   onOpenChange?: (open: boolean) => void;
 }) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(forceOpen);
   const toggle = () => {
     const newOpen = !open;
     setOpen(newOpen);
     onOpenChange?.(newOpen);
   };
+
+  useEffect(() => {
+    setOpen(forceOpen);
+  }, [forceOpen]);
 
   return (
     <AccordionContext.Provider value={{ open, toggle }}>
