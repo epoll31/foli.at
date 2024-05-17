@@ -63,7 +63,7 @@ export default function SignInForm() {
             className="w-full"
             glowColor={open ? (isValid ? "#34d399" : "#fb3b53") : "#60a5fa"}
           >
-            Sign in
+            Sign in with Email
           </Button>
         </Accordion>
       </form>
