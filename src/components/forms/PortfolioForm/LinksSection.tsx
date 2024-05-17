@@ -13,10 +13,11 @@ import {
 import Button from "@/components/ui/Button";
 import ChevronUp from "@/components/icons/chevron-up";
 import { cn } from "@/utils/cn";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import ErrorWrapper from "@/components/forms/ErrorWrapper";
 import { FormSchema } from "@/lib/zod/portfolioSchema";
+import { ConfirmReloadContext } from "./Form";
 
 type PartialLink = Omit<Link, "id" | "portfolioId">;
 export default function LinksSection({ links: startLinks }: { links: Link[] }) {
@@ -25,14 +26,30 @@ export default function LinksSection({ links: startLinks }: { links: Link[] }) {
     formState: { errors },
   } = useFormContext<FormSchema>();
   const [open, setOpen] = useState(false);
+  const { setConfirmReload } = useContext(ConfirmReloadContext);
   const {
     items: links,
-    addItem: addLink,
-    removeItem: removeLink,
+    addItem: addLink2,
+    removeItem: removeLink2,
   } = useKeyedItems<PartialLink>(startLinks, {
     type: LinkType.OTHER,
     href: "",
   });
+
+  function addLink() {
+    const link = addLink2();
+    setConfirmReload(true);
+
+    setTimeout(() => {
+      document.getElementById(`links.${link.key}.type`)?.focus();
+    }, 100);
+
+    return link;
+  }
+  function removeLink(key: number) {
+    removeLink2(key);
+    setConfirmReload(true);
+  }
 
   return (
     <Accordion className="flex flex-col" onOpenChange={setOpen}>
@@ -54,13 +71,13 @@ export default function LinksSection({ links: startLinks }: { links: Link[] }) {
       </AccordionTrigger>
       <AccordionContent>
         <div className="flex flex-col justify-center py-4">
-          {links.map((link, index) => (
+          {links.map((link) => (
             <div key={link.key} className="flex flex-col ps-6 ">
               <div className="flex flex-row">
                 <div className="w-full grid grid-cols-[min-content_1fr] items-baseline gap-x-3 gap-y-3">
-                  <label htmlFor={`links.${index}.type`}>Type:</label>
+                  <label htmlFor={`links.${link.key}.type`}>Type:</label>
                   <ErrorWrapper
-                    error={errors?.links && errors.links[index]?.message}
+                    error={errors?.links && errors.links[link.key]?.message}
                   >
                     <DropDown
                       className="w-full"
@@ -71,32 +88,36 @@ export default function LinksSection({ links: startLinks }: { links: Link[] }) {
                         { value: LinkType.PORTFOLIO, label: "Portfolio" },
                         { value: LinkType.OTHER, label: "Other" },
                       ]}
-                      {...register(`links.${index}.type`, { required: true })} // Using register for DropDown
-                      id={`links.${index}.type`}
+                      {...register(`links.${link.key}.type`, {
+                        required: true,
+                      })} // Using register for DropDown
+                      id={`links.${link.key}.type`}
                       required
                       defaultValue={link.value.type}
                       tabIndex={open ? 0 : -1}
                       glowColor={
-                        errors?.links && errors.links[index]?.type
+                        errors?.links && errors.links[link.key]?.type
                           ? "#fb3b53"
                           : "#60a5fa"
                       }
                     />
                   </ErrorWrapper>
-                  <label htmlFor={`links.${index}.href`}>Link:</label>
+                  <label htmlFor={`links.${link.key}.href`}>Link:</label>
                   <ErrorWrapper
-                    error={errors?.links && errors.links[index]?.href?.message}
+                    error={
+                      errors?.links && errors.links[link.key]?.href?.message
+                    }
                   >
                     <Input
                       className="w-full"
-                      id={`links.${index}.href`}
-                      {...register(`links.${index}.href`)} // Using register for Input
+                      id={`links.${link.key}.href`}
+                      {...register(`links.${link.key}.href`)} // Using register for Input
                       defaultValue={link.value.href}
                       type="url"
                       required
                       tabIndex={open ? 0 : -1}
                       glowColor={
-                        errors?.links && errors.links[index]?.href
+                        errors?.links && errors.links[link.key]?.href
                           ? "#fb3b53"
                           : "#60a5fa"
                       }

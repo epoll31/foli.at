@@ -11,6 +11,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { formSchema, type FormSchema } from "@/lib/zod/portfolioSchema";
 import setPortfolio from "@/utils/actions/setPortfolio";
 import useUnloadConfirmation from "@/utils/hooks/useUnloadConfirmation";
+import { createContext, useEffect, useState } from "react";
+
+export const ConfirmReloadContext = createContext({
+  confirmReload: true,
+  setConfirmReload: (_: boolean) => {},
+});
 
 export default function PorfolioForm({
   portfolio,
@@ -34,10 +40,19 @@ export default function PorfolioForm({
     },
     mode: "onChange",
   });
+  const [confirmReload, setConfirmReload] = useState(true);
+  const [manuallySetReload, setManuallySetReload] = useState(false);
 
-  useUnloadConfirmation(
-    methods.formState.isDirty && !methods.formState.isSubmitting
-  );
+  useUnloadConfirmation(confirmReload);
+
+  useEffect(() => {
+    if (manuallySetReload) {
+      return;
+    }
+    setConfirmReload(
+      methods.formState.isDirty && !methods.formState.isSubmitting
+    );
+  }, [methods.formState.isDirty, methods.formState.isSubmitting]);
 
   const onSubmit = methods.handleSubmit(async (data) => {
     const validatedData = formSchema.parse(data);
@@ -48,22 +63,34 @@ export default function PorfolioForm({
     document.location.reload();
   });
 
-  return (
-    <FormProvider {...methods}>
-      <form onSubmit={onSubmit} className="flex flex-col w-full">
-        <PortfolioInfoSection portfolio={portfolio} />
-        <LinksSection links={portfolio.links} />
-        <WorkSection workHistories={portfolio.workHistories} />
-        <EducationSection educationHistories={portfolio.educationHistories} />
+  useEffect(() => {});
 
-        <Button
-          className="m-3"
-          type="submit"
-          glowColor={methods.formState?.isValid ? "#34d399" : "#fb3b53"}
-        >
-          <span className="m-1 inline-block text-lg ">Save</span>
-        </Button>
-      </form>
-    </FormProvider>
+  return (
+    <ConfirmReloadContext.Provider
+      value={{
+        confirmReload,
+        setConfirmReload: (confirmReload) => {
+          setManuallySetReload(true);
+          setConfirmReload(confirmReload);
+        },
+      }}
+    >
+      <FormProvider {...methods}>
+        <form onSubmit={onSubmit} className="flex flex-col w-full">
+          <PortfolioInfoSection portfolio={portfolio} />
+          <LinksSection links={portfolio.links} />
+          <WorkSection workHistories={portfolio.workHistories} />
+          <EducationSection educationHistories={portfolio.educationHistories} />
+
+          <Button
+            className="m-3"
+            type="submit"
+            glowColor={methods.formState?.isValid ? "#34d399" : "#fb3b53"}
+          >
+            <span className="m-1 inline-block text-lg ">Save</span>
+          </Button>
+        </form>
+      </FormProvider>
+    </ConfirmReloadContext.Provider>
   );
 }

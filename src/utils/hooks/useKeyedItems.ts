@@ -11,16 +11,17 @@ export default function useKeyedItems<T>(
     }))
   );
   function addItem() {
-    setItems([
-      ...items,
-      {
-        key: items.reduce(
-          (acc, item) => (acc > item.key ? acc : item.key) + 1,
-          0
-        ),
-        value: defaultValue,
-      },
-    ]);
+    const item = {
+      key: items.reduce(
+        (acc, item) => (acc > item.key ? acc : item.key) + 1,
+        0
+      ),
+      value: defaultValue,
+    };
+
+    setItems([...items, item]);
+
+    return item;
   }
   function removeItem(key: number) {
     setItems(items.filter((item) => item.key !== key));

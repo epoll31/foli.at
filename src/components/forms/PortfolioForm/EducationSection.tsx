@@ -11,13 +11,14 @@ import {
 } from "@/components/ui/Accordion";
 import ChevronUp from "@/components/icons/chevron-up";
 import { cn } from "@/utils/cn";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Button from "@/components/ui/Button";
 import { useFormContext } from "react-hook-form";
 import { formatDateToMonthYear } from "@/utils/formatDate";
 import ErrorWrapper from "@/components/forms/ErrorWrapper";
 import { FormSchema } from "@/lib/zod/portfolioSchema";
 import { EducationHistory } from "@/lib/types";
+import { ConfirmReloadContext } from "./Form";
 
 type PartialEducationHistory = Omit<
   EducationHistory,
@@ -37,11 +38,12 @@ export default function EducationSection({
     formState: { errors },
   } = useFormContext<FormSchema>();
   const [open, setOpen] = useState(false);
+  const { setConfirmReload } = useContext(ConfirmReloadContext);
 
   const {
     items: educationKeys,
-    addItem: addEducation,
-    removeItem: removeEducation,
+    addItem: addEducation2,
+    removeItem: removeEducation2,
   } = useKeyedItems<PartialEducationHistory>(
     educationHistories.map((item) => ({
       school: item.school,
@@ -61,6 +63,23 @@ export default function EducationSection({
     }
   );
 
+  function addEducation() {
+    const education = addEducation2();
+    setConfirmReload(true);
+
+    setTimeout(() => {
+      document
+        .getElementById(`educationHistories.${education.key}.school`)
+        ?.focus();
+    }, 100);
+
+    return education;
+  }
+  function removeEducation(key: number) {
+    removeEducation2(key);
+    setConfirmReload(true);
+  }
+
   return (
     <Accordion className="flex flex-col" onOpenChange={setOpen}>
       <AccordionTrigger
@@ -78,30 +97,30 @@ export default function EducationSection({
       </AccordionTrigger>
       <AccordionContent>
         <div className="flex flex-col justify-center pt-4 pb-1">
-          {educationKeys.map((item, index) => (
+          {educationKeys.map((item) => (
             <div key={item.key} className="flex flex-col justify-center">
               <div key={item.key} className="flex flex-col relative px-6 gap-3">
                 <div className="grid grid-cols-[min-content_1fr] items-baseline gap-3">
-                  <label htmlFor={`ducationHistories.${index}.school`}>
+                  <label htmlFor={`educationHistories.${item.key}.school`}>
                     School:
                   </label>
                   <div className="grid grid-cols-[1fr_min-content] gap-3">
                     <ErrorWrapper
                       error={
                         errors?.educationHistories &&
-                        errors.educationHistories[index]?.school?.message
+                        errors.educationHistories[item.key]?.school?.message
                       }
                     >
                       <Input
                         className="w-full"
-                        id={`ducationHistories.${index}.school`}
-                        {...register(`educationHistories.${index}.school`)}
+                        id={`educationHistories.${item.key}.school`}
+                        {...register(`educationHistories.${item.key}.school`)}
                         defaultValue={item.value.school}
                         required
                         tabIndex={open ? 0 : -1}
                         glowColor={
                           errors?.educationHistories &&
-                          errors.educationHistories[index]?.school
+                          errors.educationHistories[item.key]?.school
                             ? "#fb3b53"
                             : "#60a5fa"
                         }
@@ -112,48 +131,48 @@ export default function EducationSection({
                       tabIndex={open ? 0 : -1}
                     />
                   </div>
-                  <label htmlFor={`edueducationHistories.${index}.degree`}>
+                  <label htmlFor={`edueducationHistories.${item.key}.degree`}>
                     Degree:
                   </label>
                   <ErrorWrapper
                     error={
                       errors?.educationHistories &&
-                      errors.educationHistories[index]?.degree?.message
+                      errors.educationHistories[item.key]?.degree?.message
                     }
                   >
                     <Input
                       className="w-full"
-                      id={`educationHistories.${index}.degree`}
-                      {...register(`educationHistories.${index}.degree`)}
+                      id={`educationHistories.${item.key}.degree`}
+                      {...register(`educationHistories.${item.key}.degree`)}
                       defaultValue={item.value.degree}
                       required
                       tabIndex={open ? 0 : -1}
                       glowColor={
                         errors?.educationHistories &&
-                        errors.educationHistories[index]?.degree
+                        errors.educationHistories[item.key]?.degree
                           ? "#fb3b53"
                           : "#60a5fa"
                       }
                     />
                   </ErrorWrapper>
-                  <label htmlFor={`educationHistories.${index}.major`}>
+                  <label htmlFor={`educationHistories.${item.key}.major`}>
                     Major:
                   </label>
                   <ErrorWrapper
                     error={
                       errors?.educationHistories &&
-                      errors.educationHistories[index]?.major?.message
+                      errors.educationHistories[item.key]?.major?.message
                     }
                   >
                     <Input
                       className="w-full"
-                      id={`educationHistories.${index}.major`}
-                      {...register(`educationHistories.${index}.major`)}
+                      id={`educationHistories.${item.key}.major`}
+                      {...register(`educationHistories.${item.key}.major`)}
                       defaultValue={item.value.major || ""}
                       tabIndex={open ? 0 : -1}
                       glowColor={
                         errors?.educationHistories &&
-                        errors.educationHistories[index]?.major
+                        errors.educationHistories[item.key]?.major
                           ? "#fb3b53"
                           : "#60a5fa"
                       }
@@ -167,7 +186,7 @@ export default function EducationSection({
                   <ErrorWrapper
                     error={
                       errors?.educationHistories &&
-                      errors.educationHistories[index]?.startDate?.message
+                      errors.educationHistories[item.key]?.startDate?.message
                     }
                   >
                     <Input
@@ -175,7 +194,7 @@ export default function EducationSection({
                       id={`education-startDate-${item.key}`}
                       onChange={(e) => {
                         setValue(
-                          `educationHistories.${index}.startDate`,
+                          `educationHistories.${item.key}.startDate`,
                           new Date(e.target.value)
                         );
                       }}
@@ -185,7 +204,7 @@ export default function EducationSection({
                       tabIndex={open ? 0 : -1}
                       glowColor={
                         errors?.educationHistories &&
-                        errors.educationHistories[index]?.startDate
+                        errors.educationHistories[item.key]?.startDate
                           ? "#fb3b53"
                           : "#60a5fa"
                       }
@@ -195,7 +214,7 @@ export default function EducationSection({
                   <ErrorWrapper
                     error={
                       errors?.educationHistories &&
-                      errors.educationHistories[index]?.endDate?.message
+                      errors.educationHistories[item.key]?.endDate?.message
                     }
                   >
                     <Input
@@ -203,7 +222,7 @@ export default function EducationSection({
                       id={`education-endDate-${item.key}`}
                       onChange={(e) => {
                         setValue(
-                          `educationHistories.${index}.endDate`,
+                          `educationHistories.${item.key}.endDate`,
                           new Date(e.target.value)
                         );
                       }}
@@ -212,32 +231,32 @@ export default function EducationSection({
                       tabIndex={open ? 0 : -1}
                       glowColor={
                         errors?.educationHistories &&
-                        errors.educationHistories[index]?.endDate
+                        errors.educationHistories[item.key]?.endDate
                           ? "#fb3b53"
                           : "#60a5fa"
                       }
                     />
                   </ErrorWrapper>
                 </div>
-                <label htmlFor={`educationHistories.${index}.description`}>
+                <label htmlFor={`educationHistories.${item.key}.description`}>
                   Description:
                 </label>
                 <ErrorWrapper
                   error={
                     errors?.educationHistories &&
-                    errors.educationHistories[index]?.description?.message
+                    errors.educationHistories[item.key]?.description?.message
                   }
                 >
                   <TextArea
                     className="h-32"
-                    id={`educationHistories.${index}.description`}
-                    {...register(`educationHistories.${index}.description`)}
+                    id={`educationHistories.${item.key}.description`}
+                    {...register(`educationHistories.${item.key}.description`)}
                     defaultValue={item.value.description}
                     required
                     tabIndex={open ? 0 : -1}
                     glowColor={
                       errors?.educationHistories &&
-                      errors.educationHistories[index]?.description
+                      errors.educationHistories[item.key]?.description
                         ? "#fb3b53"
                         : "#60a5fa"
                     }

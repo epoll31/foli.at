@@ -10,7 +10,7 @@ import {
   AccordionContent,
   AccordionTrigger,
 } from "@/components/ui/Accordion";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import ChevronUp from "@/components/icons/chevron-up";
 import { cn } from "@/utils/cn";
 import Button from "@/components/ui/Button";
@@ -18,6 +18,7 @@ import { useFormContext } from "react-hook-form";
 import { formatDateToMonthYear } from "@/utils/formatDate";
 import { FormSchema } from "@/lib/zod/portfolioSchema";
 import ErrorWrapper from "@/components/forms/ErrorWrapper";
+import { ConfirmReloadContext } from "./Form";
 
 type PartialWorkHistory = Omit<
   WorkHistory,
@@ -37,11 +38,12 @@ export default function WorkSection({
     formState: { errors },
   } = useFormContext<FormSchema>();
   const [open, setOpen] = useState(false);
+  const { setConfirmReload } = useContext(ConfirmReloadContext);
 
   const {
     items: workKeys,
-    addItem: addWork,
-    removeItem: removeWork,
+    addItem: addWork2,
+    removeItem: removeWork2,
   } = useKeyedItems<PartialWorkHistory>(
     workHistories.map((item) => ({
       title: item.title,
@@ -58,6 +60,21 @@ export default function WorkSection({
       endDate: undefined,
     }
   );
+
+  function addWork() {
+    const work = addWork2();
+    setConfirmReload(true);
+
+    setTimeout(() => {
+      document.getElementById(`workHistories.${work.key}.title`)?.focus();
+    }, 100);
+
+    return work;
+  }
+  function removeWork(key: number) {
+    removeWork2(key);
+    setConfirmReload(true);
+  }
 
   return (
     <Accordion className="flex flex-col" onOpenChange={setOpen}>
@@ -162,28 +179,28 @@ export default function WorkSection({
                   <label htmlFor={`workHistories.${item.key}.endDate`}>
                     To:
                   </label>
-                  <ErrorWrapper
+                  {/* <ErrorWrapper
                     error={errors?.workHistories?.[item.key]?.endDate?.message}
-                  >
-                    <Input
-                      className="w-full"
-                      id={`workHistories.${item.key}.endDate`}
-                      onChange={(e) => {
-                        setValue(
-                          `workHistories.${item.key}.endDate`,
-                          new Date(e.target.value)
-                        );
-                      }}
-                      type="month"
-                      defaultValue={formatDateToMonthYear(item.value.endDate)}
-                      tabIndex={open ? 0 : -1}
-                      glowColor={
-                        errors?.workHistories?.[item.key]?.endDate
-                          ? "#fb3b53"
-                          : "#60a5fa"
-                      }
-                    />
-                  </ErrorWrapper>
+                  > */}
+                  <Input
+                    className="w-full"
+                    id={`workHistories.${item.key}.endDate`}
+                    onChange={(e) => {
+                      setValue(
+                        `workHistories.${item.key}.endDate`,
+                        new Date(e.target.value)
+                      );
+                    }}
+                    type="month"
+                    defaultValue={formatDateToMonthYear(item.value.endDate)}
+                    tabIndex={open ? 0 : -1}
+                    glowColor={
+                      errors?.workHistories?.[item.key]?.endDate
+                        ? "#fb3b53"
+                        : "#60a5fa"
+                    }
+                  />
+                  {/* </ErrorWrapper> */}
                 </div>
                 <label htmlFor={`workHistories.${item.key}.description`}>
                   Description:
