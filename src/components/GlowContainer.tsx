@@ -5,11 +5,13 @@ import { CSSProperties, use, useEffect, useRef, useState } from "react";
 
 export default function GlowContainer({
   className,
+  style,
   children,
   glowColor = "#fb3b53",
   padding = "1px",
 }: {
   className?: string;
+  style?: CSSProperties;
   children: React.ReactNode;
   glowColor?: string;
   padding?: string;
@@ -98,7 +100,10 @@ export default function GlowContainer({
   return (
     <div
       className={cn("relative overflow-hidden rounded-full ", className)}
-      style={{ padding }}
+      style={{
+        ...style,
+        padding: padding,
+      }}
       ref={ref}
     >
       <span

@@ -51,8 +51,12 @@ export default async function Nav() {
 
   return (
     <GlowContainer
-      className="fixed bottom-8 shadow-xl z-40 bg-theme-white/10 backdrop-blur-sm"
+      className="fixed bottom-8 shadow-xl z-40 bg-theme-white/10"
       glowColor="var(--theme-white-20)"
+      style={{
+        backdropFilter: "blur(4px)",
+        WebkitBackdropFilter: "blur(4px)",
+      }}
     >
       <nav className="rounded-full flex flex-row flex-nowrap h-fit gap-px z-50">
         {tabs.map((tab) => (
