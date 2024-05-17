@@ -40,7 +40,8 @@ export default function Timeline({
           <span
             className={cn(
               `absolute top-0 left-0 w-1 h-full`,
-              "from-theme-gray to-theme-gray from-theme-red to-theme-red", // this is here to force TW to generate the classes
+              "from-theme-gray to-theme-gray", // this is here to force TW to generate the classes
+              "from-theme-red to-theme-red", // this is here to force TW to generate the classes
               gradients[index],
               index === 0 ? ` rounded-t-full` : "",
               index === items.length - 1 ? `rounded-b-full` : "",
