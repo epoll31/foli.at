@@ -1,6 +1,6 @@
 "use client";
 import { cn } from "@/utils/cn";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 
 export default function Timeline({
   items,
