@@ -21,7 +21,7 @@ export default function RootLayout({
       <body
         className={cn(
           inter.className,
-          "min-w-[100dvw] min-h-[100dvh] flex flex-col items-center justify-center"
+          "min-w-[100dvw] min-h-[100dvh] flex flex-col items-center justify-center overflow-x-hidden"
         )}
       >
         <div className="min-h-full flex flex-col justify-center items-center mx-8 py-12 sm:py-24 md:py-32">
