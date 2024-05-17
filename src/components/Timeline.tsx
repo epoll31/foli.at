@@ -1,4 +1,6 @@
+"use client";
 import { cn } from "@/utils/cn";
+import { useEffect, useMemo, useState } from "react";
 
 export default function Timeline({
   items,
@@ -8,23 +10,25 @@ export default function Timeline({
     active: boolean;
   }[];
 }) {
-  const getActive = (index: number) => {
-    return items[index]?.active;
-  };
+  const gradients = useMemo(() => {
+    return items.map((_, index) => {
+      const curr = items[index]?.active;
 
-  function getGradient(index: number) {
-    const curr = getActive(index);
-    const next = getActive(index + 1);
+      if (index === items.length - 1) {
+        return curr ? "bg-theme-red" : "bg-theme-gray";
+      }
 
-    const from = curr ? "theme-red" : "theme-gray";
-    const via = curr ? "theme-red" : "theme-gray";
-    const to =
-      (curr && (next || index === items.length - 1)) || (!curr && next)
-        ? "theme-red"
-        : "theme-gray";
+      const next = items[index + 1]?.active;
 
-    return `bg-gradient-to-b from-${from} via-${via} to-${to} from-70% to-90%`;
-  }
+      const from = curr ? "theme-red" : "theme-gray";
+      const to =
+        (curr && (next || index === items.length - 1)) || (!curr && next)
+          ? "theme-red"
+          : "theme-gray";
+
+      return `bg-gradient-to-b from-${from} to-${to} from-70% to-90%`;
+    });
+  }, [items]);
 
   return (
     <div className="flex flex-col w-full">
@@ -36,7 +40,7 @@ export default function Timeline({
           <span
             className={cn(
               `absolute top-0 left-0 w-1 h-full`,
-              getGradient(index),
+              gradients[index],
               index === 0 ? ` rounded-t-full` : "",
               index === items.length - 1 ? `rounded-b-full` : "",
               `-translate-x-1/2`
@@ -45,7 +49,7 @@ export default function Timeline({
           <span
             className={cn(
               `absolute top-0 left-0 w-4 h-4 rounded-full border`,
-              getActive(index)
+              item.active
                 ? "bg-theme-red border-theme-red"
                 : "bg-theme-gray border-theme-gray",
               "-translate-x-1/2 translate-y-1/2",
