@@ -38,6 +38,8 @@ function Outer({
       const lightTheme =
         document.documentElement.classList.toggle("light-theme");
 
+      if (typeof window === "undefined") return;
+
       localStorage.setItem("lightTheme", lightTheme ? "true" : "false");
 
       window.dispatchEvent(new Event("storage"));

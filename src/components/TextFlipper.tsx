@@ -17,7 +17,7 @@ function Flipper({ text, className }: { text: Text; className?: string }) {
   useEffect(() => {
     setPrev(curr);
     setCurr(text);
-  }, [text]);
+  }, [text, curr]);
 
   return (
     <span className={cn(className, "relative")}>
@@ -92,7 +92,7 @@ export default function TextFlipper({
     return () => {
       clearInterval(interval);
     };
-  }, []);
+  }, [texts.length]);
 
   return <Flipper text={texts[active]} className={className} />;
 }
