@@ -18,9 +18,9 @@ export default async function PortfolioPage() {
   return (
     <SessionProvider session={session}>
       <BackgroundGrid size={30} fade fadeFrom="20%" fadeTo="100%" />
-      <div className="rounded-xl overflow-hidden bg-theme-black drop-shadow-lg border border-theme-white/10">
-        <div className="sm:px-16  py-6 border-b border-b-theme-white/10">
-          <h2 className="text-theme-gray text-3xl md:text-4xl text-center text-nowrap">
+      <div className="rounded-xl overflow-hidden bg-theme-bg-secondary drop-shadow-lg border border-theme-border-primary">
+        <div className="sm:px-16  py-6 border-b border-b-theme-border-primary">
+          <h2 className="text-theme-text-primary text-3xl md:text-4xl text-center text-nowrap">
             Edit Your Portfolio
           </h2>
         </div>

@@ -19,12 +19,12 @@ export default function Button({
     >
       <button
         className={cn(
-          "focus-visible:outline-none border-2 border-transparent focus-visible:border-theme-blue rounded-[calc(0.6rem+0px)]",
+          "focus-visible:outline-none border-2 border-transparent focus-visible:border-theme-focus rounded-[calc(0.6rem+0px)]",
           className
         )}
         {...props}
       >
-        <div className="rounded-[calc(0.6rem-1px)] px-3 py-1 bg-theme-black-light text-theme-white/60 z-20">
+        <div className="rounded-[calc(0.6rem-1px)] px-3 py-1 bg-theme-bg-primary z-20">
           {children}
         </div>
       </button>

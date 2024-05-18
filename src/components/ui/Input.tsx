@@ -23,7 +23,7 @@ const Input = React.forwardRef(
         <input
           className={cn(
             className,
-            "px-4 py-1 rounded-full outline-2 outline-transparent outline-offset-1 focus-visible:outline-theme-blue bg-theme-black-light z-20"
+            "px-4 py-1 rounded-full outline-2 outline-transparent outline-offset-1 focus-visible:outline-theme-focus bg-theme-bg-primary z-20"
           )}
           ref={ref}
           {...props}

@@ -35,7 +35,7 @@ export default function LinksSection() {
     <Accordion className="flex flex-col" onOpenChange={setOpen}>
       <AccordionTrigger
         className={cn(
-          "relative text-center py-3 border-t border-theme-white/10 transition-all text-theme-gray",
+          "relative text-center py-3 border-t border-theme-border-primary transition-all text-theme-text-primary",
           open && "border-b"
         )}
       >
@@ -43,7 +43,7 @@ export default function LinksSection() {
         {
           <ChevronUp
             className={cn(
-              `absolute top-0 h-full end-3 -rotate-180 transition-transform  text-theme-gray`,
+              `absolute top-0 h-full end-3 -rotate-180 transition-transform  text-theme-text-primary`,
               open && "rotate-0"
             )}
           />
@@ -77,8 +77,8 @@ export default function LinksSection() {
                       tabIndex={open ? 0 : -1}
                       glowColor={
                         errors?.links && errors.links[index]?.type
-                          ? "var(--theme-red)"
-                          : "var(--theme-blue)"
+                          ? "var(--theme-error)"
+                          : "var(--theme-info)"
                       }
                     />
                   </ErrorWrapper>
@@ -96,8 +96,8 @@ export default function LinksSection() {
                       tabIndex={open ? 0 : -1}
                       glowColor={
                         errors?.links && errors.links[index]?.href
-                          ? "var(--theme-red)"
-                          : "var(--theme-blue)"
+                          ? "var(--theme-error)"
+                          : "var(--theme-info)"
                       }
                     />
                   </ErrorWrapper>

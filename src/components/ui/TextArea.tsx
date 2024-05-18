@@ -23,15 +23,15 @@ const TextArea = React.forwardRef(
         <textarea
           className={cn(
             className,
-            " w-full px-2 py-1 rounded-[calc(0.5rem-2px)] outline-2 outline-transparent outline-offset-1 focus-visible:outline-theme-blue bg-theme-black-light z-20 min-h-10 max-h-96 align-top [&::-webkit-resizer]:hidden"
+            " w-full px-2 py-1 rounded-[calc(0.5rem-2px)] outline-2 outline-transparent outline-offset-1 focus-visible:outline-theme-focus bg-theme-bg-primary z-20 min-h-10 max-h-96 align-top [&::-webkit-resizer]:hidden"
           )}
           style={{
-            scrollbarColor: "var(--theme-gray) transparent",
+            scrollbarColor: "var(--theme-text-primary) transparent",
           }}
           ref={ref}
           {...props}
         ></textarea>
-        <GridDots className="absolute w-4 h-4 text-theme-gray right-0.5 bottom-0.5 pointer-events-none" />
+        <GridDots className="absolute w-4 h-4 text-theme-text-primary right-0.5 bottom-0.5 pointer-events-none" />
       </GlowContainer>
     );
   }

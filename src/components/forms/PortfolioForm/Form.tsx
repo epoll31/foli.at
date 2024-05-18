@@ -60,8 +60,8 @@ export default function PorfolioForm({
             type="submit"
             glowColor={
               methods.formState?.isValid
-                ? "var(--theme-blue)"
-                : "var(--theme-red)"
+                ? "var(--theme-success)"
+                : "var(--theme-error)"
             }
           >
             <span className="m-1 inline-block text-lg ">Save</span>

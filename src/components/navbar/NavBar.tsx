@@ -51,8 +51,8 @@ export default async function Nav() {
 
   return (
     <GlowContainer
-      className="fixed bottom-8 shadow-xl z-40 bg-theme-white/10"
-      glowColor="var(--theme-white-20)"
+      className="fixed bottom-8 shadow-xl z-40 bg-theme-border-primary"
+      glowColor="var(--theme-border-secondary)"
       style={{
         backdropFilter: "blur(4px)",
         WebkitBackdropFilter: "blur(4px)",

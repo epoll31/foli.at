@@ -15,16 +15,16 @@ export default function Timeline({
       const curr = items[index]?.active;
 
       if (index === items.length - 1) {
-        return curr ? "bg-theme-red" : "bg-theme-gray";
+        return curr ? "bg-theme-accent-3" : "bg-theme-text-primary";
       }
 
       const next = items[index + 1]?.active;
 
-      const from = curr ? "theme-red" : "theme-gray";
+      const from = curr ? "theme-accent-3" : "theme-text-primary";
       const to =
         (curr && (next || index === items.length - 1)) || (!curr && next)
-          ? "theme-red"
-          : "theme-gray";
+          ? "theme-accent-3"
+          : "theme-text-primary";
 
       return `bg-gradient-to-b from-${from} to-${to} from-70% to-90%`;
     });
@@ -40,8 +40,8 @@ export default function Timeline({
           <span
             className={cn(
               `absolute top-0 left-0 w-1 h-full`,
-              "from-theme-gray to-theme-gray", // this is here to force TW to generate the classes
-              "from-theme-red to-theme-red", // this is here to force TW to generate the classes
+              "from-theme-text-primary to-theme-text-primary", // this is here to force TW to generate the classes
+              "from-theme-accent-3 to-theme-accent-3", // this is here to force TW to generate the classes
               gradients[index],
               index === 0 ? ` rounded-t-full` : "",
               index === items.length - 1 ? `rounded-b-full` : "",
@@ -52,8 +52,8 @@ export default function Timeline({
             className={cn(
               `absolute top-0 left-0 w-4 h-4 rounded-full border`,
               item.active
-                ? "bg-theme-red border-theme-red"
-                : "bg-theme-gray border-theme-gray",
+                ? "bg-theme-accent-3 border-theme-accent-3"
+                : "bg-theme-text-primary border-theme-text-primary",
               "-translate-x-1/2 translate-y-1/2",
               "group-hover/timeline-item:scale-110 transition-transform"
             )}
