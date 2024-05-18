@@ -20,10 +20,8 @@ export default function ThemeInitializer() {
         storage === "true"
       );
     }
+    window.dispatchEvent(new Event("storage"));
   }, []);
-
-  console.log("ThemeInitializer rendered");
-  window.dispatchEvent(new Event("storage"));
 
   return <></>;
 }

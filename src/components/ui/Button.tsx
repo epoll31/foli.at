@@ -24,7 +24,7 @@ export default function Button({
         )}
         {...props}
       >
-        <div className="rounded-[calc(0.6rem-1px)] px-3 py-1 bg-theme-bg-primary z-20">
+        <div className="rounded-[calc(0.6rem-1px)] px-3 py-1 bg-theme-bg-tertiary z-20">
           {children}
         </div>
       </button>

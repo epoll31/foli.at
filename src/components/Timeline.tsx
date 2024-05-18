@@ -15,16 +15,16 @@ export default function Timeline({
       const curr = items[index]?.active;
 
       if (index === items.length - 1) {
-        return curr ? "bg-theme-accent-3" : "bg-theme-text-primary";
+        return curr ? "bg-theme-accent-3" : "bg-theme-accent-dull";
       }
 
       const next = items[index + 1]?.active;
 
-      const from = curr ? "theme-accent-3" : "theme-text-primary";
+      const from = curr ? "theme-accent-3" : "theme-accent-dull";
       const to =
         (curr && (next || index === items.length - 1)) || (!curr && next)
           ? "theme-accent-3"
-          : "theme-text-primary";
+          : "theme-accent-dull";
 
       return `bg-gradient-to-b from-${from} to-${to} from-70% to-90%`;
     });
@@ -40,7 +40,7 @@ export default function Timeline({
           <span
             className={cn(
               `absolute top-0 left-0 w-1 h-full`,
-              "from-theme-text-primary to-theme-text-primary", // this is here to force TW to generate the classes
+              "from-theme-accent-dull to-theme-accent-dull", // this is here to force TW to generate the classes
               "from-theme-accent-3 to-theme-accent-3", // this is here to force TW to generate the classes
               gradients[index],
               index === 0 ? ` rounded-t-full` : "",
@@ -53,7 +53,7 @@ export default function Timeline({
               `absolute top-0 left-0 w-4 h-4 rounded-full border`,
               item.active
                 ? "bg-theme-accent-3 border-theme-accent-3"
-                : "bg-theme-text-primary border-theme-text-primary",
+                : "bg-theme-accent-dull border-theme-accent-dull",
               "-translate-x-1/2 translate-y-1/2",
               "group-hover/timeline-item:scale-110 transition-transform"
             )}

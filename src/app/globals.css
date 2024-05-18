@@ -9,17 +9,23 @@
   --theme-black-light: rgba(42, 43, 42, 1);
   --theme-black-light-50: rgba(42, 43, 42, 0.5);
   --theme-gray: rgba(145, 144, 142, 1);
+  --theme-dark-gray: rgba(68, 68, 68, 1);
   --theme-green: rgba(6, 214, 160, 1);
   --theme-blue: rgba(126, 178, 221, 1);
+  --theme-blue-50: rgba(191, 217, 238, 0.7);
   --theme-red: rgba(239, 71, 111, 1);
   --theme-white: rgba(255, 252, 249, 1);
   --theme-white-10: rgba(255, 252, 249, 0.1);
   --theme-white-20: rgba(255, 252, 249, 0.2);
   --theme-white-50: rgba(255, 252, 249, 0.5);
+  --theme-white-65: rgba(255, 252, 249, 0.65);
 
   /* START */
+  --theme-wordmark-text: var(--theme-white-10);
+  --theme-wordmark-border: var(--theme-white-20);
   --theme-bg-primary: var(--theme-black-light);
   --theme-bg-secondary: var(--theme-black);
+  --theme-bg-tertiary: var(--theme-black-light);
   --theme-bg-faded: var(--theme-black-light-50);
   --theme-text-primary: var(--theme-gray);
   --theme-border-primary: var(--theme-white-10);
@@ -32,29 +38,40 @@
   --theme-accent-3: var(--theme-red);
   --theme-light-faded: var(--theme-white-50);
   --theme-focus: var(--theme-blue);
+  --theme-nav-primary: var(--theme-white-10);
+  --theme-nav-secondary: var(--theme-black-light-50);
+  --theme-nav-glow: var(--theme-white-20);
+  --theme-accent-dull: var(--theme-gray);
   /* END */
 
   background-color: var(--theme-bg-primary);
   color: var(--theme-text-primary);
 }
 
-* {
-  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
-}
-
 .light-theme {
+  --theme-wordmark-text: var(--theme-blue);
+  --theme-wordmark-border: var(--theme-black-light-50);
   --theme-bg-primary: var(--theme-white);
   --theme-bg-secondary: var(--theme-white);
+  --theme-bg-tertiary: var(--theme-blue-50);
   --theme-bg-faded: var(--theme-white-50);
-  --theme-text-primary: var(--theme-black);
-  --theme-border-primary: var(--theme-black-light);
-  --theme-border-secondary: var(--theme-black-light-50);
+  --theme-text-primary: var(--theme-dark-gray);
+  --theme-border-primary: var(--theme-gray);
+  --theme-border-secondary: var(--theme-black-light);
   --theme-error: var(--theme-red);
   --theme-success: var(--theme-green);
   --theme-info: var(--theme-blue);
-  --theme-accent-1: var(--theme-blue);
+  --theme-accent-1: var(--theme-blue-50);
   --theme-accent-2: var(--theme-green);
   --theme-accent-3: var(--theme-red);
   --theme-light-faded: var(--theme-black-light-50);
   --theme-focus: var(--theme-blue);
+  --theme-nav-primary: var(--theme-blue);
+  --theme-nav-secondary: var(--theme-white-50);
+  --theme-nav-glow: var(--theme-white-65);
+  --theme-accent-dull: var(--theme-gray);
 }
+
+/* * {
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+} */

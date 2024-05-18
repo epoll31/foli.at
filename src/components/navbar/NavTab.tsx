@@ -2,23 +2,17 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { signOut } from "next-auth/react";
-import getPortfolio from "@/utils/actions/getPortfolio";
 import { useTag } from "@/utils/hooks/useTag";
-import Gear from "../icons/gear";
-import Sun from "../icons/sun";
-import Moon from "../icons/moon";
 import useTheme from "@/utils/hooks/useTheme";
 
-export interface TabContents {
+export interface Tab {
   name: string;
   href?: string;
   action?: "logout" | "tag" | "theme";
   icon: React.ReactNode;
 }
-
-export type Tab = TabContents | "theme";
 
 function Outer({
   children,
@@ -26,7 +20,7 @@ function Outer({
   tag,
 }: {
   children: React.ReactNode;
-  tab: TabContents;
+  tab: Tab;
   tag?: string;
 }) {
   const handleClick = () => {
@@ -63,27 +57,9 @@ function Outer({
   );
 }
 
-export default function NavTab({
-  tab: rawTab,
-  email,
-}: {
-  tab: Tab;
-  email?: string;
-}) {
+export default function NavTab({ tab, email }: { tab: Tab; email?: string }) {
   const [isHovered, setIsHovered] = useState(false);
   const tag = useTag(email); // i think that this is very inefficient
-
-  const theme = useTheme();
-  const tab = useMemo<TabContents>(() => {
-    if (rawTab === "theme") {
-      return {
-        name: "Theme",
-        icon: theme === "light" ? <Sun /> : <Moon />,
-        action: "theme",
-      } as TabContents;
-    }
-    return rawTab;
-  }, [rawTab, theme]);
 
   if (tab.action === "tag" && !tag) {
     return null;
@@ -92,7 +68,7 @@ export default function NavTab({
   return (
     <Outer tab={tab} tag={tag}>
       <motion.div
-        className="relative flex flex-row justify-center items-center px-4 h-10 first:pl-6 last:pr-6 bg-theme-bg-faded text-theme-text-primary"
+        className="relative flex flex-row justify-center items-center px-4 h-10 first:pl-6 last:pr-6 bg-theme-nav-secondary text-theme-text-primary"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         onTouchStart={() => {

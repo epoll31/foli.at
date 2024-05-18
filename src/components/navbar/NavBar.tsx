@@ -7,6 +7,7 @@ import Logout from "../icons/logout";
 import Pencil from "../icons/pencil";
 import { auth } from "@/auth";
 import ThemeInitializer from "./ThemeInitializer";
+import ThemeIcon from "../ThemeIcon";
 
 const loggedInTabs: Tab[] = [
   {
@@ -29,7 +30,11 @@ const loggedInTabs: Tab[] = [
     action: "logout",
     icon: <Logout />,
   },
-  "theme",
+  {
+    name: "Theme",
+    action: "theme",
+    icon: <ThemeIcon />,
+  },
 ];
 
 const loggedOutTabs: Tab[] = [
@@ -43,7 +48,11 @@ const loggedOutTabs: Tab[] = [
     href: "/signin",
     icon: <User />,
   },
-  "theme",
+  {
+    name: "Theme",
+    action: "theme",
+    icon: <ThemeIcon />,
+  },
 ];
 
 export default async function Nav() {
@@ -55,8 +64,8 @@ export default async function Nav() {
   return (
     <>
       <GlowContainer
-        className="fixed bottom-8 shadow-xl z-40 bg-theme-border-primary"
-        glowColor="var(--theme-border-secondary)"
+        className="fixed bottom-8 shadow-xl z-40 bg-theme-nav-primary"
+        glowColor="var(--theme-nav-glow)"
         style={{
           backdropFilter: "blur(4px)",
           WebkitBackdropFilter: "blur(4px)",
@@ -64,11 +73,7 @@ export default async function Nav() {
       >
         <nav className="rounded-full flex flex-row flex-nowrap h-fit gap-px z-50">
           {tabs.map((tab) => (
-            <NavTab
-              tab={tab}
-              key={tab === "theme" ? "theme" : tab.name}
-              email={email}
-            />
+            <NavTab tab={tab} key={tab.name} email={email} />
           ))}
         </nav>
       </GlowContainer>

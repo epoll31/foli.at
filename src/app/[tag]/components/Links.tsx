@@ -36,12 +36,12 @@ export default function Links({ links }: { links: LinkType[] }) {
           <motion.a
             initial={{
               scale: 1,
-              color: "var(--theme-text-primary)",
+              color: "var(--theme-accent-dull)",
               rotate: "0deg",
             }}
             whileHover={{
               scale: 1.15,
-              color: "var(--theme-accent-1)",
+              color: "var(--theme-info)",
               rotate: ["0deg", "2deg", "0deg", "-2deg", "0deg"],
             }}
             whileTap={{

@@ -23,8 +23,11 @@ const config: Config = {
       },
       colors: {
         theme: {
+          "wordmark-text": "var(--theme-wordmark-text)",
+          "wordmark-border": "var(--theme-wordmark-border)",
           "bg-primary": "var(--theme-bg-primary)",
           "bg-secondary": "var(--theme-bg-secondary)",
+          "bg-tertiary": "var(--theme-bg-tertiary)",
           "bg-faded": "var(--theme-bg-faded)",
           "text-primary": "var(--theme-text-primary)",
           "border-primary": "var(--theme-border-primary)",
@@ -37,6 +40,10 @@ const config: Config = {
           "accent-3": "var(--theme-accent-3)",
           "light-faded": "var(--theme-light-faded)",
           focus: "var(--theme-focus)",
+          "nav-primary": "var(--theme-nav-primary)",
+          "nav-secondary": "var(--theme-nav-secondary)",
+          "nav-glow": "var(--theme-nav-glow)",
+          "accent-dull": "var(--theme-accent-dull)",
         },
       },
     },
