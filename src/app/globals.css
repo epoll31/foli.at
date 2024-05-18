@@ -4,7 +4,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 :root {
   --theme-black: rgba(34, 34, 34, 1);
   --theme-black-light: rgba(42, 43, 42, 1);
@@ -18,6 +17,7 @@
   --theme-white-20: rgba(255, 252, 249, 0.2);
   --theme-white-50: rgba(255, 252, 249, 0.5);
 
+  /* START */
   --theme-bg-primary: var(--theme-black-light);
   --theme-bg-secondary: var(--theme-black);
   --theme-bg-faded: var(--theme-black-light-50);
@@ -32,7 +32,29 @@
   --theme-accent-3: var(--theme-red);
   --theme-light-faded: var(--theme-white-50);
   --theme-focus: var(--theme-blue);
+  /* END */
 
-  background-color: var(--theme-black-light);
-  color: var(--theme-gray);
+  background-color: var(--theme-bg-primary);
+  color: var(--theme-text-primary);
+}
+
+* {
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.light-theme {
+  --theme-bg-primary: var(--theme-white);
+  --theme-bg-secondary: var(--theme-white);
+  --theme-bg-faded: var(--theme-white-50);
+  --theme-text-primary: var(--theme-black);
+  --theme-border-primary: var(--theme-black-light);
+  --theme-border-secondary: var(--theme-black-light-50);
+  --theme-error: var(--theme-red);
+  --theme-success: var(--theme-green);
+  --theme-info: var(--theme-blue);
+  --theme-accent-1: var(--theme-blue);
+  --theme-accent-2: var(--theme-green);
+  --theme-accent-3: var(--theme-red);
+  --theme-light-faded: var(--theme-black-light-50);
+  --theme-focus: var(--theme-blue);
 }

@@ -6,6 +6,7 @@ import NavTab, { Tab } from "./NavTab";
 import Logout from "../icons/logout";
 import Pencil from "../icons/pencil";
 import { auth } from "@/auth";
+import ThemeInitializer from "./ThemeInitializer";
 
 const loggedInTabs: Tab[] = [
   {
@@ -28,6 +29,7 @@ const loggedInTabs: Tab[] = [
     action: "logout",
     icon: <Logout />,
   },
+  "theme",
 ];
 
 const loggedOutTabs: Tab[] = [
@@ -41,6 +43,7 @@ const loggedOutTabs: Tab[] = [
     href: "/signin",
     icon: <User />,
   },
+  "theme",
 ];
 
 export default async function Nav() {
@@ -50,19 +53,26 @@ export default async function Nav() {
   let tabs = session ? loggedInTabs : loggedOutTabs;
 
   return (
-    <GlowContainer
-      className="fixed bottom-8 shadow-xl z-40 bg-theme-border-primary"
-      glowColor="var(--theme-border-secondary)"
-      style={{
-        backdropFilter: "blur(4px)",
-        WebkitBackdropFilter: "blur(4px)",
-      }}
-    >
-      <nav className="rounded-full flex flex-row flex-nowrap h-fit gap-px z-50">
-        {tabs.map((tab) => (
-          <NavTab tab={tab} key={tab.name} email={email} />
-        ))}
-      </nav>
-    </GlowContainer>
+    <>
+      <GlowContainer
+        className="fixed bottom-8 shadow-xl z-40 bg-theme-border-primary"
+        glowColor="var(--theme-border-secondary)"
+        style={{
+          backdropFilter: "blur(4px)",
+          WebkitBackdropFilter: "blur(4px)",
+        }}
+      >
+        <nav className="rounded-full flex flex-row flex-nowrap h-fit gap-px z-50">
+          {tabs.map((tab) => (
+            <NavTab
+              tab={tab}
+              key={tab === "theme" ? "theme" : tab.name}
+              email={email}
+            />
+          ))}
+        </nav>
+      </GlowContainer>
+      <ThemeInitializer />
+    </>
   );
 }

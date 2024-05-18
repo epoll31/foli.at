@@ -2,17 +2,23 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { signOut } from "next-auth/react";
 import getPortfolio from "@/utils/actions/getPortfolio";
 import { useTag } from "@/utils/hooks/useTag";
+import Gear from "../icons/gear";
+import Sun from "../icons/sun";
+import Moon from "../icons/moon";
+import useTheme from "@/utils/hooks/useTheme";
 
-export interface Tab {
+export interface TabContents {
   name: string;
   href?: string;
-  action?: "logout" | "tag";
+  action?: "logout" | "tag" | "theme";
   icon: React.ReactNode;
 }
+
+export type Tab = TabContents | "theme";
 
 function Outer({
   children,
@@ -20,7 +26,7 @@ function Outer({
   tag,
 }: {
   children: React.ReactNode;
-  tab: Tab;
+  tab: TabContents;
   tag?: string;
 }) {
   const handleClick = () => {
@@ -28,6 +34,13 @@ function Outer({
       signOut({
         callbackUrl: "/",
       });
+    } else if (tab.action === "theme") {
+      const lightTheme =
+        document.documentElement.classList.toggle("light-theme");
+
+      localStorage.setItem("lightTheme", lightTheme ? "true" : "false");
+
+      window.dispatchEvent(new Event("storage"));
     }
   };
   const className = "first:rounded-l-full last:rounded-r-full overflow-hidden";
@@ -48,9 +61,27 @@ function Outer({
   );
 }
 
-export default function NavTab({ tab, email }: { tab: Tab; email?: string }) {
+export default function NavTab({
+  tab: rawTab,
+  email,
+}: {
+  tab: Tab;
+  email?: string;
+}) {
   const [isHovered, setIsHovered] = useState(false);
   const tag = useTag(email); // i think that this is very inefficient
+
+  const theme = useTheme();
+  const tab = useMemo<TabContents>(() => {
+    if (rawTab === "theme") {
+      return {
+        name: "Theme",
+        icon: theme === "light" ? <Sun /> : <Moon />,
+        action: "theme",
+      } as TabContents;
+    }
+    return rawTab;
+  }, [rawTab, theme]);
 
   if (tab.action === "tag" && !tag) {
     return null;
