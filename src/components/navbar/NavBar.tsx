@@ -26,14 +26,14 @@ const loggedInTabs: Tab[] = [
     icon: <Pencil />,
   },
   {
-    name: "Sign Out",
-    action: "logout",
-    icon: <Logout />,
-  },
-  {
     name: "Theme",
     action: "theme",
     icon: <ThemeIcon />,
+  },
+  {
+    name: "Sign Out",
+    action: "logout",
+    icon: <Logout />,
   },
 ];
 
@@ -44,14 +44,14 @@ const loggedOutTabs: Tab[] = [
     icon: <Home />,
   },
   {
-    name: "Sign In",
-    href: "/signin",
-    icon: <User />,
-  },
-  {
     name: "Theme",
     action: "theme",
     icon: <ThemeIcon />,
+  },
+  {
+    name: "Sign In",
+    href: "/signin",
+    icon: <User />,
   },
 ];
 
