@@ -12,6 +12,7 @@ import { formSchema, type FormSchema } from "@/lib/zod/portfolioSchema";
 import setPortfolio from "@/utils/actions/setPortfolio";
 import useUnloadConfirmation from "@/utils/hooks/useUnloadConfirmation";
 import { useEffect } from "react";
+import { useTag } from "@/components/TagContext";
 
 export default function PorfolioForm({
   portfolio,
@@ -38,10 +39,12 @@ export default function PorfolioForm({
   useUnloadConfirmation(
     methods.formState.isDirty && !methods.formState.isSubmitting
   );
+  const { fetchTag } = useTag();
 
   const onSubmit = methods.handleSubmit(async (data) => {
     const validatedData = formSchema.parse(data);
     await setPortfolio({ email }, validatedData);
+    fetchTag(email);
   });
 
   useEffect(() => {});
