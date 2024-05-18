@@ -35,14 +35,14 @@ export default function SignInForm() {
       <form action={signInWithCredentials} className="flex flex-col gap-3">
         <Accordion open={open}>
           <AccordionContent>
-            <div className="grid grid-cols-[min-content_1fr] mb-3 gap-3 items-baseline text-theme-gray">
+            <div className="grid grid-cols-[min-content_1fr] mb-3 gap-3 items-baseline text-theme-text-primary">
               <label htmlFor="email">Email</label>
               <ErrorWrapper error={errors?.email?.message}>
                 <Input
                   type="email"
                   className="w-full"
                   glowColor={
-                    errors?.email ? "var(--theme-red)" : "var(--theme-blue)"
+                    errors?.email ? "var(--theme-error)" : "var(--theme-info)"
                   }
                   {...register("email", { required: true })}
                 />
@@ -53,7 +53,9 @@ export default function SignInForm() {
                   type="password"
                   className="w-full"
                   glowColor={
-                    errors?.password ? "var(--theme-red)" : "var(--theme-blue)"
+                    errors?.password
+                      ? "var(--theme-error)"
+                      : "var(--theme-info)"
                   }
                   {...register("password", { required: true })}
                 />
@@ -69,9 +71,9 @@ export default function SignInForm() {
             glowColor={
               open
                 ? isValid
-                  ? "var(--theme-green)"
-                  : "var(--theme-red)"
-                : "var(--theme-blue)"
+                  ? "var(--theme-success)"
+                  : "var(--theme-error)"
+                : "var(--theme-info)"
             }
           >
             <span className="inline-flex py-2">Sign in with Email</span>
@@ -83,7 +85,7 @@ export default function SignInForm() {
         <Button type="submit" className="w-full">
           <span className="flex items-center gap-3 px-3 py-2 ">
             <Google className="text-2xl" />
-            <span className="mx-auto text-nowrap text-theme-gray">
+            <span className="mx-auto text-nowrap text-theme-text-primary">
               Sign in with Google
             </span>
           </span>
@@ -93,7 +95,7 @@ export default function SignInForm() {
         <Button type="submit" className="w-full">
           <span className="flex items-center gap-3 px-3 py-2 ">
             <Github className="text-2xl" />
-            <span className="mx-auto text-nowrap text-theme-gray">
+            <span className="mx-auto text-nowrap text-theme-text-primary">
               Sign in with GitHub
             </span>
           </span>

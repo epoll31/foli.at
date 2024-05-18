@@ -28,7 +28,9 @@ export default function PortfolioInfoSection({
             defaultValue={portfolio.tag}
             required
             glowColor={
-              errors?.portfolio?.tag ? "var(--theme-red)" : "var(--theme-blue)"
+              errors?.portfolio?.tag
+                ? "var(--theme-error)"
+                : "var(--theme-info)"
             }
           />
         </ErrorWrapper>
@@ -44,8 +46,8 @@ export default function PortfolioInfoSection({
             required
             glowColor={
               errors?.portfolio?.fullName
-                ? "var(--theme-red)"
-                : "var(--theme-blue)"
+                ? "var(--theme-error)"
+                : "var(--theme-info)"
             }
           />
         </ErrorWrapper>
@@ -59,8 +61,8 @@ export default function PortfolioInfoSection({
             required
             glowColor={
               errors?.portfolio?.title
-                ? "var(--theme-red)"
-                : "var(--theme-blue)"
+                ? "var(--theme-error)"
+                : "var(--theme-info)"
             }
           />
         </ErrorWrapper>
@@ -76,8 +78,8 @@ export default function PortfolioInfoSection({
             required
             glowColor={
               errors?.portfolio?.description
-                ? "var(--theme-red)"
-                : "var(--theme-blue)"
+                ? "var(--theme-error)"
+                : "var(--theme-info)"
             }
           />
         </ErrorWrapper>

@@ -36,14 +36,14 @@ export default function EducationSection() {
     <Accordion className="flex flex-col" onOpenChange={setOpen}>
       <AccordionTrigger
         className={cn(
-          "relative text-center py-3 border-y border-theme-white/10  text-theme-gray"
+          "relative text-center py-3 border-y border-theme-border-primary  text-theme-text-primary"
         )}
       >
         Education History
         {
           <ChevronUp
             className={cn(
-              `absolute top-0 h-full end-3 -rotate-180 transition-transform text-theme-gray`,
+              `absolute top-0 h-full end-3 -rotate-180 transition-transform text-theme-text-primary`,
               open && "rotate-0"
             )}
           />
@@ -75,8 +75,8 @@ export default function EducationSection() {
                         glowColor={
                           errors?.educationHistories &&
                           errors.educationHistories[index]?.school
-                            ? "var(--theme-red)"
-                            : "var(--theme-blue)"
+                            ? "var(--theme-error)"
+                            : "var(--theme-info)"
                         }
                       />
                     </ErrorWrapper>
@@ -104,8 +104,8 @@ export default function EducationSection() {
                       glowColor={
                         errors?.educationHistories &&
                         errors.educationHistories[index]?.degree
-                          ? "var(--theme-red)"
-                          : "var(--theme-blue)"
+                          ? "var(--theme-error)"
+                          : "var(--theme-info)"
                       }
                     />
                   </ErrorWrapper>
@@ -127,8 +127,8 @@ export default function EducationSection() {
                       glowColor={
                         errors?.educationHistories &&
                         errors.educationHistories[index]?.major
-                          ? "var(--theme-red)"
-                          : "var(--theme-blue)"
+                          ? "var(--theme-error)"
+                          : "var(--theme-info)"
                       }
                     />
                   </ErrorWrapper>
@@ -157,8 +157,8 @@ export default function EducationSection() {
                       glowColor={
                         errors?.educationHistories &&
                         errors.educationHistories[index]?.startDate
-                          ? "var(--theme-red)"
-                          : "var(--theme-blue)"
+                          ? "var(--theme-error)"
+                          : "var(--theme-info)"
                       }
                     />
                   </ErrorWrapper>
@@ -184,8 +184,8 @@ export default function EducationSection() {
                       glowColor={
                         errors?.educationHistories &&
                         errors.educationHistories[index]?.endDate
-                          ? "var(--theme-red)"
-                          : "var(--theme-blue)"
+                          ? "var(--theme-error)"
+                          : "var(--theme-info)"
                       }
                     />
                   </ErrorWrapper>
@@ -209,8 +209,8 @@ export default function EducationSection() {
                     glowColor={
                       errors?.educationHistories &&
                       errors.educationHistories[index]?.description
-                        ? "var(--theme-red)"
-                        : "var(--theme-blue)"
+                        ? "var(--theme-error)"
+                        : "var(--theme-info)"
                     }
                   />
                 </ErrorWrapper>

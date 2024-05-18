@@ -2,15 +2,15 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { signOut } from "next-auth/react";
-import getPortfolio from "@/utils/actions/getPortfolio";
 import { useTag } from "@/utils/hooks/useTag";
+import { toggleTheme } from "@/utils/theme";
 
 export interface Tab {
   name: string;
   href?: string;
-  action?: "logout" | "tag";
+  action?: "logout" | "tag" | "theme";
   icon: React.ReactNode;
 }
 
@@ -28,6 +28,8 @@ function Outer({
       signOut({
         callbackUrl: "/",
       });
+    } else if (tab.action === "theme") {
+      toggleTheme();
     }
   };
   const className = "first:rounded-l-full last:rounded-r-full overflow-hidden";
@@ -59,7 +61,7 @@ export default function NavTab({ tab, email }: { tab: Tab; email?: string }) {
   return (
     <Outer tab={tab} tag={tag}>
       <motion.div
-        className="relative flex flex-row justify-center items-center px-4 h-10 first:pl-6 last:pr-6 bg-theme-black-light/50 text-theme-gray"
+        className="relative flex flex-row justify-center items-center px-4 h-10 first:pl-6 last:pr-6 bg-theme-nav-secondary text-theme-text-primary"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         onTouchStart={() => {

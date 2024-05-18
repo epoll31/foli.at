@@ -17,17 +17,17 @@ export default function TrashButton({
     <motion.button
       type="button"
       className={cn(
-        "m-auto aspect-square p-0.5 rounded-md border-2 border-transparent focus-visible:outline-none  focus-visible:border-theme-blue",
+        "m-auto aspect-square p-0.5 rounded-md border-2 border-transparent focus-visible:outline-none  focus-visible:border-theme-focus",
         className
       )}
       initial={{
         scale: 1,
-        color: "var(--theme-white-50)",
+        color: "var(--theme-light-faded)",
         rotate: "0deg",
       }}
       whileHover={{
         scale: 1.15,
-        color: "var(--theme-red)",
+        color: "var(--theme-error)",
         rotate: ["0deg", "3deg", "0deg", "-3deg", "0deg"],
       }}
       whileTap={{
