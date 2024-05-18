@@ -6,7 +6,7 @@ import NavTab, { Tab } from "./NavTab";
 import Logout from "../icons/logout";
 import Pencil from "../icons/pencil";
 import { auth } from "@/auth";
-import ThemeInitializer from "./ThemeInitializer";
+import ThemeInitializer from "../ThemeInitializer";
 import ThemeIcon from "../ThemeIcon";
 
 const loggedInTabs: Tab[] = [

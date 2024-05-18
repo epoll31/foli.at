@@ -2,10 +2,10 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { signOut } from "next-auth/react";
 import { useTag } from "@/utils/hooks/useTag";
-import useTheme from "@/utils/hooks/useTheme";
+import { toggleTheme } from "@/utils/theme";
 
 export interface Tab {
   name: string;
@@ -29,14 +29,7 @@ function Outer({
         callbackUrl: "/",
       });
     } else if (tab.action === "theme") {
-      const lightTheme =
-        document.documentElement.classList.toggle("light-theme");
-
-      if (typeof window === "undefined") return;
-
-      localStorage.setItem("lightTheme", lightTheme ? "true" : "false");
-
-      window.dispatchEvent(new Event("storage"));
+      toggleTheme();
     }
   };
   const className = "first:rounded-l-full last:rounded-r-full overflow-hidden";

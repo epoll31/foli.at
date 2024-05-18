@@ -1,19 +1,17 @@
 import { useState, useEffect } from "react";
+import { getLocalStorageTheme } from "../theme";
+import { get } from "http";
 
 export default function useTheme() {
-  const [theme, setTheme] = useState<"light" | "dark">(() => {
-    if (typeof window === "undefined") return "dark";
-
-    const storedTheme = localStorage.getItem("lightTheme");
-    return storedTheme === "true" ? "light" : "dark";
-  });
+  const [theme, setTheme] = useState<"light" | "dark">(
+    getLocalStorageTheme("dark")
+  );
 
   useEffect(() => {
     if (typeof window === "undefined") return;
 
     const handleStorageChange = () => {
-      const newTheme = localStorage.getItem("lightTheme");
-      setTheme(newTheme === "true" ? "light" : "dark");
+      setTheme(getLocalStorageTheme("dark"));
     };
 
     window.addEventListener("storage", handleStorageChange);
