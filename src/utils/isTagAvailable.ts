@@ -12,5 +12,7 @@ export async function isTagTaken(tag: string) {
 }
 
 export async function isTagReserved(tag: string) {
-  return ["portfolio", "api", "settings", "signin"].includes(tag);
+  return ["portfolio", "api", "settings", "signin", "privacy-policy"].includes(
+    tag
+  );
 }
