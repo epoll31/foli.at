@@ -42,9 +42,5 @@ export default async function getPortfolio({
     },
   });
 
-  if (!portfolio) {
-    throw new Error("No portfolio found");
-  }
-
   return portfolio;
 }

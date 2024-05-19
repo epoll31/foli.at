@@ -20,6 +20,7 @@ const config: Config = {
       fontFamily: {
         "playfair-display": ["Playfair Display", "serif"],
         "poetsen-one": ["Poetsen One", "sans-serif"],
+        barlow: ["Barlow", "sans-serif"],
       },
       colors: {
         theme: {
