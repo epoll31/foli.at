@@ -23,7 +23,7 @@ const TextArea = React.forwardRef(
         <textarea
           className={cn(
             className,
-            " w-full px-2 py-1 rounded-[calc(0.5rem-2px)] outline-2 outline-transparent outline-offset-1 focus-visible:outline-theme-focus bg-theme-bg-tertiary z-20 min-h-10 max-h-96 align-top [&::-webkit-resizer]:hidden transition-light-dark"
+            " w-full px-2 py-1 rounded-[calc(0.5rem-2px)] outline-2 outline-transparent outline-offset-1 focus-visible:outline-theme-focus bg-theme-bg-tertiary z-20 min-h-10 max-h-96 align-top [&::-webkit-resizer]:hidden transition-colors"
           )}
           style={{
             scrollbarColor: "var(--theme-accent-dull) transparent",
