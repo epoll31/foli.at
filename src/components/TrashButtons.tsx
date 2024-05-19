@@ -17,7 +17,7 @@ export default function TrashButton({
     <motion.button
       type="button"
       className={cn(
-        "m-auto aspect-square p-0.5 rounded-md border-2 border-transparent focus-visible:outline-none  focus-visible:border-theme-focus",
+        "m-auto aspect-square p-0.5 rounded-md border-2 border-transparent focus-visible:outline-none focus-visible:border-theme-focus ",
         className
       )}
       initial={{

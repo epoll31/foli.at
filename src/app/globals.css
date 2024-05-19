@@ -72,7 +72,3 @@
   --theme-nav-glow: var(--theme-white-65);
   --theme-accent-dull: var(--theme-gray);
 }
-
-/* * {
-  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
-} */
