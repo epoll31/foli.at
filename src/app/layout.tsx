@@ -21,7 +21,7 @@ export default async function RootLayout({
   const session = await auth();
 
   return (
-    <html lang="en">
+    <html lang="en" className=" transition-light-dark">
       <body
         className={cn(
           inter.className,
