@@ -4,12 +4,13 @@ import WorkSection from "./components/WorkSection";
 import EducationSection from "./components/EducationSection";
 import getPortfolio from "@/utils/actions/getPortfolio";
 import { Portfolio } from "@/lib/types";
+import NotFound from "@/components/NotFound";
 
 export default async function Page({ params }: { params: { tag: string } }) {
   const portfolio = await getPortfolio({ tag: params.tag });
 
   if (!portfolio) {
-    return <ShowMissingPortfolio />;
+    return <NotFound tag={params.tag} />;
   }
 
   return <ShowPortfolio portfolio={portfolio} />;
