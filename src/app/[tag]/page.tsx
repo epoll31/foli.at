@@ -3,14 +3,19 @@ import Links from "./components/Links";
 import WorkSection from "./components/WorkSection";
 import EducationSection from "./components/EducationSection";
 import getPortfolio from "@/utils/actions/getPortfolio";
+import { Portfolio } from "@/lib/types";
 
 export default async function Page({ params }: { params: { tag: string } }) {
   const portfolio = await getPortfolio({ tag: params.tag });
 
   if (!portfolio) {
-    redirect("/", RedirectType.replace);
+    return <ShowMissingPortfolio />;
   }
 
+  return <ShowPortfolio portfolio={portfolio} />;
+}
+
+function ShowPortfolio({ portfolio }: { portfolio: Portfolio }) {
   return (
     <div className="max-w-prose flex flex-col gap-3 items-center">
       <h2 className="text-4xl text-center">{portfolio.fullName}</h2>
@@ -24,6 +29,15 @@ export default async function Page({ params }: { params: { tag: string } }) {
       {portfolio.educationHistories.length > 0 && (
         <EducationSection educationHistories={portfolio.educationHistories} />
       )}
+    </div>
+  );
+}
+
+function ShowMissingPortfolio() {
+  return (
+    <div className="max-w-prose flex flex-col gap-3 items-center">
+      <h2 className="text-4xl text-center">404</h2>
+      <p className="text-2xl text-center">Portfolio not found</p>
     </div>
   );
 }
