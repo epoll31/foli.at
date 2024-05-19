@@ -32,7 +32,8 @@ function Outer({
       toggleTheme();
     }
   };
-  const className = "first:rounded-l-full last:rounded-r-full overflow-hidden";
+  const className =
+    "first:rounded-l-full last:rounded-r-full overflow-hidden outline-transparent focus-visible:outline focus-visible:outline-theme-focus outline-2 -outline-offset-2";
 
   if (tab.href || tab.action === "tag") {
     const href = (tab.action === "tag" ? `/${tag}` : tab.href) as string;

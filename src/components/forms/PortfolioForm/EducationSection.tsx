@@ -36,7 +36,7 @@ export default function EducationSection() {
     <Accordion className="flex flex-col" onOpenChange={setOpen}>
       <AccordionTrigger
         className={cn(
-          "relative text-center py-3 border-y border-theme-border-primary  text-theme-text-primary transition-light-dark"
+          "relative text-center py-3 border-y border-theme-border-primary text-theme-text-primary transition-light-dark"
         )}
       >
         Education History

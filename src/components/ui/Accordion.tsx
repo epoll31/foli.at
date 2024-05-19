@@ -52,7 +52,10 @@ export function AccordionTrigger({
     <button
       type="button"
       onClick={toggle}
-      className={cn("w-full text-left focus-visible:outline-none", className)}
+      className={cn(
+        "w-full text-left focus-visible:outline outline-theme-focus outline-2 -outline-offset-2",
+        className
+      )}
     >
       {children}
     </button>
