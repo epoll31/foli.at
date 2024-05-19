@@ -22,6 +22,10 @@ const config: Config = {
         "poetsen-one": ["Poetsen One", "sans-serif"],
         barlow: ["Barlow", "sans-serif"],
       },
+      transitionProperty: {
+        "light-dark":
+          "background-color 0.5s ease-in-out, color 0.5s ease-in-out, border-color 0.5s ease-in-out, -webkit-text-stroke-color 0.5s ease-in-out",
+      },
       colors: {
         theme: {
           "wordmark-text": "var(--theme-wordmark-text)",
