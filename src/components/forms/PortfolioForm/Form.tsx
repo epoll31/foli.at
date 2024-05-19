@@ -11,7 +11,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { formSchema, type FormSchema } from "@/lib/zod/portfolioSchema";
 import setPortfolio from "@/utils/actions/setPortfolio";
 import useUnloadConfirmation from "@/utils/hooks/useUnloadConfirmation";
-import { useEffect } from "react";
 import { useTag } from "@/components/TagContext";
 
 export default function PorfolioForm({
@@ -46,8 +45,6 @@ export default function PorfolioForm({
     await setPortfolio({ email }, validatedData);
     fetchTag(email);
   });
-
-  useEffect(() => {});
 
   return (
     <FormProvider {...methods}>
