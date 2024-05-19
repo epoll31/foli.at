@@ -57,7 +57,6 @@ const loggedOutTabs: Tab[] = [
 
 export default async function Nav() {
   const session = await auth();
-  const email = session?.user?.email ?? undefined;
 
   let tabs = session ? loggedInTabs : loggedOutTabs;
 
@@ -73,7 +72,7 @@ export default async function Nav() {
       >
         <nav className="rounded-full flex flex-row flex-nowrap h-fit gap-px z-50">
           {tabs.map((tab) => (
-            <NavTab tab={tab} key={tab.name} email={email} />
+            <NavTab tab={tab} key={tab.name} />
           ))}
         </nav>
       </GlowContainer>

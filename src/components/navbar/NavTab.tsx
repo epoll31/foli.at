@@ -2,10 +2,10 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { signOut } from "next-auth/react";
-import { useTag } from "@/utils/hooks/useTag";
 import { toggleTheme } from "@/utils/theme";
+import { useTag } from "../TagContext";
 
 export interface Tab {
   name: string;
@@ -50,11 +50,18 @@ function Outer({
   );
 }
 
-export default function NavTab({ tab, email }: { tab: Tab; email?: string }) {
+export default function NavTab({ tab }: { tab: Tab }) {
   const [isHovered, setIsHovered] = useState(false);
-  const tag = useTag(email); // i think that this is very inefficient
+  const { tag } = useTag();
 
-  if (tab.action === "tag" && !tag) {
+  const preventRender = useMemo(() => {
+    if (tab.action === "tag") {
+      return !tag;
+    }
+    return false;
+  }, [tab.action, tag]);
+
+  if (preventRender) {
     return null;
   }
 
