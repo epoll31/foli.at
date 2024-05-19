@@ -35,7 +35,7 @@ export default function LinksSection() {
     <Accordion className="flex flex-col" onOpenChange={setOpen}>
       <AccordionTrigger
         className={cn(
-          "relative text-center py-3 border-t border-theme-border-primary transition-all text-theme-text-primary",
+          "relative text-center py-3 border-t border-theme-border-primary  transition-light-dark text-theme-text-primary ",
           open && "border-b"
         )}
       >
