@@ -63,7 +63,7 @@ export default async function Nav() {
   return (
     <>
       <GlowContainer
-        className="fixed bottom-8 shadow-xl z-40 bg-theme-nav-primary"
+        className="fixed bottom-8 shadow-xl z-40 bg-theme-nav-primary  transition-light-dark"
         glowColor="var(--theme-nav-glow)"
         style={{
           backdropFilter: "blur(4px)",
