@@ -1,11 +1,18 @@
 import { z } from "zod";
 import { LinkType } from "@/lib/types";
+import { isTagReserved, isTagTaken } from "@/utils/isTagAvailable";
 
 const portfolioSchema = z.object({
   tag: z
     .string()
     .min(3, "Tag must be at least 3 characters")
-    .max(20, "Tag must be at most 20 characters"),
+    .max(20, "Tag must be at most 20 characters")
+    .refine(async (tag) => !(await isTagTaken(tag)), {
+      message: "Tag is already taken",
+    })
+    .refine(async (tag) => !(await isTagReserved(tag)), {
+      message: "Invalid tag name",
+    }),
   fullName: z
     .string()
     .min(1, "Full name must not be empty")
