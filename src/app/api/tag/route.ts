@@ -7,6 +7,15 @@ export async function POST(req: Request) {
     // Get the portfolio
     const portfolio = await getPortfolio({ email });
 
+    if (!portfolio) {
+      return new Response(JSON.stringify({ error: "No portfolio found" }), {
+        status: 404,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    }
+
     // Return the tag as JSON
     return new Response(JSON.stringify({ tag: portfolio.tag }), {
       status: 200,
