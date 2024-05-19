@@ -66,7 +66,7 @@
   --theme-accent-2: var(--theme-green);
   --theme-accent-3: var(--theme-red);
   --theme-light-faded: var(--theme-black-light-50);
-  --theme-focus: var(--theme-blue);
+  --theme-focus: var(--theme-black);
   --theme-nav-primary: var(--theme-blue);
   --theme-nav-secondary: var(--theme-white-50);
   --theme-nav-glow: var(--theme-white-65);
