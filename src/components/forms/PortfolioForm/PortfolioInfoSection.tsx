@@ -2,9 +2,10 @@
 import Input from "@/components/ui/Input";
 import TextArea from "@/components/ui/TextArea";
 import { Portfolio } from "@/lib/types";
-import { useFormContext } from "react-hook-form";
+import { useFormContext, useWatch } from "react-hook-form";
 import { FormSchema } from "@/lib/zod/portfolioSchema";
 import ErrorWrapper from "@/components/forms/ErrorWrapper";
+import NoteWrapper from "../NoteWrapper";
 
 export default function PortfolioInfoSection({
   portfolio,
@@ -14,25 +15,33 @@ export default function PortfolioInfoSection({
   const {
     register,
     formState: { errors },
+    control,
   } = useFormContext<FormSchema>();
+  const tag = useWatch({ control, name: "portfolio.tag" });
 
   return (
     <div className="p-6 flex flex-col gap-3">
       <div className="w-full grid grid-cols-[min-content_1fr] items-baseline gap-x-3 gap-y-3">
         <label htmlFor="portfolio.tag">Tag:</label>
         <ErrorWrapper error={errors?.portfolio?.tag?.message}>
-          <Input
-            className="w-full"
-            id="portfolio.tag"
-            {...register("portfolio.tag", { required: true })}
-            defaultValue={portfolio.tag}
-            required
-            glowColor={
-              errors?.portfolio?.tag
-                ? "var(--theme-error)"
-                : "var(--theme-info)"
+          <NoteWrapper
+            note={
+              !errors?.portfolio?.tag?.message ? `foli.at/${tag}` : undefined
             }
-          />
+          >
+            <Input
+              className="w-full"
+              id="portfolio.tag"
+              {...register("portfolio.tag", { required: true })}
+              defaultValue={portfolio.tag}
+              required
+              glowColor={
+                errors?.portfolio?.tag
+                  ? "var(--theme-error)"
+                  : "var(--theme-info)"
+              }
+            />
+          </NoteWrapper>
         </ErrorWrapper>
         <label htmlFor="portfolio.fullName" className="text-nowrap">
           Name:
