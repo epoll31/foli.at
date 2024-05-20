@@ -12,7 +12,7 @@ import {
   signInWithGithub,
   signInWithGoogle,
 } from "@/utils/auth/actions";
-import { Accordion, AccordionContent, AccordionTrigger } from "../ui/Accordion";
+import { Accordion, AccordionContent } from "../ui/Accordion";
 import { useState } from "react";
 import Hr from "@/components/ui/Hr";
 
@@ -29,13 +29,12 @@ export default function SignInForm() {
     mode: "onChange",
   });
   const [open, setOpen] = useState(false);
-  //TODO: fix tabindex on accordion closed things
   return (
     <div className="flex flex-col gap-3 p-6">
       <form action={signInWithCredentials} className="flex flex-col gap-3">
         <Accordion open={open}>
           <AccordionContent>
-            <div className="grid grid-cols-[min-content_1fr] mb-3 gap-3 items-baseline text-theme-text-primary">
+            <div className="grid grid-cols-[min-content_1fr] mb-3 gap-3 items-baseline text-theme-text-primary ">
               <label htmlFor="email">Email</label>
               <ErrorWrapper error={errors?.email?.message}>
                 <Input
@@ -45,6 +44,7 @@ export default function SignInForm() {
                     errors?.email ? "var(--theme-error)" : "var(--theme-info)"
                   }
                   {...register("email", { required: true })}
+                  tabIndex={open ? 0 : -1}
                 />
               </ErrorWrapper>
               <label htmlFor="password">Password</label>
@@ -58,6 +58,7 @@ export default function SignInForm() {
                       : "var(--theme-info)"
                   }
                   {...register("password", { required: true })}
+                  tabIndex={open ? 0 : -1}
                 />
               </ErrorWrapper>
             </div>
@@ -76,7 +77,9 @@ export default function SignInForm() {
                 : "var(--theme-info)"
             }
           >
-            <span className="inline-flex py-2">Sign in with Email</span>
+            <span className="inline-flex py-2 text-theme-text-primary">
+              Sign in with Email
+            </span>
           </Button>
         </Accordion>
       </form>
@@ -93,11 +96,9 @@ export default function SignInForm() {
       </form>
       <form action={signInWithGithub}>
         <Button type="submit" className="w-full">
-          <span className="flex items-center gap-3 px-3 py-2 ">
+          <span className="flex items-center gap-3 px-3 py-2 text-theme-text-primary">
             <Github className="text-2xl" />
-            <span className="mx-auto text-nowrap text-theme-text-primary">
-              Sign in with GitHub
-            </span>
+            <span className="mx-auto text-nowrap">Sign in with GitHub</span>
           </span>
         </Button>
       </form>
